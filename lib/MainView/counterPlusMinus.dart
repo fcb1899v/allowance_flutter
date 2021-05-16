@@ -19,15 +19,15 @@ class counterPlusMinusState extends State<counterPlusMinus> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(),
-        FloatingActionButton(
-          backgroundColor: Colors.lightBlue,
-          onPressed: () { // Startボタンタップ時の処理
-            viewModel.refresh();
-          },
-          child: Icon(CupertinoIcons.refresh),
-          tooltip: 'Decrease',
-        ),
-        Spacer(),
+        // FloatingActionButton(
+        //   backgroundColor: Colors.lightBlue,
+        //   onPressed: () { // Startボタンタップ時の処理
+        //     viewModel.refresh();
+        //   },
+        //   child: Icon(CupertinoIcons.refresh),
+        //   tooltip: 'Decrease',
+        // ),
+        // Spacer(),
         // FloatingActionButton(
         //   backgroundColor: Colors.lightBlue,
         //   onPressed: () { // Startボタンタップ時の処理
@@ -38,7 +38,7 @@ class counterPlusMinusState extends State<counterPlusMinus> {
         // ),
         // Spacer(),
         FloatingActionButton(
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: (viewModel.counter > 1) ? Colors.lightBlue: Colors.grey,
           onPressed: () { // Startボタンタップ時の処理
             viewModel.decreaseCounter();
           },
@@ -47,7 +47,7 @@ class counterPlusMinusState extends State<counterPlusMinus> {
         ),
         Spacer(),
         FloatingActionButton(
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: (viewModel.counter < 10) ? Colors.lightBlue: Colors.grey,
           onPressed: () { // Stopボタンタップ時の処理
             viewModel.increaseCounter();
           },

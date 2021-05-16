@@ -15,19 +15,23 @@ extension StringExt on String {
     return (int.parse(this) > 0) ? int.parse(this) : defaultint;
   }
 
-  int toBalance(List<int> spendlist) {
-    final balance = this.toInt(500) - spendlist.toSum();
-    return (balance > 0) ? balance : 0;
+  String toBalance(List<int> amountlist, int counternum) {
+    final balance = this.toInt(500) - amountlist.toSum(counternum);
+    return (balance > 0) ? balance.toString() : "0";
   }
 
-  double toPercent(List<int> spendlist) {
-    final percent = spendlist.toSum().toDouble() / this.toInt(500).toDouble();
+  double toPercent(List<int> amountlist, int counternum) {
+    final percent = amountlist.toSum(counternum).toDouble() / this.toInt(500).toDouble();
     return (percent < 1) ? percent : 1;
   }
 }
 
 extension IntArrayExt on List<int> {
-  int toSum() {
-    return this.reduce((value, element) => value + element);
+  int toSum(int counternum) {
+    var sumvalue = 0;
+    for (var i = 0; i < counternum; i++) {
+      sumvalue += this[i];
+    }
+    return sumvalue;
   }
 }

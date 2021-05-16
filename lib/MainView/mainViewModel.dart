@@ -42,7 +42,7 @@ class mainViewModel extends Model {
   }
 
   void decreaseCounter() async {
-    if (counter > 2) { _counter--; }
+    if (counter > 1) { _counter--; }
     print("decreaseCounter : ${_counter}");
     saveCounter();
     notifyListeners();

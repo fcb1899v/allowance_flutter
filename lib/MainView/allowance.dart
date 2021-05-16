@@ -34,37 +34,38 @@ class _AllowancePageState extends State<AllowancePage> {
   @override
   Widget build(BuildContext context) {
     return ScopedModel<mainViewModel>(
-        model: viewModel,
-        child: ScopedModelDescendant<mainViewModel>(
-            builder: (context, child, model) =>
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Colors.deepPurpleAccent,
-                      Theme.of(context).primaryColor,
-                    ]
-                  ),
-                ),
-                child: Scaffold(
-                  resizeToAvoidBottomInset: false,
-                  backgroundColor: Colors.transparent,
-                  appBar: mainAppBar(),
-                  body: Center(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 50),
-                        balanceView(viewModel, allowance),
-                        SizedBox(height: 60),
-                        spendSpreadSheet(viewModel),
-                        SizedBox(height: 30),
-                        counterPlusMinus(viewModel),
-                      ]
-                    ),
-                  ),
+      model: viewModel,
+      child: ScopedModelDescendant<mainViewModel>(
+        builder: (context, child, model) => Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: <Color>[
+                Colors.deepPurpleAccent,
+                Theme.of(context).primaryColor,
+              ]
+            ),
+          ),
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.transparent,
+            appBar: mainAppBar(),
+            body: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 50),
+                    balanceView(viewModel, allowance),
+                    SizedBox(height: 30),
+                    counterPlusMinus(viewModel),
+                    SizedBox(height: 50),
+                    spendSpreadSheet(viewModel),
+                  ]
                 ),
               ),
+            ),
+          ),
         ),
+      ),
     );
   }
 }

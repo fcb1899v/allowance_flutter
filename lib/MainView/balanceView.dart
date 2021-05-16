@@ -82,7 +82,7 @@ class balanceViewState extends State<balanceView> {
                       );
                     }).toList(),
                   ),
-                  Text(widget.allowance.toBalance(viewModel.amntlist).toString(),
+                  Text(widget.allowance.toBalance(viewModel.amntlist, viewModel.counter),
                     style: TextStyle(
                       color: Colors.lightBlue,
                       fontSize: 50,
@@ -102,7 +102,7 @@ class balanceViewState extends State<balanceView> {
                 width: MediaQuery.of(context).size.width - 60,
                 lineHeight: 10.0,
                 linearStrokeCap: LinearStrokeCap.butt,
-                percent: widget.allowance.toPercent(viewModel.amntlist),
+                percent: widget.allowance.toPercent(viewModel.amntlist, viewModel.counter),
                 animation: true,
                 animationDuration: 2000,
                 backgroundColor: Colors.white,

@@ -50,7 +50,6 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
     );
   }
 
-
   List<DataRow> getDataRows() {
     List<DataRow> datarows = [];
     for (var i = 0; i < viewModel.counter; i++) {
