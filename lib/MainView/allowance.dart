@@ -47,6 +47,7 @@ class _AllowancePageState extends State<AllowancePage> {
                   ),
                 ),
                 child: Scaffold(
+                  resizeToAvoidBottomInset: false,
                   backgroundColor: Colors.transparent,
                   appBar: mainAppBar(),
                   body: Center(

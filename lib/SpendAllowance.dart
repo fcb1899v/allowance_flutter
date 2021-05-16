@@ -5,7 +5,7 @@ extension IntExt on int {
   }
 
   String toPrice() {
-    return (this > 0) ? "¥ ${this.toRadixString(10)}" : "";
+    return (this > 0) ? "${this.toRadixString(10)}" : "";
   }
 }
 

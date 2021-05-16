@@ -24,9 +24,11 @@ class amntFieldViewState extends State<amntFieldView> {
     final prefs = await SharedPreferences.getInstance();
     viewModel.amntlist[widget.i] = prefs.getInt("amntkey${widget.i + 1}") ?? 0;
     amntcontroller = TextEditingController.fromValue(
-        TextEditingValue(text: viewModel.amntlist[widget.i].toPrice(),
-            selection: TextSelection.collapsed(offset: viewModel.amntlist[widget.i].toString().length)
-        )
+      TextEditingValue(text: viewModel.amntlist[widget.i].toPrice(),
+        selection: TextSelection.collapsed(
+          offset: viewModel.amntlist[widget.i].toPrice().length
+        ),
+      ),
     );
     // print("getAmount");
   }
@@ -44,6 +46,7 @@ class amntFieldViewState extends State<amntFieldView> {
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
     return TextField(
+      enabled: true,
       controller: amntcontroller,
       style: TextStyle(
         color: Colors.lightBlue,
@@ -64,16 +67,15 @@ class amntFieldViewState extends State<amntFieldView> {
       maxLines: 1,
       onChanged: (text) {
         print("Amount : $text");
-        if (text != "" || text != null || text.toInt(0) != null || text.toInt(0) != 0) {
+        if (text != "" || text != null || text.toInt(0) != null) {
           viewModel.saveAmnt(text.toInt(0), widget.i);
-        } else {
-          viewModel.saveAmnt(0, widget.i);
         }
         getAmount();
       },
       onTap: () {
         viewModel.saveAmnt(0, widget.i);
         getAmount();
+        amntcontroller.clear();
       },
     );
   }

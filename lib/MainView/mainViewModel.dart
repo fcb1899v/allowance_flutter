@@ -6,6 +6,9 @@ class mainViewModel extends Model {
   int _counter = 3;
   int get counter => _counter;
 
+  String _unitvalue = "¥";
+  String get unitvalue => _unitvalue;
+
   List<int> _amntlist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
   List<int> get amntlist => _amntlist;
 
@@ -45,6 +48,22 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
+  void getUnit() async {
+    final prefs = await SharedPreferences.getInstance();
+    _unitvalue = prefs.getString("unitkey") ?? "¥";
+    print("getUnit : ${_unitvalue}");
+    notifyListeners();
+  }
+
+  void saveUnit(String? unit) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (unit != null || unit != "") {
+      await prefs.setString("unitkey", unit!);
+    }
+    print("saveUnit : ${_unitvalue}");
+    notifyListeners();
+  }
+
   void getDesc(int i) async {
     final prefs = await SharedPreferences.getInstance();
     desclist[i] = prefs.getString("desckey${i + 1}") ?? "";
@@ -77,7 +96,7 @@ class mainViewModel extends Model {
 
   void getAmntList() async {
     getCounter();
-    for (int i = 0; i < _counter; i++) {
+    for (int i = 0; i < counter; i++) {
       getAmnt(i);
       print("$i");
     }
@@ -85,9 +104,11 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
-  void saveAmnt(int amnt, int i) async {
+  void saveAmnt(int? amnt, int i) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt("amntkey${i + 1}", amnt);
+    if (amnt != null) {
+      await prefs.setInt("amntkey${i + 1}", amnt);
+    }
     print("saveAmnt");
     notifyListeners();
   }

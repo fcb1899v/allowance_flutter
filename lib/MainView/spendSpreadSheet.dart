@@ -39,6 +39,18 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
     );
   }
 
+  Text unitText() {
+    return Text(viewModel.unitvalue,
+        style: TextStyle(
+          color: Colors.lightBlue,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.right,
+    );
+  }
+
+
   List<DataRow> getDataRows() {
     List<DataRow> datarows = [];
     for (var i = 0; i < viewModel.counter; i++) {
@@ -46,6 +58,7 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
         cells: <DataCell>[
           DataCell(datePickerView(i),),
           DataCell(descFieldView(viewModel, i),),
+          DataCell(unitText(),),
           DataCell(amntFieldView(viewModel, i),),
         ],
       ));
@@ -62,14 +75,14 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
               dividerColor: Colors.lightBlue
           ),
           child: Container(
-            width: MediaQuery.of(context).size.width - 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
             ),
+            padding: EdgeInsets.only(left: 20, right: 20,),
             child: DataTable(
               headingRowHeight: 40,
               showCheckboxColumn: true,
-              columnSpacing: 30,
+              columnSpacing: 10,
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
@@ -79,6 +92,7 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
               columns: <DataColumn>[
                 dataColumnTitle("Date"),
                 dataColumnTitle("Description"),
+                dataColumnTitle(""),
                 dataColumnTitle("Amount"),
               ],
               rows: getDataRows(),

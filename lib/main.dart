@@ -19,7 +19,7 @@ Future main() async {
 
 class MyApp extends StatelessWidget {
 
-  static final String title = "Ayaka's Allowance";
+  static final String title = "Allowance App";
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:MainPage(title: title),
+      home: MainPage(title: title),
     );
   }
 }

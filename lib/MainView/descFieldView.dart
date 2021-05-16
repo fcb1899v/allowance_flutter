@@ -15,16 +15,18 @@ class descFieldViewState extends State<descFieldView> {
   final mainViewModel viewModel;
   descFieldViewState(this.viewModel);
 
-  var descController = TextEditingController();
+  var desccontroller = TextEditingController();
 
   //データ取得用関数
   void getDescription() async {
     final prefs = await SharedPreferences.getInstance();
     viewModel.desclist[widget.i] = prefs.getString("desckey${widget.i + 1}") ?? "";
-    descController = TextEditingController.fromValue(
-        TextEditingValue(text: viewModel.desclist[widget.i],
-            selection: TextSelection.collapsed(offset: viewModel.desclist[widget.i].length)
-        )
+    desccontroller = TextEditingController.fromValue(
+      TextEditingValue(text: viewModel.desclist[widget.i],
+        selection: TextSelection.collapsed(
+            offset: viewModel.desclist[widget.i].length
+        ),
+      ),
     );
     // print("getAmount");
   }
@@ -34,6 +36,7 @@ class descFieldViewState extends State<descFieldView> {
   void initState() {
     super.initState();
     setState(() {
+      viewModel.getCounter();
       getDescription();
     });
   }
@@ -41,7 +44,8 @@ class descFieldViewState extends State<descFieldView> {
   //テキストフィールドの表示
   Widget build(BuildContext context) {
     return TextField(
-      controller: descController,
+      enabled: true,
+      controller: desccontroller,
       style: TextStyle(
         color: Colors.lightBlue,
         fontWeight: FontWeight.bold,
@@ -59,17 +63,14 @@ class descFieldViewState extends State<descFieldView> {
       ),
       maxLines: 1,
       onChanged: (text) {
-        print("Description : $text");
         if (text != null) {
           viewModel.saveDesc(text, widget.i);
-        } else {
-          viewModel.saveDesc("", widget.i);
+          print("Description : $text");
         }
-        getDescription();
       },
-      onTap: (){
+      onTap: () {
         viewModel.saveDesc("", widget.i);
-        descController.clear();
+        getDescription();
       },
     );
   }
