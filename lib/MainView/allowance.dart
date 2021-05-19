@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'drawerView.dart';
 import 'mainAppBar.dart';
 import 'balanceView.dart';
 import 'mainViewModel.dart';
@@ -17,18 +18,21 @@ class AllowancePage extends StatefulWidget {
 class _AllowancePageState extends State<AllowancePage> {
   final mainViewModel viewModel;
   _AllowancePageState(this.viewModel);
-  var allowance = "500";
 
   @override
   void initState() {
     super.initState();
-    viewModel.init();
+    setState(() {
+      viewModel.init();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    viewModel.dispose();
+    setState(() {
+      viewModel.dispose();
+    });
   }
 
   @override
@@ -48,13 +52,14 @@ class _AllowancePageState extends State<AllowancePage> {
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
-            appBar: mainAppBar(),
+            appBar: mainAppBar(viewModel),
+            drawer: drawerView(viewModel),
             body: SingleChildScrollView(
               child: Center(
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 50),
-                    balanceView(viewModel, allowance),
+                    balanceView(viewModel),
                     SizedBox(height: 30),
                     counterPlusMinus(viewModel),
                     SizedBox(height: 50),

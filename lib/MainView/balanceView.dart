@@ -7,8 +7,7 @@ import '../SpendAllowance.dart';
 
 class balanceView extends StatefulWidget{
   final mainViewModel viewModel;
-  final String allowance;
-  balanceView(this.viewModel, this.allowance);
+  balanceView(this.viewModel);
   @override
   balanceViewState createState() => new balanceViewState(viewModel);
 }
@@ -25,6 +24,7 @@ class balanceViewState extends State<balanceView> {
     setState(() {
       viewModel.getUnit();
       viewModel.getAmntList();
+      viewModel.getAllowance();
     });
   }
 
@@ -40,17 +40,18 @@ class balanceViewState extends State<balanceView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'Balance  ',
+                  Text('Balance  ',
                     style: TextStyle(
                       color: Colors.lightBlue,
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      shadows: <Shadow>[Shadow(
-                        offset: Offset(2.0, 1.0),
-                        blurRadius: 1.0,
-                        color: Colors.white,
-                      )],
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(2.0, 1.0),
+                          blurRadius: 1.0,
+                          color: Colors.white,
+                        ),
+                      ],
                       fontFamily: 'Pacifico',
                     ),
                   ),
@@ -60,13 +61,15 @@ class balanceViewState extends State<balanceView> {
                       color: Colors.lightBlue,
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
-                      shadows: <Shadow>[Shadow(
-                        offset: Offset(2.0, 1.0),
-                        blurRadius: 1.0,
-                        color: Colors.white,
-                      )],
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(2.0, 1.0),
+                          blurRadius: 1.0,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
-                    icon:  Icon(CupertinoIcons.minus, size: 0.1),
+                    icon: Icon(CupertinoIcons.minus, size: 0.1),
                     underline: SizedBox(),
                     onChanged: (String? newValue) {
                       viewModel.saveUnit(newValue!);
@@ -75,23 +78,25 @@ class balanceViewState extends State<balanceView> {
                       });
                     },
                     items: <String>["¥", "\$", "€", "£",]
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
+                      .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
                     }).toList(),
                   ),
-                  Text(widget.allowance.toBalance(viewModel.amntlist, viewModel.counter),
+                  Text(viewModel.allowance.toBalance(viewModel.amntlist, viewModel.counter),
                     style: TextStyle(
                       color: Colors.lightBlue,
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
-                      shadows: <Shadow>[Shadow(
-                        offset: Offset(2.0, 1.0),
-                        blurRadius: 1.0,
-                        color: Colors.white,
-                      )],
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(2.0, 1.0),
+                          blurRadius: 1.0,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -101,8 +106,8 @@ class balanceViewState extends State<balanceView> {
                 alignment: MainAxisAlignment.center,
                 width: MediaQuery.of(context).size.width - 60,
                 lineHeight: 10.0,
-                linearStrokeCap: LinearStrokeCap.butt,
-                percent: widget.allowance.toPercent(viewModel.amntlist, viewModel.counter),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                percent: viewModel.allowance.toPercent(viewModel.amntlist, viewModel.counter),
                 animation: true,
                 animationDuration: 2000,
                 backgroundColor: Colors.white,

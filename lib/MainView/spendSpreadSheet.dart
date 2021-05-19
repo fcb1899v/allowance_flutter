@@ -22,6 +22,7 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
     super.initState();
     setState(() {
       viewModel.getCounter();
+      viewModel.getDescList();
       viewModel.getAmntList();
     });
   }
@@ -74,27 +75,27 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
               dividerColor: Colors.lightBlue
           ),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-            ),
             padding: EdgeInsets.only(left: 20, right: 20,),
-            child: DataTable(
-              headingRowHeight: 40,
-              showCheckboxColumn: true,
-              columnSpacing: 10,
-              decoration: BoxDecoration(
-                color: Colors.white,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: DataTable(
+                headingRowHeight: 50,
+                showCheckboxColumn: true,
+                columnSpacing: 10,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                headingRowColor: MaterialStateColor.resolveWith(
+                        (states) => Colors.lightBlue
+                ),
+                columns: <DataColumn>[
+                  dataColumnTitle("Date"),
+                  dataColumnTitle("Description"),
+                  dataColumnTitle(""),
+                  dataColumnTitle("Amount"),
+                ],
+                rows: getDataRows(),
               ),
-              headingRowColor: MaterialStateColor.resolveWith(
-                      (states) => Colors.lightBlue
-              ),
-              columns: <DataColumn>[
-                dataColumnTitle("Date"),
-                dataColumnTitle("Description"),
-                dataColumnTitle(""),
-                dataColumnTitle("Amount"),
-              ],
-              rows: getDataRows(),
             ),
           ),
         ),

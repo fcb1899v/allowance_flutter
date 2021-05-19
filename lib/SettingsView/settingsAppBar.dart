@@ -1,39 +1,34 @@
+import 'package:allowance_app/MainView/allowance.dart';
+import 'package:allowance_app/MainView/mainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../SpendAllowance.dart';
-import 'mainViewModel.dart';
+import 'package:allowance_app/main.dart';
 
+class settingsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-class mainAppBar extends StatefulWidget implements PreferredSizeWidget{
-  final mainViewModel viewModel;
-  mainAppBar(this.viewModel);
-  @override
-  mainAppBarState createState() => new mainAppBarState(viewModel);
   @override
   final Size preferredSize = AppBar().preferredSize;
-}
-
-class mainAppBarState extends State<mainAppBar> {
-
-  final mainViewModel viewModel;
-  mainAppBarState(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
         icon: Icon(
-          Icons.menu,
+          CupertinoIcons.back,
           color: Colors.white,
         ),
         onPressed: () {
-          Scaffold.of(context).openDrawer();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AllowancePage(mainViewModel())
+            ),
+          );
         },
       ),
-      title: Text(DateTime.now().displayMonthYear(viewModel.index),
+      title: Text("Settings",
         style: TextStyle(
           color: Colors.white,
-          fontSize: 32,
           fontFamily: 'Pacifico',
         ),
       ),

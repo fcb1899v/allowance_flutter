@@ -19,24 +19,24 @@ class counterPlusMinusState extends State<counterPlusMinus> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(),
-        // FloatingActionButton(
-        //   backgroundColor: Colors.lightBlue,
-        //   onPressed: () { // Startボタンタップ時の処理
-        //     viewModel.refresh();
-        //   },
-        //   child: Icon(CupertinoIcons.refresh),
-        //   tooltip: 'Decrease',
-        // ),
-        // Spacer(),
-        // FloatingActionButton(
-        //   backgroundColor: Colors.lightBlue,
-        //   onPressed: () { // Startボタンタップ時の処理
-        //     viewModel.reflesh();
-        //   },
-        //   child: Icon(CupertinoIcons.trash),
-        //   tooltip: 'Decrease',
-        // ),
-        // Spacer(),
+        FloatingActionButton(
+          backgroundColor: (viewModel.index > 0) ? Colors.lightBlue: Colors.grey,
+          onPressed: () { // Startボタンタップ時の処理
+            if (viewModel.index > 0) {
+              setState(() {
+                viewModel.decreaseIndex();
+                viewModel.getCounter();
+                viewModel.getDescList();
+                viewModel.getAmntList();
+                viewModel.getAllowance();
+              });
+            }
+          },
+          child: Icon(CupertinoIcons.back),
+          tooltip: 'Decrease',
+          heroTag: "hero4",
+        ),
+        Spacer(),
         FloatingActionButton(
           backgroundColor: (viewModel.counter > 1) ? Colors.lightBlue: Colors.grey,
           onPressed: () { // Startボタンタップ時の処理
@@ -44,6 +44,7 @@ class counterPlusMinusState extends State<counterPlusMinus> {
           },
           child: Icon(CupertinoIcons.minus),
           tooltip: 'Decrease',
+          heroTag: "hero3",
         ),
         Spacer(),
         FloatingActionButton(
@@ -53,6 +54,23 @@ class counterPlusMinusState extends State<counterPlusMinus> {
           },
           child: Icon(CupertinoIcons.add),
           tooltip: 'Increase',
+          heroTag: "hero2",
+        ),
+        Spacer(),
+        FloatingActionButton(
+          backgroundColor: Colors.lightBlue,
+          onPressed: () { // Startボタンタップ時の処理
+            setState(() {
+              viewModel.increaseIndex();
+              viewModel.getCounter();
+              viewModel.getDescList();
+              viewModel.getAmntList();
+              viewModel.getAllowance();
+            });
+          },
+          child: Icon(CupertinoIcons.forward),
+          tooltip: 'Increase',
+          heroTag: "hero1",
         ),
         Spacer(),
       ],

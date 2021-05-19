@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../SpendAllowance.dart';
 
 class datePickerView extends StatefulWidget{
   final int i;
@@ -17,7 +18,7 @@ class datePickerViewState extends State<datePickerView> {
   //データ保存用関数
   saveDate(DateTime date) async {
     final prefs = await SharedPreferences.getInstance();
-    final datestring = "${date.month}/${date.day}/${date.year}";
+    final datestring = date.toDateString("Select");
     await prefs.setString("datekey${widget.i + 1}", datestring);
     // print("saveDate");
   }
@@ -50,7 +51,7 @@ class datePickerViewState extends State<datePickerView> {
     );
     if(picked != null) setState(() => {
       date = picked,
-      datestring = "${date.month}/${date.day}/${date.year}",
+      datestring = date.toDateString("Select"),
       saveDate(date)
       // print("datepicker");
     });
