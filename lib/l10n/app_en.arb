@@ -21,9 +21,29 @@
     "description": "List of date title label"
   },
 
+  "selectdate": "Select date",
+  "@selectdate": {
+    "description": "Open datepicker"
+  },
+
   "desc": "Description",
   "@desc": {
     "description": "List of description title label"
+  },
+
+  "inputdesc": "Enter",
+  "@inputdesc": {
+    "description": "Open Textfield for description"
+  },
+
+  "settingdesctitle": "Setting the description",
+  "@settingdesctitle": {
+    "description": "Setting description title"
+  },
+
+  "settingdeschint": "Enter the description",
+  "@settingdeschint": {
+    "description": "Setting description hint"
   },
 
   "amnt": "Amount",
@@ -31,9 +51,19 @@
     "description": "List of amount title label"
   },
 
-  "selectdate": "Select date",
-  "@selectdate": {
-    "description": "Open datepicker"
+  "inputamnt": "Enter",
+  "@inputamnt": {
+    "description": "Open Textfield for amount"
+  },
+
+  "settingamnttitle": "Setting the amount",
+  "@settingamnttitle": {
+    "description": "Setting amount title"
+  },
+
+  "settingamnthint": "Enter the amount",
+  "@settingamnthint": {
+    "description": "Setting amount hint"
   },
 
   "enter": "Enter",

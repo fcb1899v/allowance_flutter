@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'datePickerView.dart';
-import 'descFieldView.dart';
-import 'amntFieldView.dart';
+import 'descTextFieldView.dart';
+import 'amntTextFieldView.dart';
 import 'mainViewModel.dart';
 
 class spendSpreadSheet extends StatefulWidget{
@@ -49,9 +49,9 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
       datarows.add(DataRow(
         cells: <DataCell>[
           DataCell(datePickerView(viewModel, id),),
-          DataCell(descFieldView(viewModel, id),),
+          DataCell(descTextFieldView(viewModel, id),),
           DataCell(unitText(),),
-          DataCell(amntFieldView(viewModel, id),),
+          DataCell(amntTextFieldView(viewModel, id),),
         ],
       ));
     }

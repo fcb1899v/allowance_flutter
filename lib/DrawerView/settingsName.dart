@@ -55,8 +55,10 @@ class settingsNameState extends State<settingsName> {
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.settingnamehint
+              hintText: AppLocalizations.of(context)!.settingnamehint,
+              hintStyle: TextStyle(color: Colors.grey[400]),
             ),
+            autofocus: true,
           ),
           actions: <Widget>[
             TextButton(

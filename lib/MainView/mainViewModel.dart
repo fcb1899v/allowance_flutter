@@ -125,7 +125,7 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     if (_counter[index] == _maxcounter[index]) {
       await prefs.setInt("maxcounterkey$index", counter[index] + 1);
-      _datelist[index].add("Select Date");
+      _datelist[index].add("Select date");
       _desclist[index].add("");
       _amntlist[index].add(0);
       _maxcounter[index]++;
@@ -210,6 +210,13 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
+  void clearDesc(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("desckey${index}_$id", "");
+    print("clearDesc");
+    notifyListeners();
+  }
+
   void saveAmntList(int id, int amount) async{
     final prefs = await SharedPreferences.getInstance();
     _amntlist[index][id] = amount;
@@ -230,6 +237,13 @@ class mainViewModel extends Model {
         ),
       );
     }
+    notifyListeners();
+  }
+
+  void clearAmnt(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("amntkey${index}_$id", 0);
+    print("clearAmnt");
     notifyListeners();
   }
 

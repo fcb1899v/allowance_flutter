@@ -53,8 +53,11 @@ class settingsAllowanceState extends State<settingsAllowance> {
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.settingallowancehint),
+              hintText: AppLocalizations.of(context)!.settingallowancehint,
+              hintStyle: TextStyle(color: Colors.grey[400]),
+            ),
             keyboardType: TextInputType.number,
+            autofocus: true,
           ),
           actions: <Widget>[
             TextButton(

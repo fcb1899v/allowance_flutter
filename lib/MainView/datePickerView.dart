@@ -24,7 +24,7 @@ class datePickerViewState extends State<datePickerView> {
     return TextButton(
       child: Text(displaydate,
         style: TextStyle(
-          color: (displaydate == selectdate) ? Colors.grey: Colors.lightBlue,
+          color: (displaydate == selectdate) ? Colors.grey[400]: Colors.lightBlue,
           fontSize: (displaydate == selectdate) ? 14: 16,
           fontWeight: FontWeight.bold,
         ),
