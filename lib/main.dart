@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui';
 import 'dart:async';
 import 'MainView/mainViewModel.dart';
-import 'MainView/allowance.dart';
+import 'MainView/mainHomePage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,12 +23,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MainPage(),
+      initialRoute: "/",
+      routes: {
+        //"/summary": (context) => SummaryPage(mainViewModel()),
+      },
       debugShowCheckedModeBanner: false,
       title: "Allowance App",
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
-        fontFamily: 'Irohamaru',
+        fontFamily: 'defaultFont',
         brightness: Brightness.light,
         primaryColor: Colors.pinkAccent[100],
         textButtonTheme: TextButtonThemeData(
@@ -48,5 +52,5 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
-  Widget build(BuildContext context) => AllowancePage(mainViewModel());
+  Widget build(BuildContext context) => MainHomePage(mainViewModel());
 }

@@ -29,6 +29,9 @@ dependencies:
   flutter_hooks: ^0.17.0
   hooks_riverpod: ^0.14.0+4
 
+# Graph
+  fl_chart: ^0.36.1
+
 # Localize
   flutter_localizations:
     sdk: flutter
@@ -44,9 +47,12 @@ flutter:
 
   uses-material-design: true
   fonts:
-    - family: Pacifico
+    - family: defaultFont
+      fonts:
+        - asset: fonts/yasashisagothic.otf
+    - family: enAccent
       fonts:
         - asset: fonts/Pacifico.ttf
-    - family: Irohamaru
+    - family: jaAccent
       fonts:
-        - asset: fonts/irohamaru-Medium.ttf
+        - asset: fonts/RiiPopkkR.otf

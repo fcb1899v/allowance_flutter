@@ -1,6 +1,8 @@
 {
   "@@locale": "ja",
 
+  "list": "リスト",
+  "summary": "まとめ",
   "title": "のおこづかい帳",
   "allowancebook": "おこづかい帳",
   "balance": "使えるお金 ",

@@ -1,6 +1,16 @@
 {
   "@@locale": "en",
 
+  "list": "List",
+  "@list": {
+    "description": "Bottom label of list"
+  },
+
+  "summary": "Summary",
+  "@summary": {
+    "description": "Bottom label of summary"
+  },
+
   "title": "'s Allowance",
   "@title": {
     "description": "Title label"

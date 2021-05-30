@@ -3,12 +3,17 @@ import 'package:package_info/package_info.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quiver/strings.dart';
-import '../extension.dart';
+import 'extension.dart';
 import 'dart:async';
 
 class mainViewModel extends Model {
 
-  //＜＞で各月の表示を変更、利用開始月:0
+  bool _selectflag = true;
+  bool get selectflag => _selectflag;
+
+  bool _lyflag = true;
+  bool get lyflag => _lyflag;
+
   int _index = 0;
   int get index => _index;
 
@@ -21,8 +26,8 @@ class mainViewModel extends Model {
   String _name = "";
   String get name => _name;
 
-  int _allowance = 500;
-  int get allowance => _allowance;
+  double _allowance = 500;
+  double get allowance => _allowance;
 
   String _unitvalue = "¥";
   String get unitvalue => _unitvalue;
@@ -46,20 +51,16 @@ class mainViewModel extends Model {
   );
   List<List<String>> get desclist => _desclist;
 
-  List<TextEditingController> _desccontroller = List.generate(100, (_) =>
-    TextEditingController()
+  List<List<double>> _amntlist = List.generate(100, (_) =>
+    List.generate(3, (_) => 0.0)
   );
-  List<TextEditingController> get desccontroller  => _desccontroller;
+  List<List<double>> get amntlist => _amntlist;
 
-  List<List<int>> _amntlist = List.generate(100, (_) =>
-    List.generate(3, (_) => 0)
-  );
-  List<List<int>> get amntlist => _amntlist;
+  List<double> _balancelist = List.generate(100, (_) => 0);
+  List<double> get balancelist => _balancelist;
 
-  List<TextEditingController> _amntcontroller = List.generate(100, (_) =>
-    TextEditingController()
-  );
-  List<TextEditingController> get amntcontroller  => _amntcontroller;
+  List<double> _percentlist = List.generate(100, (_) => 0);
+  List<double> get percentlist => _percentlist;
 
   //データの初期化
   void init()
@@ -74,9 +75,21 @@ class mainViewModel extends Model {
     getDateList();
     getDescList();
     getAmntList();
+    getBalance();
+    getPercent();
   }
 
   void dispose() {
+  }
+
+  void changeSelectFlag() async{
+    _selectflag = !selectflag;
+    notifyListeners();
+  }
+
+  void changeLyFlag() async{
+    _lyflag = !lyflag;
+    notifyListeners();
   }
 
   void nextIndex() async{
@@ -155,7 +168,7 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     _datelist[index][id] = date.toDateString("");
     prefs.setString("datekey${index}_$id", date.toDateString("Select date"));
-    print("index: $index, id: $id, Date : ${date.toDateString("Select date")}");
+    //print("index: $index, id: $id, Date : ${date.toDateString("Select date")}");
     notifyListeners();
   }
 
@@ -170,7 +183,7 @@ class mainViewModel extends Model {
   void clearDate(int id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("datekey${index}_$id", "Select date");
-    print("clearDate");
+    //print("clearDate");
     notifyListeners();
   }
 
@@ -199,13 +212,6 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     for (int id = 0; id < maxcounter[index]; id++) {
       _desclist[index][id] = prefs.getString("desckey${index}_$id") ?? "";
-      _desccontroller[id] = TextEditingController.fromValue(
-        TextEditingValue(text: _desclist[index][id],
-          selection: TextSelection.collapsed(
-              offset: _desclist[index][id].length
-          ),
-        ),
-      );
     }
     notifyListeners();
   }
@@ -213,37 +219,60 @@ class mainViewModel extends Model {
   void clearDesc(int id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString("desckey${index}_$id", "");
-    print("clearDesc");
+    //print("clearDesc");
     notifyListeners();
   }
 
-  void saveAmntList(int id, int amount) async{
+  void saveAmntList(int id, double amount) async{
     final prefs = await SharedPreferences.getInstance();
     _amntlist[index][id] = amount;
-    prefs.setInt("amntkey${index}_$id", amount);
-    //print("id: $id, saveAmount: $amount");
+    prefs.setDouble("amntkey${index}_$id", amount);
+    print("id: $id, saveAmount: $amount");
     notifyListeners();
   }
 
   void getAmntList() async {
     final prefs = await SharedPreferences.getInstance();
     for (int id = 0; id < maxcounter[index]; id++) {
-      _amntlist[index][id] = prefs.getInt("amntkey${index}_$id") ?? 0;
-      _amntcontroller[id] = TextEditingController.fromValue(
-        TextEditingValue(text: _amntlist[index][id].toNumberString(),
-          selection: TextSelection.collapsed(
-              offset: _amntlist[index][id].toNumberString().length
-          ),
-        ),
-      );
+      _amntlist[index][id] = prefs.getDouble("amntkey${index}_$id") ?? 0;
     }
     notifyListeners();
   }
 
   void clearAmnt(int id) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt("amntkey${index}_$id", 0);
-    print("clearAmnt");
+    await prefs.setDouble("amntkey${index}_$id", 0);
+    //print("clearAmnt");
+    notifyListeners();
+  }
+
+  void saveBalance() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble("balancekey$index", allowance.toBalance(amntlist, index, counter));
+    notifyListeners();
+  }
+
+  void getBalance() async {
+    final prefs = await SharedPreferences.getInstance();
+    for (int index = 0; index < maxindex; index++) {
+      _balancelist[index] = prefs.getDouble("balancekey$index") ?? 0;
+    }
+    notifyListeners();
+  }
+
+  void savePercent() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble("percentkey$index", allowance.toPercent(amntlist, index, counter));
+    print("savePercent: ${percentlist[index]}");
+    notifyListeners();
+  }
+
+  void getPercent() async {
+    final prefs = await SharedPreferences.getInstance();
+    for (int index = 0; index < maxindex; index++) {
+      _percentlist[index] = prefs.getDouble("percentkey$index") ?? 0;
+      //print("getPercent: ${percentlist[index]}");
+    }
     notifyListeners();
   }
 
@@ -270,15 +299,15 @@ class mainViewModel extends Model {
 
   void getAllowance() async {
     final prefs = await SharedPreferences.getInstance();
-    _allowance = prefs.getInt("allowancekey") ?? 500;
+    _allowance = prefs.getDouble("allowancekey") ?? 500;
     //print("getAllowance : ${allowance}");
     notifyListeners();
   }
 
-  void saveAllowance(int? intallowance) async {
+  void saveAllowance(double? doubleallowance) async {
     final prefs = await SharedPreferences.getInstance();
-    if ((intallowance ?? 0) != 0) {
-      await prefs.setInt("allowancekey", intallowance!);
+    if ((doubleallowance ?? 0.0) != 0) {
+      await prefs.setDouble("allowancekey", doubleallowance as double);
     }
     //print("saveAllowance : ${allowance}");
     notifyListeners();
