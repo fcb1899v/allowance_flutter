@@ -144,5 +144,15 @@
   "version": "Version",
   "@version": {
     "description": "Version"
+  },
+
+  "month": "[Month]",
+  "@month": {
+    "description": "Month"
+  },
+
+  "savedmoney": "Saved money",
+  "@savedmoney": {
+    "description": "Saved Money"
   }
 }

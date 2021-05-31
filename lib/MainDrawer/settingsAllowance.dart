@@ -18,6 +18,11 @@ class settingsAllowanceState extends State<settingsAllowance> {
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
+    final inputallowance = AppLocalizations.of(context)!.notset;
+    final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
+    final displayallowance = (viewModel.allowance > 0) ?
+            "${viewModel.unitvalue} ${viewModel.allowance.toStringAsFixed(numberdigit)}":
+            inputallowance;
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar),
       title: Text(AppLocalizations.of(context)!.allowance,
@@ -27,7 +32,7 @@ class settingsAllowanceState extends State<settingsAllowance> {
           fontFamily: (lang == "ja") ? 'jaAccent': 'defaultFont',
         ),
       ),
-      subtitle: Text("${viewModel.unitvalue} ${viewModel.allowance}",
+      subtitle: Text(displayallowance,
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.grey,

@@ -22,16 +22,20 @@ extension StringExt on String {
     return (double.parse(this) > 0) ? double.parse(this) : defaultdouble;
   }
 
+  String addZero() {
+    return (this.toInt(0) < 10) ? "0${this}": "${this}";
+  }
+
+  int removeZero() {
+    return (this[0] == "0") ? this[1].toInt(1): this.toInt(1);
+  }
+
   int toDay() {
-    return (this.split("/")[1].substring(0, 1) == "0") ?
-      this.split("/")[1].substring(1).toInt(1):
-      this.split("/")[1].toInt(1);
+    return this.split("/")[1].removeZero();
   }
 
   int toMonth() {
-    return (this.split("/")[0].substring(0, 1) == "0") ?
-      this.split("/")[0].substring(1).toInt(1):
-      this.split("/")[0].toInt(1);
+    return this.split("/")[0].removeZero();
   }
 
   int toYear() {
@@ -49,6 +53,17 @@ extension StringExt on String {
   int toCurrentIndex() {
     print("now : ${DateTime.now()}, startdate : $this");
     return 12 * (DateTime.now().year - this.toYear()) + DateTime.now().month - this.toMonth();
+  }
+}
+
+extension intExt on int {
+
+  int monthIndex(String startdate) {
+    return (startdate.toMonth() - 1 + this) % 12;
+  }
+
+  int yearIndex() {
+    return (this / 12).toInt();
   }
 }
 
@@ -73,14 +88,6 @@ extension DateExt on DateTime? {
     }
   }
 
-  int defYear(){
-    return (this != null) ? DateTime.now().year - this!.year: 0;
-  }
-
-  int defMonth(){
-    return (this != null) ? DateTime.now().month - this!.month: 0;
-  }
-
   int displayMonth(int index) {
     return (this != null && (this!.month + index) % 12 != 0) ?
         (this!.month + index) % 12: 12;
@@ -97,35 +104,7 @@ extension DateExt on DateTime? {
   }
 }
 
-extension ListListStringExt on List<List<String>> {
-
-  List<String> toDateStringList(int index, int count) {
-    List<String> datestringlist = [];
-    for (var i = 0; i < count; i++) {
-      datestringlist.add(this[index][i]);
-    }
-    return datestringlist;
-  }
-
-  List<String> toDescriptionList(int index, int count) {
-    List<String> desclist = [];
-    for (var i = 0; i < count; i++) {
-      desclist.add(this[index][i]);
-    }
-    return desclist;
-  }
-}
-
 extension ListListIntExt on List<List<double>> {
-
-  List<double> toAmountList(int index, int count) {
-    List<double> amountlist = [];
-    for (var i = 0; i < count; i++) {
-      amountlist.add(this[index][i]);
-    }
-    return amountlist;
-  }
-
   double toAmountSum(int index, int count) {
     double amntsum = 0;
     for (var i = 0; i < count; i++) {

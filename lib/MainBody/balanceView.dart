@@ -62,6 +62,7 @@ class balanceViewState extends State<balanceView> {
                     ),
                     icon: Icon(CupertinoIcons.minus, size: 0.1),
                     underline: SizedBox(),
+                    dropdownColor: Colors.lightBlue,
                     onChanged: (String? newValue) {
                       viewModel.saveUnit(newValue!);
                       setState(() {

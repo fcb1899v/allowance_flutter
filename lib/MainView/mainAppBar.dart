@@ -38,7 +38,7 @@ class mainAppBarState extends State<mainAppBar> {
           color: Colors.white,
           fontSize: (lang == "ja") ? 26: 32,
           fontWeight: FontWeight.bold,
-          fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+          fontFamily: (lang == "ja") ? 'defaultfont': 'enAccent',
         ),
       ),
       flexibleSpace: Container(

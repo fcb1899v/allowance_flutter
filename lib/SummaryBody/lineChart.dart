@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../MainView/mainViewModel.dart';
+import '../MainView/extension.dart';
 
 class lineChart extends StatefulWidget {
   final mainViewModel viewModel;
@@ -14,84 +16,76 @@ class _lineChartState extends State<lineChart> {
   final mainViewModel viewModel;
   _lineChartState(this.viewModel);
 
-  List<Color> gradientColors = [
-    Colors.lightBlue,
-    Colors.white,
-  ];
+  int yearindex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      width: MediaQuery.of(context).size.width - 50,
-      child: LineChart(
-        LineChartData(
-          gridData: _griddata(),
-          titlesData: _titledata(),
-          borderData: _bordardata(),
-          minX: viewModel.maxindex.toDouble(),
-          maxX: 0,
-          minY: 0,
-          maxY: viewModel.allowance,
-          lineBarsData: _linechartbardatalist(),
+        height: 350,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.all(20),
+        child: LineChart(
+          LineChartData(
+            gridData: _griddata(),
+            titlesData: _titledata(),
+            borderData: _bordardata(),
+            minX: 0,
+            maxX: 11,
+            minY: 0,
+            maxY: viewModel.allowance,
+            lineBarsData: _linechartbardatalist(),
+            axisTitleData: _axistitledata(),
+          ),
         ),
-      ),
-    );
+      );
   }
 
   FlGridData _griddata() {
+    final yflline = FlLine(
+      color: Colors.grey,
+      strokeWidth: 1,
+    );
+    final xflline = FlLine(
+      color: Colors.grey,
+      strokeWidth: 1,
+    );
     return FlGridData(
       show: true,
       drawHorizontalLine: true,
       drawVerticalLine: true,
-      getDrawingHorizontalLine: (value) {
-        return FlLine(
-          color: Colors.white,
-          strokeWidth: 1,
-        );
-      },
-      getDrawingVerticalLine: (value) {
-        return FlLine(
-          color: Colors.white,
-          strokeWidth: 1,
-        );
-      },
+      getDrawingHorizontalLine: (value) => yflline,
+      getDrawingVerticalLine: (value) => xflline,
     );
   }
 
   FlTitlesData _titledata() {
+    final textstyle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+    final deltay = viewModel.allowance ~/ 500 * 100;
     return FlTitlesData(
       show: true,
       bottomTitles: SideTitles(
         showTitles: true,
-        reservedSize: 22,
-        getTextStyles: (value) => const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-        margin: 8,
+        reservedSize: 20,
+        getTextStyles: (value) => textstyle,
+        margin: 10,
+        getTitles: (value) => "${(value.toInt() + 1).toString().addZero()}",
       ),
       leftTitles: SideTitles(
         showTitles: true,
-        getTextStyles: (value) => const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 15,
-        ),
+        reservedSize: 30,
+        margin: 10,
+        getTextStyles: (value) => textstyle,
         getTitles: (value) {
-          switch (value.toInt()) {
-            case 0: return '0';
-            case 100: return '100';
-            case 200: return '200';
-            case 300: return '300';
-            case 400: return '400';
-            case 500: return '500';
+          if (value.toInt() % deltay == 0 || value == viewModel.allowance) {
+            return "${value.toInt()}";
+          } else {
+            return '';
           }
-          return '';
-        },
-        reservedSize: 28,
-        margin: 12,
+        }
       ),
     );
   }
@@ -99,52 +93,60 @@ class _lineChartState extends State<lineChart> {
   FlBorderData _bordardata() {
     return FlBorderData(
       show: true,
-      border: Border.all(
-        color: Colors.white,
-        width: 1
+      border: const Border(
+        left: BorderSide(color: Colors.white, width: 1),
+        top: BorderSide(color: Colors.white, width: 1),
+        bottom: BorderSide(color: Colors.white, width: 1),
+        right: BorderSide(color: Colors.white, width: 1),
+      ),
+    );
+  }
+
+  FlAxisTitleData _axistitledata() {
+    var lang = Localizations.localeOf(context).languageCode;
+    return FlAxisTitleData(
+      topTitle: AxisTitle(
+        showTitle: true,
+        titleText: "${AppLocalizations.of(context)!.savedmoney} ${viewModel.startdate.toYear() + yearindex} [${viewModel.unitvalue}]",
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 28,
+          fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+        ),
+        margin: 20,
+      ),
+      bottomTitle: AxisTitle(
+        showTitle: true,
+        margin: 5,
+        titleText: AppLocalizations.of(context)!.month,
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+        ),
       ),
     );
   }
 
   List<LineChartBarData> _linechartbardatalist() {
-
-    List<FlSpot> flspotlist = List.generate(viewModel.maxindex,
-      (index) => FlSpot(index.toDouble(), viewModel.balancelist[index].toDouble())
+    List<FlSpot> flspotlist = List.generate(12,
+      (index) => FlSpot(index.toDouble(), viewModel.balance[yearindex][index - 12 * yearindex])
     );
-
-    return [
-      LineChartBarData(
-        spots: flspotlist,
-        //isCurved: true,
-        barWidth: 5,
-        isStrokeCapRound: true,
-        colors: [
-          ColorTween(
-              begin: Colors.lightBlue,
-              end: Colors.white
-          ).lerp(0.2)!,
-          ColorTween(
-              begin: Colors.lightBlue,
-              end: Colors.white
-          ).lerp(0.2)!,
-        ],
-        dotData: FlDotData(
-          show: false,
-        ),
-        belowBarData: BarAreaData(
-          show: true,
-          colors: [
-            ColorTween(
-              begin: Colors.lightBlue,
-              end: Colors.white
-            ).lerp(0.2)!.withOpacity(0.5),
-            ColorTween(
-              begin: Colors.lightBlue,
-              end: Colors.white
-            ).lerp(0.2)!.withOpacity(0.5),
-          ],
-        ),
+    return [ LineChartBarData(
+      spots: flspotlist,
+      isCurved: false,
+      barWidth: 5,
+      isStrokeCapRound: true,
+      colors: [Colors.lightBlue],
+      dotData: FlDotData(
+        show: true,
       ),
-    ];
+      belowBarData: BarAreaData(
+        show: true,
+        colors: [Colors.lightBlue.withOpacity(0.5)],
+      ),
+    ),];
   }
 }

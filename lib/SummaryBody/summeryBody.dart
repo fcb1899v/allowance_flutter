@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../MainView/mainViewModel.dart';
-import 'segmentMenu.dart';
 import 'lineChart.dart';
 
 class summeryBody extends StatefulWidget {
@@ -22,8 +21,8 @@ class _summeryBodyState extends State<summeryBody> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 50),
-            segmentMenu(viewModel),
-            SizedBox(height: 50),
+            // segmentMenu(viewModel),
+            // SizedBox(height: 30),
             lineChart(viewModel),
             SizedBox(height: 50),
           ]

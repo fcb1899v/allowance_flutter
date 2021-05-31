@@ -35,33 +35,39 @@ class mainViewModel extends Model {
   String _version = "0.0.0";
   String get version => _version;
 
-  List<int> _counter = List.generate(100, (_) => 3);
+  List<int> _counter = List.generate(120, (_) => 3);
   List<int> get counter => _counter;
 
-  List<int> _maxcounter = List.generate(100, (_) => 3);
+  List<int> _maxcounter = List.generate(120, (_) => 3);
   List<int> get maxcounter => _maxcounter;
 
-  List<List<String>> _datelist = List.generate(100, (_) =>
+  List<List<String>> _datelist = List.generate(120, (_) =>
     List.generate(3, (_) => "Select date")
   );
   List<List<String>> get datelist => _datelist;
 
-  List<List<String>> _desclist = List.generate(100, (_) =>
+  List<List<String>> _desclist = List.generate(120, (_) =>
     List.generate(3, (_) => "")
   );
   List<List<String>> get desclist => _desclist;
 
-  List<List<double>> _amntlist = List.generate(100, (_) =>
+  List<List<double>> _amntlist = List.generate(120, (_) =>
     List.generate(3, (_) => 0.0)
   );
   List<List<double>> get amntlist => _amntlist;
 
-  List<double> _balancelist = List.generate(100, (_) => 0);
+  List<double> _balancelist = List.generate(120, (_) => 0);
   List<double> get balancelist => _balancelist;
 
-  List<double> _percentlist = List.generate(100, (_) => 0);
+  List<double> _percentlist = List.generate(120, (_) => 0);
   List<double> get percentlist => _percentlist;
 
+  List<List<double>> _balance = List.generate(10, 
+    (_) => List.generate(12, (_) => 0)
+  );
+  List<List<double>> get balance => _balance;
+  
+  
   //データの初期化
   void init()
   {
@@ -256,6 +262,9 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     for (int index = 0; index < maxindex; index++) {
       _balancelist[index] = prefs.getDouble("balancekey$index") ?? 0;
+      final monthindex = (startdate.toMonth() - 1 + index) % 12;
+      final yearindex = (index / 12).toInt();
+      _balance[yearindex][monthindex] = prefs.getDouble("balancekey$index") ?? 0;
     }
     notifyListeners();
   }

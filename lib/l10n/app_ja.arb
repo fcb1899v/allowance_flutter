@@ -29,5 +29,7 @@
   "settingallowancehint": "おこづかいを入力してね",
   "startdate": "使い始めた日",
   "privacyPolicy": "プライバシー・ポリシー",
-  "version": "バージョン"
+  "version": "バージョン",
+  "month": "[月]",
+  "savedmoney": "残したお金"
 }
