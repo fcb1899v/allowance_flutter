@@ -22,11 +22,11 @@ class _mainBodyState extends State<mainBody> {
       child: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 50),
+            SizedBox(height: 60),
             balanceView(viewModel),
             SizedBox(height: 30),
             counterPlusMinus(viewModel),
-            SizedBox(height: 50),
+            SizedBox(height: 60),
             spendSpreadSheet(viewModel),
           ]
         ),

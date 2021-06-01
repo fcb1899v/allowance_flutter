@@ -20,6 +20,9 @@ class mainViewModel extends Model {
   int _maxindex = 0;
   int get maxindex => _maxindex;
 
+  int _yearindex = 0;
+  int get yearindex => _yearindex;
+
   String _startdate = "01/01/2021";
   String get startdate => _startdate;
 
@@ -135,8 +138,25 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     _index = startdate.toCurrentIndex();
     _maxindex = prefs.getInt("maxindexkey") ?? index;
+    _yearindex = DateTime.now().year - startdate.toYear();
     if (index > maxindex) _maxindex = index;
-    print("index: $index");
+    print("index: $index, maxindex: $maxindex, yearindex: $yearindex");
+    notifyListeners();
+  }
+
+  void increaseYearIndex() async {
+    if (yearindex < 9) {
+      _yearindex++;
+      print("yearindex: $yearindex");
+      notifyListeners();
+    }
+  }
+
+  void decreaseYearIndex() async {
+    if (yearindex > 0) {
+      _yearindex--;
+    }
+    print("yearindex: $yearindex");
     notifyListeners();
   }
 

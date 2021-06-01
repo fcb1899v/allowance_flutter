@@ -16,8 +16,6 @@ class _lineChartState extends State<lineChart> {
   final mainViewModel viewModel;
   _lineChartState(this.viewModel);
 
-  int yearindex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -107,12 +105,19 @@ class _lineChartState extends State<lineChart> {
     return FlAxisTitleData(
       topTitle: AxisTitle(
         showTitle: true,
-        titleText: "${AppLocalizations.of(context)!.savedmoney} ${viewModel.startdate.toYear() + yearindex} [${viewModel.unitvalue}]",
+        titleText: "${AppLocalizations.of(context)!.savedmoney} [${viewModel.unitvalue}]",
         textStyle: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 28,
+          fontSize: 32,
           fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+          shadows: <Shadow>[
+            Shadow(
+              offset: Offset(2.0, 2.0),
+              blurRadius: 1.0,
+              color: Colors.lightBlue,
+            ),
+          ],
         ),
         margin: 20,
       ),
@@ -132,7 +137,7 @@ class _lineChartState extends State<lineChart> {
 
   List<LineChartBarData> _linechartbardatalist() {
     List<FlSpot> flspotlist = List.generate(12,
-      (index) => FlSpot(index.toDouble(), viewModel.balance[yearindex][index - 12 * yearindex])
+      (index) => FlSpot(index.toDouble(), viewModel.balance[viewModel.yearindex][index])
     );
     return [ LineChartBarData(
       spots: flspotlist,
