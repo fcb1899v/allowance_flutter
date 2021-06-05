@@ -1,21 +1,32 @@
 
 extension DoubleExt on double {
 
-  double toBalance(List<List<double>> amntlist, int index, List<int> count) {
-    final balance = this - amntlist.toAmountSum(index, count[index]);
-    return (balance > 0) ? balance : 0;
+  double toAbs() {
+    return (this < 0.0) ? (-1)* this: this;
   }
 
-  double toPercent(List<List<double>> amntlist, int index, List<int> count) {
-    final percent = (amntlist.toAmountSum(index, count[index]) / this);
-    print("percent: $percent");
-    return (percent < 1) ? percent : 1;
+  String stringBalance(String unitvalue) {
+    final numberdigit = (unitvalue == '¥') ? 0: 2;
+    return this.toStringAsFixed(numberdigit);
+  }
+
+  String stringAmount(String unitvalue) {
+    final numberdigit = (unitvalue == '¥') ? 0: 2;
+    final plusminus = (this < 0) ? "-": "+";
+    final stringamount = "$plusminus${this.toAbs().toStringAsFixed(numberdigit)}";
+    final defaultvalue = "$plusminus${(0.0).toStringAsFixed(numberdigit)}";
+    return (stringamount == defaultvalue) ? "-": stringamount;
   }
 }
 
 extension StringExt on String {
+
   int toInt(int defaultint) {
     return (int.parse(this) > 0) ? int.parse(this) : defaultint;
+  }
+
+  int toIntDay(int defaultint) {
+    return (int.parse(this) > 0 || int.parse(this) < 32) ? int.parse(this) : defaultint;
   }
 
   double toDouble(double defaultdouble) {
@@ -104,12 +115,34 @@ extension DateExt on DateTime? {
   }
 }
 
-extension ListListIntExt on List<List<double>> {
+extension ListListDoubleExt on List<List<double>> {
+
   double toAmountSum(int index, int count) {
     double amntsum = 0;
     for (var i = 0; i < count; i++) {
-      amntsum += this[index][i];
+      if (this[index][i] > 0) {
+        amntsum += this[index][i];
+      }
     }
     return amntsum;
+  }
+
+  double toSum(int index, int count) {
+    double sum = 0;
+    for (var i = 0; i < count; i++) {
+      sum += this[index][i];
+    }
+    return sum;
+  }
+
+  double toBalance(int index, List<int> count) {
+    return this.toSum(index, count[index]);
+  }
+
+  double toPercent(int index, List<int> count) {
+    double sum = (this.toSum(index, count[index]) > 0.0) ? this.toSum(index, count[index]): 0.0;
+    double amountsum = (this.toAmountSum(index, count[index]) > 0.0) ? this.toAmountSum(index, count[index]): 0.0;
+    double percent = (sum == 0.0 || amountsum ==0.0) ? 1: (1 - sum / amountsum);
+    return (percent > 1.0) ? 1.0: (percent < 0) ? 0.0: percent;
   }
 }

@@ -3,16 +3,17 @@ import 'package:flutter/cupertino.dart';
 import '../MainView/mainViewModel.dart';
 import '../MainView/extension.dart';
 
-class yearPlusMinus extends StatefulWidget{
+
+class monthPlusMinus extends StatefulWidget{
   final mainViewModel viewModel;
-  yearPlusMinus(this.viewModel);
+  monthPlusMinus(this.viewModel);
   @override
-  yearPlusMinusState createState() => new yearPlusMinusState(viewModel);
+  monthPlusMinusState createState() => new monthPlusMinusState(viewModel);
 }
 
-class yearPlusMinusState extends State<yearPlusMinus> {
+class monthPlusMinusState extends State<monthPlusMinus> {
   final mainViewModel viewModel;
-  yearPlusMinusState(this.viewModel);
+  monthPlusMinusState(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +27,23 @@ class yearPlusMinusState extends State<yearPlusMinus> {
           height: 40,
           child: FittedBox(
             child: FloatingActionButton(
-              backgroundColor: (viewModel.yearindex > 0) ?
-                Colors.lightBlue: Colors.grey,
-              onPressed: () {
-                setState(() {
-                  viewModel.decreaseYearIndex();
-                });
+              backgroundColor: (viewModel.index > 0) ?
+              Colors.lightBlue: Colors.grey,
+              onPressed: () { // Startボタンタップ時の処理
+                if (viewModel.index > 0) {
+                  setState(() {
+                    viewModel.beforeIndex();
+                  });
+                }
               },
               child: Icon(CupertinoIcons.back),
               tooltip: 'Decrease',
-              heroTag: "hero12",
+              heroTag: "hero4",
             ),
           ),
         ),
         Spacer(),
-        Text("${viewModel.startdate.toYear() + viewModel.yearindex}",
+        Text(viewModel.startdate.toDate().displayMonthYear(viewModel.index),
           style: TextStyle(
             color: Colors.white,
             fontSize: 32,
@@ -61,16 +64,15 @@ class yearPlusMinusState extends State<yearPlusMinus> {
           height: 40,
           child: FittedBox(
             child: FloatingActionButton(
-              backgroundColor: (viewModel.yearindex < 9) ?
-                Colors.lightBlue: Colors.grey,
-              onPressed: () {
-                setState((){
-                  viewModel.increaseYearIndex();
+              backgroundColor: Colors.lightBlue,
+              onPressed: () { // Startボタンタップ時の処理
+                setState(() {
+                  viewModel.nextIndex();
                 });
               },
               child: Icon(CupertinoIcons.forward),
               tooltip: 'Increase',
-              heroTag: "hero11",
+              heroTag: "hero1",
             ),
           ),
         ),

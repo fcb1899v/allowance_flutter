@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'extension.dart';
 import 'mainViewModel.dart';
 
 class mainAppBar extends StatefulWidget implements PreferredSizeWidget{
@@ -22,7 +21,6 @@ class mainAppBarState extends State<mainAppBar> {
   @override
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
-    final title = viewModel.startdate.toDate().displayMonthYear(viewModel.index);
     return AppBar(
       leading: IconButton(
         icon: Icon(
@@ -33,7 +31,9 @@ class mainAppBarState extends State<mainAppBar> {
           Scaffold.of(context).openDrawer();
         },
       ),
-      title: Text((viewModel.selectflag) ? title: AppLocalizations.of(context)!.summary,
+      title: Text((viewModel.selectflag) ?
+               AppLocalizations.of(context)!.list:
+               AppLocalizations.of(context)!.summary,
         style: TextStyle(
           color: Colors.white,
           fontSize: (lang == "ja") ? 26: 32,

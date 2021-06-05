@@ -15,44 +15,33 @@ class amntTextFieldView extends StatefulWidget{
 class amntTextFieldViewState extends State<amntTextFieldView> {
 
   final mainViewModel viewModel;
-
   amntTextFieldViewState(this.viewModel);
 
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
-    final inputamnt = AppLocalizations.of(context)!.inputamnt;
-    final amntstring = viewModel.amntlist[viewModel.index][widget.id];
-    final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
-    final displayamnt = (amntstring > 0) ? amntstring.toStringAsFixed(numberdigit): inputamnt;
-    return TextButton(
-      child: Text(displayamnt,
-        style: TextStyle(
-          color: (displayamnt == inputamnt) ? Colors.grey[400] : Colors.lightBlue,
-          fontSize: (displayamnt == inputamnt) ? 14 : 16,
-          fontWeight: FontWeight.bold,
+    double amount = viewModel.amntlist[viewModel.index][widget.id];
+    return InkWell(
+      onTap: () => amntFieldDialog(context),
+      child: SizedBox(
+        child: Container(
+          width: double.infinity,
+          child: Text((amount == 0.0) ? "-": amount.stringAmount(viewModel.unitvalue),
+            style: TextStyle(
+              color: (amount == 0.0) ? Colors.grey[400]: Colors.lightBlue,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.right,
+            maxLines: 1,
+          ),
         ),
-        maxLines: 1,
       ),
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all(EdgeInsets.zero),
-        minimumSize: MaterialStateProperty.all(Size.zero),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
-      onPressed: () =>
-      {
-        viewModel.clearAmnt(widget.id),
-        amntFieldDialog(context),
-        setState(() {
-          viewModel.getAmntList();
-          viewModel.getBalance();
-          viewModel.getPercent();
-        }),
-      },
     );
   }
 
   Future<void> amntFieldDialog(BuildContext context) async {
     double inputnumber = viewModel.amntlist[viewModel.index][widget.id];
+    double plusminus = (inputnumber < 0) ? -1.0: 1.0;
     return showDialog(
       context: context,
       builder: (context) {
@@ -62,7 +51,8 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
           ),
           content: TextField(
             onChanged: (value) {
-              if (value.toDouble(0) > 0) inputnumber = value.toDouble(0);
+              inputnumber = plusminus * value.toDouble(0);
+              viewModel.saveAmntList(widget.id, inputnumber);
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
@@ -82,6 +72,9 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
               ),
               onPressed: () {
                 setState(() {
+                  viewModel.saveAmntList(widget.id, 0.0);
+                  viewModel.saveBalance();
+                  viewModel.savePercent();
                   Navigator.pop(context);
                 });
               },
@@ -95,9 +88,6 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
                 ),
               ),
               onPressed: () {
-                viewModel.saveAmntList(widget.id, inputnumber);
-                viewModel.saveBalance();
-                viewModel.savePercent();
                 setState(() {
                   viewModel.getAmntList();
                   viewModel.getBalance();

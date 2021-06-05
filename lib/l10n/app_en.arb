@@ -21,7 +21,7 @@
     "description": "Title label"
   },
 
-  "balance": "Balance ",
+  "balance": "Balance",
   "@balance": {
     "description": "Balance label"
   },
@@ -31,9 +31,29 @@
     "description": "List of date title label"
   },
 
+  "day": "Day",
+  "@day": {
+    "description": "List of day title label"
+  },
+
   "selectdate": "Select date",
   "@selectdate": {
     "description": "Open datepicker"
+  },
+
+  "inputdate": "Enter",
+  "@inputdate": {
+    "description": "Open Textfield for date"
+  },
+
+  "settingdatetitle": "Setting the day",
+  "@settingdatetitle": {
+    "description": "Setting day title"
+  },
+
+  "settingdatehint": "Enter the day",
+  "@settingdatehint": {
+    "description": "Setting day hint"
   },
 
   "desc": "Description",
@@ -149,10 +169,5 @@
   "month": "[Month]",
   "@month": {
     "description": "Month"
-  },
-
-  "savedmoney": "Saved money",
-  "@savedmoney": {
-    "description": "Saved Money"
   }
 }

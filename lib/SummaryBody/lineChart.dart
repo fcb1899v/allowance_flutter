@@ -101,16 +101,15 @@ class _lineChartState extends State<lineChart> {
   }
 
   FlAxisTitleData _axistitledata() {
-    var lang = Localizations.localeOf(context).languageCode;
     return FlAxisTitleData(
       topTitle: AxisTitle(
         showTitle: true,
-        titleText: "${AppLocalizations.of(context)!.savedmoney} [${viewModel.unitvalue}]",
+        titleText: "${AppLocalizations.of(context)!.balance} [${viewModel.unitvalue}]",
         textStyle: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 32,
-          fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+          fontSize: 28,
+          fontFamily: 'defaultfont',
           shadows: <Shadow>[
             Shadow(
               offset: Offset(2.0, 2.0),
@@ -129,7 +128,7 @@ class _lineChartState extends State<lineChart> {
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 16,
-          fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+          fontFamily: "defaultfont",
         ),
       ),
     );

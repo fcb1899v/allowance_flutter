@@ -32,17 +32,6 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
     );
   }
 
-  Text unitText() {
-    return Text(viewModel.unitvalue,
-        style: TextStyle(
-          color: Colors.lightBlue,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign: TextAlign.right,
-    );
-  }
-
   List<DataRow> getDataRows() {
     List<DataRow> datarows = [];
     for (var id = 0; id < viewModel.counter[viewModel.index]; id++) {
@@ -50,7 +39,6 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
         cells: <DataCell>[
           DataCell(datePickerView(viewModel, id),),
           DataCell(descTextFieldView(viewModel, id),),
-          DataCell(unitText(),),
           DataCell(amntTextFieldView(viewModel, id),),
         ],
       ));
@@ -67,11 +55,12 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
               dividerColor: Colors.lightBlue
           ),
           child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20,),
+            padding: EdgeInsets.only(left: 0, right: 0,),
+            width: MediaQuery.of(context).size.width * 0.8,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: DataTable(
-                headingRowHeight: 50,
+                headingRowHeight: 40,
                 showCheckboxColumn: true,
                 columnSpacing: 10,
                 decoration: BoxDecoration(
@@ -81,10 +70,9 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
                         (states) => Colors.lightBlue
                 ),
                 columns: <DataColumn>[
-                  dataColumnTitle(AppLocalizations.of(context)!.date),
+                  dataColumnTitle(AppLocalizations.of(context)!.day),
                   dataColumnTitle(AppLocalizations.of(context)!.desc),
-                  dataColumnTitle(""),
-                  dataColumnTitle(AppLocalizations.of(context)!.amnt),
+                  dataColumnTitle("${AppLocalizations.of(context)!.amnt} [${viewModel.unitvalue}]"),
                 ],
                 rows: getDataRows(),
               ),

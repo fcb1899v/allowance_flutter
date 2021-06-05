@@ -19,30 +19,30 @@ class descTextFieldViewState extends State<descTextFieldView> {
 
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
-    final inputdesc = AppLocalizations.of(context)!.inputdesc;
-    final descstring = viewModel.desclist[viewModel.index][widget.id];
-    final displaydesc = (descstring == "") ? inputdesc: descstring;
-    return TextButton(
-      child: Text(displaydesc,
-        style: TextStyle(
-          color: (displaydesc == inputdesc) ? Colors.grey[400]: Colors.lightBlue,
-          fontSize: (displaydesc == inputdesc) ? 14: 15,
-          fontWeight: FontWeight.bold,
-        ),
-        maxLines: 1,
-      ),
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all(EdgeInsets.zero),
-        minimumSize: MaterialStateProperty.all(Size.zero),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
-      onPressed: () => {
-        viewModel.clearDesc(widget.id),
-        descFieldDialog(context),
-        setState(() {
-          viewModel.getDescList();
-        }),
+    String description = viewModel.desclist[viewModel.index][widget.id];
+    return InkWell(
+      onTap: () => {
+        if (description != "") {
+          descFieldDialog(context),
+          setState(() {
+            viewModel.getDescList();
+          }),
+        },
       },
+      child: SizedBox(
+        child: Container(
+          width: double.infinity,
+          child: Text((description != "") ? description: "-",
+            style: TextStyle(
+              color: (description == "") ? Colors.grey[400]: Colors.lightBlue,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            maxLines: 1,
+            textAlign: TextAlign.right,
+          ),
+        ),
+      ),
     );
   }
 

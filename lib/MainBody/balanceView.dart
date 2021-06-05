@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../MainView/mainViewModel.dart';
+import '../MainView/extension.dart';
+
 
 class balanceView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -19,7 +21,7 @@ class balanceViewState extends State<balanceView> {
 
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
-    final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
+    String customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: FittedBox(
@@ -31,72 +33,39 @@ class balanceViewState extends State<balanceView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(AppLocalizations.of(context)!.balance,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 1.0,
-                          color: Colors.lightBlue,
-                        ),
-                      ],
-                      fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
-                    ),
-                  ),
+                  Text("${AppLocalizations.of(context)!.balance}", style: customTextStyle(32, customfont),),
+                  Text(" [", style: customTextStyle(32, "defaultfont"),),
                   DropdownButton <String>(
                     value: viewModel.unitvalue,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 45,
-                      fontWeight: FontWeight.bold,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 1.0,
-                          color: Colors.lightBlue,
-                        ),
-                      ],
-                    ),
+                    dropdownColor: Colors.lightBlue,
+                    style: customTextStyle(32, "defaultfont"),
                     icon: Icon(CupertinoIcons.minus, size: 0.1),
                     underline: SizedBox(),
-                    dropdownColor: Colors.lightBlue,
-                    onChanged: (String? newValue) {
-                      viewModel.saveUnit(newValue!);
+                    onChanged: (value) {
+                      viewModel.saveUnit(value);
                       setState(() {
+                        viewModel.saveUnit(value);
                         viewModel.getUnit();
                       });
                     },
                     items: <String>["¥", "\$", "€", "£",]
-                      .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
                     }).toList(),
                   ),
-                  Text(viewModel.balancelist[viewModel.index].toStringAsFixed(numberdigit),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 45,
-                      fontWeight: FontWeight.bold,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 1.0,
-                          color: Colors.lightBlue,
-                        ),
-                      ],
-                    ),
+                  Text("] ", style: customTextStyle(32, "defaultfont"),),
+                  Text("${viewModel.balancelist[viewModel.index].stringBalance(viewModel.unitvalue)}",
+                    style: customTextStyle(40, "defaultfont"),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               LinearPercentIndicator(
                 alignment: MainAxisAlignment.center,
-                width: MediaQuery.of(context).size.width - 60,
+                width: MediaQuery.of(context).size.width * 0.8,
                 lineHeight: 10.0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 percent: viewModel.percentlist[viewModel.index],
@@ -109,6 +78,22 @@ class balanceViewState extends State<balanceView> {
           ),
         ),
       ),
+    );
+  }
+
+  TextStyle customTextStyle(double size, font) {
+    return TextStyle(
+      color: Colors.white,
+      fontSize: size,
+      fontWeight: FontWeight.bold,
+      fontFamily: font,
+      shadows: <Shadow>[
+        Shadow(
+          offset: Offset(2.0, 2.0),
+          blurRadius: 1.0,
+          color: Colors.lightBlue,
+        ),
+      ],
     );
   }
 }
