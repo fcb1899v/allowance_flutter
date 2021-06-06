@@ -1,6 +1,26 @@
 {
   "@@locale": "en",
 
+  "enter": "Enter",
+  "@enter": {
+    "description": "Input textfield"
+  },
+
+  "select": "Select",
+  "@select": {
+    "description": "Open picker"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+
+  "notset": "Not set",
+  "@notset": {
+    "description": "Not set"
+  },
+
   "list": "List",
   "@list": {
     "description": "Bottom label of list"
@@ -11,6 +31,44 @@
     "description": "Bottom label of summary"
   },
 
+  "balance": "Balance",
+  "@balance": {
+    "description": "Balance label"
+  },
+
+  "savedmoney": "Saved Money",
+  "@savedmoney": {
+    "description": "Saved Money label"
+  },
+
+
+  "allowance": "Allowance",
+  "@allowance": {
+    "description": "Allowance"
+  },
+
+  "spend": "Spend",
+  "@spend": {
+    "description": "Spend money"
+  },
+
+  "day": "Day",
+  "@day": {
+    "description": "List of day title label"
+  },
+
+  "desc": "Description",
+  "@desc": {
+    "description": "List of description title label"
+  },
+
+  "amnt": "Amount",
+  "@amnt": {
+    "description": "List of amount title label"
+  },
+
+
+
   "title": "'s Allowance",
   "@title": {
     "description": "Title label"
@@ -19,21 +77,6 @@
   "allowancebook": "Allowance book",
   "@allowancebook": {
     "description": "Title label"
-  },
-
-  "balance": "Balance",
-  "@balance": {
-    "description": "Balance label"
-  },
-
-  "date": "Date",
-  "@date": {
-    "description": "List of date title label"
-  },
-
-  "day": "Day",
-  "@day": {
-    "description": "List of day title label"
   },
 
   "selectdate": "Select date",
@@ -56,11 +99,6 @@
     "description": "Setting day hint"
   },
 
-  "desc": "Description",
-  "@desc": {
-    "description": "List of description title label"
-  },
-
   "inputdesc": "Enter",
   "@inputdesc": {
     "description": "Open Textfield for description"
@@ -76,11 +114,6 @@
     "description": "Setting description hint"
   },
 
-  "amnt": "Amount",
-  "@amnt": {
-    "description": "List of amount title label"
-  },
-
   "inputamnt": "Enter",
   "@inputamnt": {
     "description": "Open Textfield for amount"
@@ -94,21 +127,6 @@
   "settingamnthint": "Enter the amount",
   "@settingamnthint": {
     "description": "Setting amount hint"
-  },
-
-  "enter": "Enter",
-  "@enter": {
-    "description": "Input textfield"
-  },
-
-  "cancel": "Cancel",
-  "@cancel": {
-    "description": "Cancel button"
-  },
-
-  "notset": "Not set",
-  "@notset": {
-    "description": "Not set"
   },
 
   "name": "Your name",
@@ -134,11 +152,6 @@
   "settingunittitle": "Setting currency unit",
   "@settingunittitle": {
     "description": "Setting currency unit title"
-  },
-
-  "allowance": "Monthly allowance",
-  "@allowance": {
-    "description": "Setting monthly allowance"
   },
 
   "settingallowancetitle": "Setting your monthly allowance",

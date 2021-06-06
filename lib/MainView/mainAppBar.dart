@@ -36,7 +36,7 @@ class mainAppBarState extends State<mainAppBar> {
                AppLocalizations.of(context)!.summary,
         style: TextStyle(
           color: Colors.white,
-          fontSize: (lang == "ja") ? 26: 32,
+          fontSize: (lang == "ja") ? 18: 24,
           fontWeight: FontWeight.bold,
           fontFamily: (lang == "ja") ? 'defaultfont': 'enAccent',
         ),

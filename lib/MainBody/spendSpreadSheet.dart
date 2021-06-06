@@ -24,7 +24,7 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
       label: Text(columntitle,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 18,
+          fontSize: 16,
           fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
         ),
         textAlign: TextAlign.center,

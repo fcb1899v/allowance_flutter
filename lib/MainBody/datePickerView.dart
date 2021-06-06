@@ -17,14 +17,12 @@ class datePickerViewState extends State<datePickerView> {
 
   //DatePickerが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
-    final datestring = viewModel.datelist[viewModel.index][widget.id];
+    int i = viewModel.index;
+    final datestring = viewModel.datelist[i][widget.id];
     return InkWell(
       onTap: () => {
-        if (viewModel.datelist[viewModel.index][widget.id] != 0) {
+        if (widget.id != viewModel.counter[i] - 1) {
           viewModel.selectDate(context, widget.id),
-          setState(() {
-            viewModel.getDateList();
-          }),
         },
       },
       child: SizedBox(
@@ -33,7 +31,7 @@ class datePickerViewState extends State<datePickerView> {
           child: Text((datestring < 1 || datestring > 31 || datestring == null) ? "-": "$datestring",
             style: TextStyle(
               color: (datestring == 0) ? Colors.grey[400]: Colors.lightBlue,
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.right,

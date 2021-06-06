@@ -75,7 +75,7 @@ class _lineChartState extends State<lineChart> {
       leftTitles: SideTitles(
         showTitles: true,
         reservedSize: 30,
-        margin: 10,
+        margin: 15,
         getTextStyles: (value) => textstyle,
         getTitles: (value) {
           if (value.toInt() % deltay == 0 || value == viewModel.allowance) {
@@ -104,21 +104,14 @@ class _lineChartState extends State<lineChart> {
     return FlAxisTitleData(
       topTitle: AxisTitle(
         showTitle: true,
-        titleText: "${AppLocalizations.of(context)!.balance} [${viewModel.unitvalue}]",
+        titleText: "${AppLocalizations.of(context)!.savedmoney} [${viewModel.unitvalue}]",
         textStyle: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 28,
+          fontSize: 20,
           fontFamily: 'defaultfont',
-          shadows: <Shadow>[
-            Shadow(
-              offset: Offset(2.0, 2.0),
-              blurRadius: 1.0,
-              color: Colors.lightBlue,
-            ),
-          ],
         ),
-        margin: 20,
+        margin: 10,
       ),
       bottomTitle: AxisTitle(
         showTitle: true,

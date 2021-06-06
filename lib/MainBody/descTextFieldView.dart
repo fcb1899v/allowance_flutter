@@ -19,15 +19,11 @@ class descTextFieldViewState extends State<descTextFieldView> {
 
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
-    String description = viewModel.desclist[viewModel.index][widget.id];
+    int i = viewModel.index;
+    String description = viewModel.desclist[i][widget.id];
     return InkWell(
       onTap: () => {
-        if (description != "") {
-          descFieldDialog(context),
-          setState(() {
-            viewModel.getDescList();
-          }),
-        },
+        if (widget.id != viewModel.counter[i] - 1) descFieldDialog(context),
       },
       child: SizedBox(
         child: Container(
@@ -35,7 +31,7 @@ class descTextFieldViewState extends State<descTextFieldView> {
           child: Text((description != "") ? description: "-",
             style: TextStyle(
               color: (description == "") ? Colors.grey[400]: Colors.lightBlue,
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
             maxLines: 1,
@@ -52,8 +48,10 @@ class descTextFieldViewState extends State<descTextFieldView> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(
-              AppLocalizations.of(context)!.settingdesctitle
+          title: Text(AppLocalizations.of(context)!.spend,
+            style: TextStyle(fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           content: TextField(
             onChanged: (value) {
@@ -76,9 +74,7 @@ class descTextFieldViewState extends State<descTextFieldView> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  Navigator.pop(context);
-                });
+                Navigator.pop(context);
               },
             ),
             TextButton(

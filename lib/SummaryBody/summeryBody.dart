@@ -21,11 +21,11 @@ class _summeryBodyState extends State<summeryBody> {
       child: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             yearPlusMinus(viewModel),
-            SizedBox(height: 50),
+            SizedBox(height: 10),
             lineChart(viewModel),
-            SizedBox(height: 50),
+            SizedBox(height: 10),
           ]
         ),
       ),

@@ -16,14 +16,14 @@ class yearPlusMinusState extends State<yearPlusMinus> {
 
   @override
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(),
+        Spacer(),
         Container(
-          width: 40,
-          height: 40,
+          width: 30,
+          height: 30,
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: (viewModel.yearindex > 0) ?
@@ -43,8 +43,7 @@ class yearPlusMinusState extends State<yearPlusMinus> {
         Text("${viewModel.startdate.toYear() + viewModel.yearindex}",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
+            fontSize: 24,
             shadows: <Shadow>[
               Shadow(
                 offset: Offset(2.0, 2.0),
@@ -52,13 +51,13 @@ class yearPlusMinusState extends State<yearPlusMinus> {
                 color: Colors.lightBlue,
               ),
             ],
-            fontFamily: (lang == "ja") ? 'defaultfont': 'enAccent',
+            fontFamily: 'enAccent',
           ),
         ),
         Spacer(),
         Container(
-          width: 40,
-          height: 40,
+          width: 30,
+          height: 30,
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: (viewModel.yearindex < 9) ?
@@ -74,6 +73,7 @@ class yearPlusMinusState extends State<yearPlusMinus> {
             ),
           ),
         ),
+        Spacer(),
         Spacer(),
       ],
     );

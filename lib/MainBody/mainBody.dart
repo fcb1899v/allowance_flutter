@@ -25,11 +25,11 @@ class _mainBodyState extends State<mainBody> {
       child: Center(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             monthPlusMinus(viewModel),
-            SizedBox(height: 50),
+            SizedBox(height: 10),
             balanceView(viewModel),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Row(mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Spacer(),
@@ -41,7 +41,7 @@ class _mainBodyState extends State<mainBody> {
                 Spacer(),
                 ],
             ),
-            SizedBox(height: 60),
+            SizedBox(height: 20),
             spendSpreadSheet(viewModel),
           ]
         ),

@@ -35,7 +35,7 @@ class mainDrawerState extends State<mainDrawer> {
               SizedBox(height: 10),
               settingsName(viewModel),
               settingsUnit(viewModel),
-              settingsAllowance(viewModel),
+              //settingsAllowance(viewModel),
               startDateView(viewModel),
               versionView(viewModel),
             ],

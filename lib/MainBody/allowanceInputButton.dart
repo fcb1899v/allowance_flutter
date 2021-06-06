@@ -34,21 +34,11 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
     );
   }
 
-  Widget spendInputTitle(String title) {
-    return Container(
-      width: double.infinity,
-      child: Text(title,
-        style: TextStyle(fontSize: 20,),
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
-
   Widget buttonText(String text){
     return Text(text,
       style: TextStyle(
         color: Colors.lightBlue,
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -61,11 +51,20 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: spendInputTitle(AppLocalizations.of(context)!.date),
+          title: Text(AppLocalizations.of(context)!.allowance,
+            style: TextStyle(fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextField(
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 onChanged: (value) {
                   if (isNotBlank(value)) {
                     viewModel.saveDateList(id - 1, value.toInt(1));
@@ -73,14 +72,19 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
                 },
                 controller: TextEditingController(),
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.settingdatehint,
+                  labelText: AppLocalizations.of(context)!.day,
+                  hintText: AppLocalizations.of(context)!.enter,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
+                keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 30),
-              spendInputTitle("${AppLocalizations.of(context)!.settingamnttitle} [${viewModel.unitvalue}]"),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               TextField(
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 onChanged: (value) {
                   if (value.toDouble(0) > 0) {
                     viewModel.saveAmntList(id - 1, value.toDouble(0));
@@ -88,9 +92,16 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
                 },
                 controller: TextEditingController(),
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.settingamnthint,
+                  labelText: "${AppLocalizations.of(context)!.amnt} [${viewModel.unitvalue}]",
+                  labelStyle: TextStyle(
+                    color: Colors.lightBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  hintText: AppLocalizations.of(context)!.enter,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                autofocus: true,
               ),
             ],
           ),

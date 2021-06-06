@@ -21,7 +21,6 @@ class balanceViewState extends State<balanceView> {
 
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
-    String customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: FittedBox(
@@ -33,12 +32,17 @@ class balanceViewState extends State<balanceView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("${AppLocalizations.of(context)!.balance}", style: customTextStyle(32, customfont),),
-                  Text(" [", style: customTextStyle(32, "defaultfont"),),
+                  Text("${AppLocalizations.of(context)!.balance}",
+                    style: customTextStyle(
+                        (lang == "ja") ? 24: 32,
+                        (lang == "ja") ? 'defaultfont': 'enAccent',
+                    ),
+                  ),
+                  Text(" [", style: customTextStyle(24, "defaultfont"),),
                   DropdownButton <String>(
                     value: viewModel.unitvalue,
                     dropdownColor: Colors.lightBlue,
-                    style: customTextStyle(32, "defaultfont"),
+                    style: customTextStyle(24, "defaultfont"),
                     icon: Icon(CupertinoIcons.minus, size: 0.1),
                     underline: SizedBox(),
                     onChanged: (value) {
@@ -56,9 +60,9 @@ class balanceViewState extends State<balanceView> {
                       );
                     }).toList(),
                   ),
-                  Text("] ", style: customTextStyle(32, "defaultfont"),),
+                  Text("] ", style: customTextStyle(24, "defaultfont"),),
                   Text("${viewModel.balancelist[viewModel.index].stringBalance(viewModel.unitvalue)}",
-                    style: customTextStyle(40, "defaultfont"),
+                    style: customTextStyle(32, "defaultfont"),
                   ),
                 ],
               ),

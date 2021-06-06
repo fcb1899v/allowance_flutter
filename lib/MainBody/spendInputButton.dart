@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quiver/strings.dart';
 import '../MainView/mainViewModel.dart';
@@ -34,105 +35,139 @@ class spendInputButtonState extends State<spendInputButton> {
     );
   }
 
-  Widget spendInputTitle(String title) {
-    return Container(
-      width: double.infinity,
-      child: Text(title,
-        style: TextStyle(fontSize: 20,),
-        textAlign: TextAlign.left,
-      ),
-    );
-  }
-
-  Widget buttonText(String text){
-    return Text(text,
-      style: TextStyle(
-        color: Colors.lightBlue,
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
   Future<void> spendInputDialog(BuildContext context) async {
     final int i = viewModel.index;
     final int id = viewModel.counter[i];
-    String inputdesc = AppLocalizations.of(context)!.allowance;
+    int inputday = 0;
+    String inputdesc = "";
+    double inputamnt = 0.0;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: spendInputTitle(AppLocalizations.of(context)!.date),
+          title: Text(AppLocalizations.of(context)!.spend,
+            style: TextStyle(fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               TextField(
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 onChanged: (value) {
                   if (isNotBlank(value)) {
-                    viewModel.saveDateList(id - 1, value.toInt(1));
+                    inputdesc = value;
+                  } else {
+                    inputdesc = "";
                   }
+                  print("inputdesc: $inputdesc");
                 },
                 controller: TextEditingController(),
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.settingdatehint,
+                  labelText: AppLocalizations.of(context)!.desc,
+                  labelStyle: TextStyle(
+                    color: Colors.lightBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  hintText: AppLocalizations.of(context)!.enter,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
+                autofocus: true,
               ),
-              SizedBox(height: 30),
-              spendInputTitle(AppLocalizations.of(context)!.settingdesctitle,),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               TextField(
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 onChanged: (value) {
-                  inputdesc = value;
-                  viewModel.saveDescList(id - 1, inputdesc);
+                  if (value.toInt(0) > 0 && value.toInt(0) < 32) {
+                    inputday = value.toInt(0);
+                  } else {
+                    inputday = 0;
+                  }
+                  print("inputday: $inputday");
                 },
                 controller: TextEditingController(),
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.settingdeschint,
+                  labelText: AppLocalizations.of(context)!.day,
+                  labelStyle: TextStyle(
+                    color: Colors.lightBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  hintText: AppLocalizations.of(context)!.enter,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
+                keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 30),
-              spendInputTitle("${AppLocalizations.of(context)!.settingamnttitle} [${viewModel.unitvalue}]"),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               TextField(
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
                 onChanged: (value) {
                   if (value.toDouble(0) > 0) {
-                    viewModel.saveAmntList(id - 1, (-1.0) * value.toDouble(0));
+                    inputamnt = (-1.0) * value.toDouble(0);
+                  } else {
+                    inputamnt = 0;
                   }
+                  print("inputamnt: $inputamnt");
                 },
                 controller: TextEditingController(),
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.settingamnthint,
+                  labelText: "${AppLocalizations.of(context)!.amnt} [${viewModel.unitvalue}]",
+                  labelStyle: TextStyle(
+                      color: Colors.lightBlue,
+                      fontWeight: FontWeight.bold,
+                  ),
+                  hintText: AppLocalizations.of(context)!.enter,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
-              child: buttonText(AppLocalizations.of(context)!.cancel),
+              child: Text(AppLocalizations.of(context)!.cancel,
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 setState(() {
-                  viewModel.saveDateList(id - 1, 0);
-                  viewModel.saveDescList(id - 1, "");
-                  viewModel.saveAmntList(id - 1, 0.0);
                   viewModel.decreaseCounter();
                   Navigator.pop(context);
                 });
               },
             ),
             TextButton(
-              child: buttonText("OK"),
+              child: Text("OK",
+                style: TextStyle(
+                  color: Colors.lightBlue,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
-                setState(() {
-                  viewModel.getDateList();
-                  viewModel.getDescList();
-                  viewModel.getAmntList();
-                  viewModel.getBalance();
-                  viewModel.getPercent();
-                });
-                Navigator.pop(context);
+                if (inputday != 0 && isNotBlank(inputdesc) && inputamnt != 0) {
+                  setState(() {
+                    viewModel.saveDateList(id - 1, inputday);
+                    viewModel.saveDescList(id - 1, inputdesc);
+                    viewModel.saveAmntList(id - 1, inputamnt);
+                  });
+                  Navigator.pop(context);
+                }
               },
             ),
           ],

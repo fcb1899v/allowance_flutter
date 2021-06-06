@@ -17,14 +17,14 @@ class monthPlusMinusState extends State<monthPlusMinus> {
 
   @override
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Spacer(),
+        Spacer(),
         Container(
-          width: 40,
-          height: 40,
+          width: 30,
+          height: 30,
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: (viewModel.index > 0) ?
@@ -38,7 +38,7 @@ class monthPlusMinusState extends State<monthPlusMinus> {
               },
               child: Icon(CupertinoIcons.back),
               tooltip: 'Decrease',
-              heroTag: "hero4",
+              heroTag: "hero2",
             ),
           ),
         ),
@@ -46,8 +46,7 @@ class monthPlusMinusState extends State<monthPlusMinus> {
         Text(viewModel.startdate.toDate().displayMonthYear(viewModel.index),
           style: TextStyle(
             color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
+            fontSize: 24,
             shadows: <Shadow>[
               Shadow(
                 offset: Offset(2.0, 2.0),
@@ -55,13 +54,13 @@ class monthPlusMinusState extends State<monthPlusMinus> {
                 color: Colors.lightBlue,
               ),
             ],
-            fontFamily: (lang == "ja") ? 'defaultfont': 'enAccent',
+            fontFamily: 'enAccent',
           ),
         ),
         Spacer(),
         Container(
-          width: 40,
-          height: 40,
+          width: 30,
+          height: 30,
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: Colors.lightBlue,
@@ -76,6 +75,7 @@ class monthPlusMinusState extends State<monthPlusMinus> {
             ),
           ),
         ),
+        Spacer(),
         Spacer(),
       ],
     );

@@ -19,6 +19,8 @@ dependencies:
   cupertino_icons: ^1.0.3
 # Gradient app bar
   gradient_app_bar: ^0.1.3
+# Floating Button
+  flutter_speed_dial: ^3.0.5
 # Bar indicator
   percent_indicator: ^3.0.1
 # isNotBlank

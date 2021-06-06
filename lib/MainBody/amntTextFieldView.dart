@@ -19,16 +19,19 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
 
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
-    double amount = viewModel.amntlist[viewModel.index][widget.id];
+    int i = viewModel.index;
+    double amount = viewModel.amntlist[i][widget.id];
     return InkWell(
-      onTap: () => amntFieldDialog(context),
+      onTap: () => {
+        if (widget.id != viewModel.counter[i] - 1) amntFieldDialog(context)
+      },
       child: SizedBox(
         child: Container(
           width: double.infinity,
           child: Text((amount == 0.0) ? "-": amount.stringAmount(viewModel.unitvalue),
             style: TextStyle(
               color: (amount == 0.0) ? Colors.grey[400]: Colors.lightBlue,
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.right,
@@ -40,25 +43,28 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
   }
 
   Future<void> amntFieldDialog(BuildContext context) async {
-    double inputnumber = viewModel.amntlist[viewModel.index][widget.id];
+    int i = viewModel.index;
+    double inputnumber = viewModel.amntlist[i][widget.id];
     double plusminus = (inputnumber < 0) ? -1.0: 1.0;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(
-            AppLocalizations.of(context)!.settingamnttitle
+          title: Text(AppLocalizations.of(context)!.amnt,
+            style: TextStyle(fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           content: TextField(
             onChanged: (value) {
               inputnumber = plusminus * value.toDouble(0);
-              viewModel.saveAmntList(widget.id, inputnumber);
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.settingamnthint,
               hintStyle: TextStyle(color: Colors.grey[400]),
             ),
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
             autofocus: true,
           ),
           actions: <Widget>[
@@ -71,12 +77,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  viewModel.saveAmntList(widget.id, 0.0);
-                  viewModel.saveBalance();
-                  viewModel.savePercent();
-                  Navigator.pop(context);
-                });
+                Navigator.pop(context);
               },
             ),
             TextButton(
@@ -88,6 +89,9 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
                 ),
               ),
               onPressed: () {
+                viewModel.saveAmntList(widget.id, inputnumber);
+                viewModel.saveBalance();
+                viewModel.savePercent();
                 setState(() {
                   viewModel.getAmntList();
                   viewModel.getBalance();

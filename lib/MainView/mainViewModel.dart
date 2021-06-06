@@ -17,7 +17,7 @@ class mainViewModel extends Model {
   int _index = 0;
   int get index => _index;
 
-  int _maxindex = 12;
+  int _maxindex = 0;
   int get maxindex => _maxindex;
 
   int _yearindex = 0;
@@ -99,13 +99,16 @@ class mainViewModel extends Model {
   }
 
   void nextIndex() async{
-    if (maxindex < index + 1) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt("maxindexkey", index + 1);
-      _maxindex = index + 1;
+    if (index < 120) {
+      _index++;
+      print("index: $index");
     }
-    _index++;
-    print("index: $index, maxindex: $maxindex");
+    if (maxindex == index) {
+      final prefs = await SharedPreferences.getInstance();
+      _maxindex = index + 1;
+      await prefs.setInt("maxindexkey", maxindex);
+      print("maxindex: $maxindex");
+    }
     notifyListeners();
   }
 
@@ -133,9 +136,9 @@ class mainViewModel extends Model {
   void getCurrentIndex() async {
     final prefs = await SharedPreferences.getInstance();
     _index = startdate.toCurrentIndex();
-    _maxindex = prefs.getInt("maxindexkey") ?? index;
+    _maxindex = prefs.getInt("maxindexkey") ?? index + 1;
     _yearindex = DateTime.now().year - startdate.toYear();
-    if (index > maxindex) _maxindex = index;
+    if (maxindex < index + 1) _maxindex = index + 1;
     //print("index: $index, maxindex: $maxindex, yearindex: $yearindex");
     notifyListeners();
   }
