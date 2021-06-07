@@ -20,9 +20,9 @@ class settingsAllowanceState extends State<settingsAllowance> {
     var lang = Localizations.localeOf(context).languageCode;
     final inputallowance = AppLocalizations.of(context)!.notset;
     final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
-    final displayallowance = (viewModel.allowance > 0) ?
-            "${viewModel.unitvalue} ${viewModel.allowance.toStringAsFixed(numberdigit)}":
-            inputallowance;
+    // final displayallowance = (viewModel.allowance > 0) ?
+    //         "${viewModel.unitvalue} ${viewModel.allowance.toStringAsFixed(numberdigit)}":
+    //         inputallowance;
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar),
       title: Text(AppLocalizations.of(context)!.allowance,
@@ -32,7 +32,7 @@ class settingsAllowanceState extends State<settingsAllowance> {
           fontFamily: (lang == "ja") ? 'jaAccent': 'defaultFont',
         ),
       ),
-      subtitle: Text(displayallowance,
+      subtitle: Text("displayallowance",
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.grey,
@@ -46,7 +46,7 @@ class settingsAllowanceState extends State<settingsAllowance> {
   }
 
   Future<void> allowanceFieldDialog(BuildContext context) async {
-    double inputallowance = viewModel.allowance;
+    //double inputallowance = viewModel.allowance;
     return showDialog(
       context: context,
       builder: (context) {
@@ -55,7 +55,7 @@ class settingsAllowanceState extends State<settingsAllowance> {
           content: TextField(
             onChanged: (value) {
               if (value.toInt(0) > 0) {
-                inputallowance = value.toDouble(0);
+                //inputallowance = value.toDouble(0);
               }
             },
             controller: TextEditingController(),
@@ -90,11 +90,11 @@ class settingsAllowanceState extends State<settingsAllowance> {
                 ),
               ),
               onPressed: () {
-                if (inputallowance > 0) {
-                  viewModel.saveAllowance(inputallowance);
-                }
+                // if (inputallowance > 0) {
+                //   //viewModel.saveAllowance(inputallowance);
+                // }
                 setState(() {
-                  viewModel.getAllowance();
+                  //viewModel.getAllowance();
                 });
                 Navigator.pop(context);
               },

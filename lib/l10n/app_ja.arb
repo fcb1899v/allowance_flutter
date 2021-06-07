@@ -16,7 +16,11 @@
   "day": "日",
   "desc": "内容",
   "amnt": "金額",
-
+  "input": "入力する",
+  "delete": "削除",
+  "settingdatehint": "日にちを入力 (1~31)",
+  "settingdeschint": "買ったものを入力",
+  "settingamnthint": "金額を入力",
 
   "title": "のおこづかい帳",
   "allowancebook": "おこづかい帳",
@@ -26,11 +30,6 @@
   "inputdate": "入力してね",
   "inputdesc": "入力してね",
   "inputamnt": "入力してね",
-
-  "settingdatehint": "数字を入力してね",
-  "settingdeschint": "入力してね",
-  "settingamnthint": "数字を入力してね",
-
   "settingdatetitle": "日",
   "settingdesctitle": "買ったもの",
   "settingamnttitle": "金額",

@@ -21,6 +21,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
   Widget build(BuildContext context) {
     int i = viewModel.index;
     double amount = viewModel.amntlist[i][widget.id];
+    final customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
         if (widget.id != viewModel.counter[i] - 1) amntFieldDialog(context)
@@ -30,7 +31,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
           width: double.infinity,
           child: Text((amount == 0.0) ? "-": amount.stringAmount(viewModel.unitvalue),
             style: TextStyle(
-              color: (amount == 0.0) ? Colors.grey[400]: Colors.lightBlue,
+              color: customcolor,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -44,23 +45,35 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
 
   Future<void> amntFieldDialog(BuildContext context) async {
     int i = viewModel.index;
-    double inputnumber = viewModel.amntlist[i][widget.id];
-    double plusminus = (inputnumber < 0) ? -1.0: 1.0;
+    double inputamnt = 0.0;
+    double amount = viewModel.amntlist[i][widget.id];
+    double plusminus = (amount < 0) ? -1.0: 1.0;
+    Color? customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.amnt,
             style: TextStyle(fontSize: 16,
+              color: customcolor,
               fontWeight: FontWeight.bold,
             ),
           ),
           content: TextField(
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
             onChanged: (value) {
-              inputnumber = plusminus * value.toDouble(0);
+              if (value.toDouble(0.0) > 0.0) {
+                inputamnt = plusminus * value.toDouble(0);
+              }
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: customcolor, width: 1.0),
+              ),
               hintText: AppLocalizations.of(context)!.settingamnthint,
               hintStyle: TextStyle(color: Colors.grey[400]),
             ),
@@ -71,8 +84,8 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
             TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
                 style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
+                  color: customcolor,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -83,21 +96,20 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
             TextButton(
               child: Text("OK",
                 style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
+                  color: customcolor,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               onPressed: () {
-                viewModel.saveAmntList(widget.id, inputnumber);
-                viewModel.saveBalance();
-                viewModel.savePercent();
-                setState(() {
-                  viewModel.getAmntList();
-                  viewModel.getBalance();
-                  viewModel.getPercent();
-                });
-                Navigator.pop(context);
+                if (inputamnt != 0.0) {
+                  setState(() {
+                    viewModel.saveAmntList(widget.id, inputamnt);
+                    viewModel.saveBalance();
+                    viewModel.savePercent();
+                  });
+                  Navigator.pop(context);
+                }
               },
             ),
           ],

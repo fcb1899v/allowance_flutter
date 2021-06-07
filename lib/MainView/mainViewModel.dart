@@ -29,8 +29,8 @@ class mainViewModel extends Model {
   String _name = "";
   String get name => _name;
 
-  double _allowance = 500;
-  double get allowance => _allowance;
+  double _maxbalance = 0;
+  double get maxbalance => _maxbalance;
 
   String _unitvalue = "¥";
   String get unitvalue => _unitvalue;
@@ -72,7 +72,6 @@ class mainViewModel extends Model {
   void init()
   {
     getName();
-    getAllowance();
     getUnit();
     getVersionNumber();
     getStartDate();
@@ -204,9 +203,50 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
+  void deleteList(int id) async{
+    final prefs = await SharedPreferences.getInstance();
+    _datelist[index].removeRange(id, 1);
+    _datelist[index].add(0);
+    _desclist[index].removeRange(id, 1);
+    _desclist[index].add("");
+    _amntlist[index].removeRange(id, 1);
+    _amntlist[index].add(0.0);
+    print("id: $id");
+    for (int i = 0; i < counter[index]; i++) {
+      await prefs.setInt("datekey${index}_$i", datelist[index][i]);
+      await prefs.setString("desckey${index}_$i", desclist[index][i]);
+      await prefs.setDouble("amntkey${index}_$i", amntlist[index][i]);
+    }
+    notifyListeners();
+  }
+
   //DatePickerで日付を記録
   Future selectDate(BuildContext context, int id) async {
+    Color? customcolor = (amntlist[index][id] > 0) ? Colors.pinkAccent: Colors.lightBlue;
     final DateTime? picked = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: customcolor, // header background color
+              onPrimary: Colors.white, // header text color
+              onSurface: Colors.blueGrey, // body text color
+
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: customcolor, // button text color
+                textStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "defaultfont",
+                )
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
       initialDate: startdate.toDisplayDate(index),
       firstDate: DateTime(startdate.toDisplayDate(index).year - 1),
@@ -257,18 +297,6 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
-  void saveBalance() async {
-    final prefs = await SharedPreferences.getInstance();
-    final monthindex = (startdate.toMonth() - 1 + index) % 12;
-    final yearindex = index ~/ 12;
-    _balancelist[index] = amntlist.toBalance(index, counter);
-    _balance[yearindex][monthindex] = amntlist.toBalance(index, counter);
-    await prefs.setDouble("balancelistkey$index", amntlist.toBalance(index, counter));
-    await prefs.setDouble("balancekey$index", amntlist.toBalance(index, counter));
-    print("saveBalance: ${balancelist[index]}");
-    notifyListeners();
-  }
-
   void getBalance() async {
     final prefs = await SharedPreferences.getInstance();
     for (int i = 0; i < maxindex; i++) {
@@ -277,7 +305,23 @@ class mainViewModel extends Model {
       _balancelist[i] = prefs.getDouble("balancelistkey$i") ?? 0.0;
       _balance[yearindex][monthindex] = prefs.getDouble("balancekey$i") ?? 0.0;
     }
+    _maxbalance = prefs.getDouble("maxbalancekey") ?? 500.0;
     //print("getBalance: ${balancelist[index]}");
+    notifyListeners();
+  }
+
+  void saveBalance() async {
+    final prefs = await SharedPreferences.getInstance();
+    final monthindex = (startdate.toMonth() - 1 + index) % 12;
+    final yearindex = index ~/ 12;
+    _balancelist[index] = amntlist.toBalance(index, counter);
+    _balance[yearindex][monthindex] = amntlist.toBalance(index, counter);
+    _maxbalance = balancelist.toMaxBalance();
+    await prefs.setDouble("balancelistkey$index", amntlist.toBalance(index, counter));
+    await prefs.setDouble("balancekey$index", amntlist.toBalance(index, counter));
+    await prefs.setDouble("maxbalancekey", balancelist.toMaxBalance());
+    print("saveBalance: ${balancelist[index]}");
+    print("saveMaxBalance: $maxbalance");
     notifyListeners();
   }
 
@@ -315,22 +359,6 @@ class mainViewModel extends Model {
       await prefs.setString("namekey", stringname!);
     }
     print("saveName : ${name}");
-    notifyListeners();
-  }
-
-  void getAllowance() async {
-    final prefs = await SharedPreferences.getInstance();
-    _allowance = prefs.getDouble("allowancekey") ?? 500;
-    //print("getAllowance : ${allowance}");
-    notifyListeners();
-  }
-
-  void saveAllowance(double? doubleallowance) async {
-    final prefs = await SharedPreferences.getInstance();
-    if ((doubleallowance ?? 0.0) != 0) {
-      await prefs.setDouble("allowancekey", doubleallowance as double);
-    }
-    print("saveAllowance : ${allowance}");
     notifyListeners();
   }
 

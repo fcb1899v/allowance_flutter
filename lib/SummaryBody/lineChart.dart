@@ -18,6 +18,7 @@ class _lineChartState extends State<lineChart> {
 
   @override
   Widget build(BuildContext context) {
+    final deltay = viewModel.maxbalance ~/ 500 * 100;
     return Container(
         height: 350,
         width: MediaQuery.of(context).size.width,
@@ -30,7 +31,7 @@ class _lineChartState extends State<lineChart> {
             minX: 0,
             maxX: 11,
             minY: 0,
-            maxY: viewModel.allowance,
+            maxY: (viewModel.maxbalance ~/ deltay + 1.0) * deltay,
             lineBarsData: _linechartbardatalist(),
             axisTitleData: _axistitledata(),
           ),
@@ -62,7 +63,7 @@ class _lineChartState extends State<lineChart> {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    final deltay = viewModel.allowance ~/ 500 * 100;
+    final deltay = viewModel.maxbalance ~/ 500 * 100;
     return FlTitlesData(
       show: true,
       bottomTitles: SideTitles(
@@ -78,7 +79,7 @@ class _lineChartState extends State<lineChart> {
         margin: 15,
         getTextStyles: (value) => textstyle,
         getTitles: (value) {
-          if (value.toInt() % deltay == 0 || value == viewModel.allowance) {
+          if (value.toInt() % deltay == 0 || value == viewModel.maxbalance) {
             return "${value.toInt()}";
           } else {
             return '';

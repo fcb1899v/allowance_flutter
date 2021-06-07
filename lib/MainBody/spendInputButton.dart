@@ -55,7 +55,6 @@ class spendInputButtonState extends State<spendInputButton> {
             children: <Widget>[
               TextField(
                 style: TextStyle(
-                  color: Colors.lightBlue,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -74,15 +73,17 @@ class spendInputButtonState extends State<spendInputButton> {
                     color: Colors.lightBlue,
                     fontWeight: FontWeight.bold,
                   ),
-                  hintText: AppLocalizations.of(context)!.enter,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlue, width: 1.0),
+                  ),
+                  hintText: AppLocalizations.of(context)!.settingdeschint,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
                 autofocus: true,
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
               TextField(
                 style: TextStyle(
-                  color: Colors.lightBlue,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -101,15 +102,17 @@ class spendInputButtonState extends State<spendInputButton> {
                     color: Colors.lightBlue,
                     fontWeight: FontWeight.bold,
                   ),
-                  hintText: AppLocalizations.of(context)!.enter,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlue, width: 1.0),
+                  ),
+                  hintText: AppLocalizations.of(context)!.settingdatehint,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 10),
               TextField(
                 style: TextStyle(
-                  color: Colors.lightBlue,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -128,7 +131,10 @@ class spendInputButtonState extends State<spendInputButton> {
                       color: Colors.lightBlue,
                       fontWeight: FontWeight.bold,
                   ),
-                  hintText: AppLocalizations.of(context)!.enter,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlue, width: 1.0),
+                  ),
+                  hintText: AppLocalizations.of(context)!.settingamnthint,
                   hintStyle: TextStyle(color: Colors.grey[400]),
                 ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -160,12 +166,13 @@ class spendInputButtonState extends State<spendInputButton> {
                 ),
               ),
               onPressed: () {
-                if (inputday != 0 && isNotBlank(inputdesc) && inputamnt != 0) {
+                if (inputday > 0 && isNotBlank(inputdesc) && inputamnt != 0) {
                   setState(() {
                     viewModel.saveDateList(id - 1, inputday);
                     viewModel.saveDescList(id - 1, inputdesc);
                     viewModel.saveAmntList(id - 1, inputamnt);
                   });
+                  //viewModel.selectDate(context, id - 1);
                   Navigator.pop(context);
                 }
               },

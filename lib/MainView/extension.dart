@@ -19,6 +19,21 @@ extension DoubleExt on double {
   }
 }
 
+extension ListDoubleExt on List<double> {
+  double toMaxBalance() {
+    double maxbalance = 500;
+    double newmaxbalance = 500;
+    for (var i = 0; i < 120; i++) {
+      if (this[i] > maxbalance) {
+        newmaxbalance = this[i];
+        maxbalance = newmaxbalance;
+      }
+    }
+    print("maxbalance: $maxbalance");
+    return maxbalance;
+  }
+}
+
 extension StringExt on String {
 
   int toInt(int defaultint) {
@@ -112,6 +127,10 @@ extension DateExt on DateTime? {
 
   String displayMonthYear(int index) {
     return "${this.displayMonth(index)}/${this.displayYear(index)}";
+  }
+
+  String displayMonthDay(int index, int day) {
+    return "${this.displayMonth(index)}/$day";
   }
 }
 

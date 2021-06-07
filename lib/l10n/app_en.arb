@@ -41,7 +41,6 @@
     "description": "Saved Money label"
   },
 
-
   "allowance": "Allowance",
   "@allowance": {
     "description": "Allowance"
@@ -67,7 +66,30 @@
     "description": "List of amount title label"
   },
 
+  "input": "Input",
+  "@input": {
+    "description": "Input List"
+  },
 
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete last row"
+  },
+
+  "settingdatehint": "Enter the day (1~31)",
+  "@settingdatehint": {
+    "description": "Setting day hint"
+  },
+
+  "settingdesctitle": "Setting the description",
+  "@settingdesctitle": {
+    "description": "Setting description title"
+  },
+
+  "settingdeschint": "Enter the description",
+  "@settingdeschint": {
+    "description": "Setting description hint"
+  },
 
   "title": "'s Allowance",
   "@title": {
@@ -94,24 +116,9 @@
     "description": "Setting day title"
   },
 
-  "settingdatehint": "Enter the day",
-  "@settingdatehint": {
-    "description": "Setting day hint"
-  },
-
   "inputdesc": "Enter",
   "@inputdesc": {
     "description": "Open Textfield for description"
-  },
-
-  "settingdesctitle": "Setting the description",
-  "@settingdesctitle": {
-    "description": "Setting description title"
-  },
-
-  "settingdeschint": "Enter the description",
-  "@settingdeschint": {
-    "description": "Setting description hint"
   },
 
   "inputamnt": "Enter",

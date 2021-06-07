@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'balanceView.dart';
+import 'inputButtons.dart';
 import 'monthPlusMinus.dart';
 import 'spendSpreadSheet.dart';
 import 'allowanceInputButton.dart';
@@ -27,21 +28,9 @@ class _mainBodyState extends State<mainBody> {
           children: <Widget>[
             SizedBox(height: 10),
             monthPlusMinus(viewModel),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             balanceView(viewModel),
-            SizedBox(height: 20),
-            Row(mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Spacer(),
-                allowanceInputButton(viewModel),
-                Spacer(),
-                spendInputButton(viewModel),
-                Spacer(),
-                deleteButton(viewModel),
-                Spacer(),
-                ],
-            ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             spendSpreadSheet(viewModel),
           ]
         ),

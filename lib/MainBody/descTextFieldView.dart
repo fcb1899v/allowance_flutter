@@ -21,16 +21,18 @@ class descTextFieldViewState extends State<descTextFieldView> {
   Widget build(BuildContext context) {
     int i = viewModel.index;
     String description = viewModel.desclist[i][widget.id];
+    double amount = viewModel.amntlist[i][widget.id];
+    Color? customcolor = (isBlank(description)) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
-        if (widget.id != viewModel.counter[i] - 1) descFieldDialog(context),
+        if (widget.id != viewModel.counter[i] - 1 && amount < 0.0) descFieldDialog(context),
       },
       child: SizedBox(
         child: Container(
           width: double.infinity,
-          child: Text((description != "") ? description: "-",
+          child: Text((isNotBlank(description)) ? description: "-",
             style: TextStyle(
-              color: (description == "") ? Colors.grey[400]: Colors.lightBlue,
+              color: customcolor,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -43,22 +45,34 @@ class descTextFieldViewState extends State<descTextFieldView> {
   }
 
   Future<void> descFieldDialog(BuildContext context) async {
-    String inputtext = viewModel.desclist[viewModel.index][widget.id];
+    int i = viewModel.index;
+    String inputtext = "";
+    String description = viewModel.desclist[i][widget.id];
+    double amount = viewModel.amntlist[i][widget.id];
+    Color? customcolor = (isBlank(description)) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.spend,
             style: TextStyle(fontSize: 16,
+              color: customcolor,
               fontWeight: FontWeight.bold,
             ),
           ),
           content: TextField(
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
             onChanged: (value) {
               if (isNotBlank(value)) inputtext = value;
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: customcolor, width: 1.0),
+              ),
               hintText: AppLocalizations.of(context)!.settingdeschint,
               hintStyle: TextStyle(color: Colors.grey[400]),
             ),
@@ -68,8 +82,8 @@ class descTextFieldViewState extends State<descTextFieldView> {
             TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
                 style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
+                  color: customcolor,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -80,17 +94,18 @@ class descTextFieldViewState extends State<descTextFieldView> {
             TextButton(
               child: Text("OK",
                 style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
+                  color: customcolor,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               onPressed: () {
-                viewModel.saveDescList(widget.id, inputtext);
-                setState(() {
-                  viewModel.getDescList();
-                });
-                Navigator.pop(context);
+                if (isNotBlank(inputtext)) {
+                  setState(() {
+                    viewModel.saveDescList(widget.id, inputtext);
+                  });
+                  Navigator.pop(context);
+                }
               },
             ),
           ],
