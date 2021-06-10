@@ -18,19 +18,25 @@ class _mainBodyState extends State<mainBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 10),
-            monthPlusMinus(viewModel),
-            SizedBox(height: 20),
-            balanceView(viewModel),
-            SizedBox(height: 40),
-            spendSpreadSheet(viewModel),
-            SizedBox(height: 40),
-          ]
-        ),
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          monthPlusMinus(viewModel),
+          SizedBox(height: 10),
+          balanceView(viewModel),
+          SizedBox(height: 40),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  spendSpreadSheet(viewModel),
+                  SizedBox(height: 40),
+                ]
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

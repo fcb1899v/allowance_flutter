@@ -36,9 +36,14 @@
     "description": "Balance label"
   },
 
-  "savedmoney": "Saved Money",
-  "@savedmoney": {
-    "description": "Saved Money label"
+  "moneyspent": "Money spent",
+  "@moneyspent": {
+    "description": "Money spent label"
+  },
+
+  "moneyleft": "Money left",
+  "@moneyleft": {
+    "description": "Money left label"
   },
 
   "month": "[Month]",

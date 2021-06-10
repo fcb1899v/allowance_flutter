@@ -9,7 +9,8 @@
   "list": "リスト",
   "summary": "まとめ",
   "balance": "残っているお金",
-  "savedmoney": "残ったお金",
+  "moneyspent": "使ったお金",
+  "moneyleft": "残したお金",
   "month": "[月]",
 
   "allowance": "おこづかい",

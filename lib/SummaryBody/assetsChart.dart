@@ -64,7 +64,16 @@ class assetsChartState extends State<assetsChart> {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    final deltay = viewModel.maxassets ~/ 500 * 100;
+    double deltay = 1;
+    if (viewModel.maxassets >= 500) {
+      deltay = viewModel.maxassets ~/ 500 * 100;
+    } else if (viewModel.maxassets >= 50) {
+      deltay = viewModel.maxassets ~/ 50 * 10;
+    } else if (viewModel.maxassets >= 5) {
+      deltay = viewModel.maxassets ~/ 5 * 1;
+    } else {
+      deltay = 1;
+    }
     return FlTitlesData(
       show: true,
       bottomTitles: SideTitles(
@@ -80,10 +89,12 @@ class assetsChartState extends State<assetsChart> {
         margin: 15,
         getTextStyles: (value) => textstyle,
         getTitles: (value) {
-          if (value.toInt() % deltay == 0 && value.toInt() < 1000) {
-            return "${value.toInt()}";
-          } else if (value.toInt() % deltay == 0) {
-            return "${(value.toInt() / 1000).toStringAsFixed(0)}k";
+          if (value.toInt() % deltay == 0.0 && deltay >= 2000) {
+            return "${(value.toDouble() / 1000).toStringAsFixed(0)}k";
+          } else if (value.toDouble() % deltay == 0.0 && deltay >= 500) {
+            return "${(value.toDouble() / 1000).toStringAsFixed(1)}k";
+          } else if (value.toDouble() % deltay == 0.0) {
+            return "${value.toDouble().toStringAsFixed(0)}";
           } else {
             return '';
           }

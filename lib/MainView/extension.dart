@@ -5,7 +5,7 @@ extension DoubleExt on double {
     return (this < 0.0) ? (-1)* this: this;
   }
 
-  String stringBalance(String unitvalue) {
+  String stringMoney(String unitvalue) {
     final numberdigit = (unitvalue == '¥') ? 0: 2;
     return this.toStringAsFixed(numberdigit);
   }
@@ -136,7 +136,16 @@ extension DateExt on DateTime? {
 
 extension ListListMapAmntxt on List<List<Map>> {
 
-  double toAmountSum(int index, int count) {
+  double toSum(int index, int count) {
+    double amntsum = 0;
+    for (var i = 0; i < count; i++) {
+      amntsum += this[index][i]["amnt"];
+    }
+    return amntsum;
+  }
+
+
+  double toAllowanceSum(int index, int count) {
     double amntsum = 0;
     for (var i = 0; i < count; i++) {
       if (this[index][i]["amnt"] > 0) {
@@ -146,12 +155,14 @@ extension ListListMapAmntxt on List<List<Map>> {
     return amntsum;
   }
 
-  double toSum(int index, int count) {
-    double sum = 0;
+  double toSpendSum(int index, int count) {
+    double amntsum = 0;
     for (var i = 0; i < count; i++) {
-      sum += this[index][i]["amnt"];
+      if (this[index][i]["amnt"] < 0) {
+        amntsum += this[index][i]["amnt"];
+      }
     }
-    return sum;
+    return (-1.0) * amntsum;
   }
 
   double toBalance(int index, List<int> count) {
@@ -160,7 +171,7 @@ extension ListListMapAmntxt on List<List<Map>> {
 
   double toPercent(int index, List<int> count) {
     double sum = (this.toSum(index, count[index]) > 0.0) ? this.toSum(index, count[index]): 0.0;
-    double amountsum = (this.toAmountSum(index, count[index]) > 0.0) ? this.toAmountSum(index, count[index]): 0.0;
+    double amountsum = (this.toAllowanceSum(index, count[index]) > 0.0) ? this.toAllowanceSum(index, count[index]): 0.0;
     double percent = (sum == 0.0 || amountsum ==0.0) ? 1: (1 - sum / amountsum);
     return (percent > 1.0) ? 1.0: (percent < 0) ? 0.0: percent;
   }

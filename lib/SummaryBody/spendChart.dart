@@ -5,26 +5,26 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../MainView/mainViewModel.dart';
 import '../MainView/extension.dart';
 
-class balanceChart extends StatefulWidget {
+class spendChart extends StatefulWidget {
   final mainViewModel viewModel;
-  balanceChart(this.viewModel);
+  spendChart(this.viewModel);
   @override
-  balanceChartState createState() => balanceChartState(viewModel);
+  spendChartState createState() => spendChartState(viewModel);
 }
 
-class balanceChartState extends State<balanceChart> {
+class spendChartState extends State<spendChart> {
   final mainViewModel viewModel;
-  balanceChartState(this.viewModel);
+  spendChartState(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
     double deltay = 1;
-    if (viewModel.maxbalance >= 500) {
-      deltay = viewModel.maxbalance ~/ 500 * 100;
-    } else if (viewModel.maxbalance >= 50) {
-      deltay = viewModel.maxbalance ~/ 50 * 10;
-    } else if (viewModel.maxbalance >= 5) {
-      deltay = viewModel.maxbalance ~/ 5 * 1;
+    if (viewModel.maxspend >= 500) {
+      deltay = viewModel.maxspend ~/ 500 * 100;
+    } else if (viewModel.maxspend >= 50) {
+      deltay = viewModel.maxspend ~/ 50 * 10;
+    } else if (viewModel.maxspend >= 5) {
+      deltay = viewModel.maxspend ~/ 5 * 1;
     } else {
       deltay = 1;
     }
@@ -40,7 +40,7 @@ class balanceChartState extends State<balanceChart> {
             minX: 0,
             maxX: 11,
             minY: 0,
-            maxY: (viewModel.maxbalance ~/ deltay + 1.0) * deltay,
+            maxY: (viewModel.maxspend ~/ deltay + 1.0) * deltay,
             lineBarsData: _linechartbardatalist(),
             axisTitleData: _axistitledata(),
           ),
@@ -73,12 +73,12 @@ class balanceChartState extends State<balanceChart> {
       fontSize: 14,
     );
     double deltay = 1;
-    if (viewModel.maxbalance >= 500) {
-      deltay = viewModel.maxbalance ~/ 500 * 100;
-    } else if (viewModel.maxbalance >= 50) {
-      deltay = viewModel.maxbalance ~/ 50 * 10;
-    } else if (viewModel.maxbalance >= 5) {
-      deltay = viewModel.maxbalance ~/ 5 * 1;
+    if (viewModel.maxspend >= 500) {
+      deltay = viewModel.maxspend ~/ 500 * 100;
+    } else if (viewModel.maxspend >= 50) {
+      deltay = viewModel.maxspend ~/ 50 * 10;
+    } else if (viewModel.maxspend >= 5) {
+      deltay = viewModel.maxspend ~/ 5 * 1;
     } else {
       deltay = 1;
     }
@@ -127,7 +127,7 @@ class balanceChartState extends State<balanceChart> {
     return FlAxisTitleData(
       topTitle: AxisTitle(
         showTitle: true,
-        titleText: "${AppLocalizations.of(context)!.moneyleft} [${viewModel.unitvalue}]",
+        titleText: "${AppLocalizations.of(context)!.moneyspent} [${viewModel.unitvalue}]",
         textStyle: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -152,20 +152,20 @@ class balanceChartState extends State<balanceChart> {
 
   List<LineChartBarData> _linechartbardatalist() {
     List<FlSpot> flspotlist = List.generate(12,
-      (index) => FlSpot(index.toDouble(), viewModel.balance[viewModel.yearindex][index])
+      (index) => FlSpot(index.toDouble(), viewModel.spend[viewModel.yearindex][index])
     );
     return [ LineChartBarData(
       spots: flspotlist,
       isCurved: false,
       barWidth: 5,
       isStrokeCapRound: true,
-      colors: [Colors.pinkAccent],
+      colors: [Colors.lightBlue],
       dotData: FlDotData(
         show: true,
       ),
       belowBarData: BarAreaData(
         show: true,
-        colors: [Colors.pinkAccent.withOpacity(0.5)],
+        colors: [Colors.lightBlue.withOpacity(0.5)],
       ),
     ),];
   }

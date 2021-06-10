@@ -32,26 +32,6 @@ class mainViewModel extends Model {
   double _startassets = 0.0;
   double get startassets => _startassets;
 
-  List<List<double>> _assets = List.generate(10,
-    (_) => List.generate(12, (_) => 0.0)
-  );
-  List<List<double>> get assets => _assets;
-
-  double _maxassets = 0.0;
-  double get maxassets => _maxassets;
-
-  double _maxbalance = 0.0;
-  double get maxbalance => _maxbalance;
-
-  String _unitvalue = "¥";
-  String get unitvalue => _unitvalue;
-
-  String _version = "0.0.0";
-  String get version => _version;
-
-  List<int> _counter = List.generate(120, (_) => 1);
-  List<int> get counter => _counter;
-
   List<List<Map>> _spendlist = List.generate(120, (_) =>
       List.generate(30, (_) => {"date": 100, "desc": "", "amnt": 0.0})
   );
@@ -63,10 +43,38 @@ class mainViewModel extends Model {
   List<double> _percentlist = List.generate(120, (_) => 0.0);
   List<double> get percentlist => _percentlist;
 
-  List<List<double>> _balance = List.generate(10, 
+  List<List<double>> _assets = List.generate(10,
     (_) => List.generate(12, (_) => 0.0)
   );
+  List<List<double>> get assets => _assets;
+
+  double _maxassets = 0.0;
+  double get maxassets => _maxassets;
+
+  List<List<double>> _balance = List.generate(10,
+          (_) => List.generate(12, (_) => 0.0)
+  );
   List<List<double>> get balance => _balance;
+
+  double _maxbalance = 0.0;
+  double get maxbalance => _maxbalance;
+
+  List<List<double>> _spend = List.generate(10,
+          (_) => List.generate(12, (_) => 0.0)
+  );
+  List<List<double>> get spend => _spend;
+
+  double _maxspend = 0.0;
+  double get maxspend => _maxspend;
+
+  String _unitvalue = "¥";
+  String get unitvalue => _unitvalue;
+
+  String _version = "0.0.0";
+  String get version => _version;
+
+  List<int> _counter = List.generate(120, (_) => 1);
+  List<int> get counter => _counter;
 
   //データの初期化
   void init()
@@ -79,6 +87,7 @@ class mainViewModel extends Model {
     getCounter();
     getSpendList();
     getAssets();
+    getSpend();
     getBalance();
     getPercent();
   }
@@ -201,6 +210,7 @@ class mainViewModel extends Model {
     saveBalance();
     savePercent();
     saveAssets();
+    saveSpend();
     notifyListeners();
   }
 
@@ -236,6 +246,7 @@ class mainViewModel extends Model {
     saveBalance();
     savePercent();
     saveAssets();
+    saveSpend();
     notifyListeners();
   }
 
@@ -331,6 +342,7 @@ class mainViewModel extends Model {
     saveBalance();
     savePercent();
     saveAssets();
+    saveSpend();
     notifyListeners();
   }
 
@@ -346,6 +358,7 @@ class mainViewModel extends Model {
   }
 
   void getBalance() async {
+    final initialmaxbalance = (unitvalue == "¥") ? 500.0: 5.00;
     final prefs = await SharedPreferences.getInstance();
     for (int i = 0; i < maxindex; i++) {
       final monthindex = (startdate.toMonth() - 1 + i) % 12;
@@ -353,7 +366,7 @@ class mainViewModel extends Model {
       _balancelist[i] = prefs.getDouble("balancelistkey$i") ?? 0.0;
       _balance[yearindex][monthindex] = prefs.getDouble("balancekey$i") ?? 0.0;
     }
-    _maxbalance = prefs.getDouble("maxbalancekey") ?? 500.0;
+    _maxbalance = prefs.getDouble("maxbalancekey") ?? initialmaxbalance;
     //print("getBalance: ${balancelist[index]}");
     notifyListeners();
   }
@@ -378,6 +391,37 @@ class mainViewModel extends Model {
     _percentlist[index] = spendlist.toPercent(index, counter);
     await prefs.setDouble("percentkey$index", percentlist[index]);
     print("savePercent: ${percentlist[index]}");
+    notifyListeners();
+  }
+
+  void getSpend() async {
+    final initialmaxspend = (unitvalue == "¥") ? 500.0: 5.00;
+    final prefs = await SharedPreferences.getInstance();
+    for (int i = 0; i < maxindex; i++) {
+      final monthindex = (startdate.toMonth() - 1 + i) % 12;
+      final yearindex = i ~/ 12;
+      _spend[yearindex][monthindex] = prefs.getDouble("spendkey$i") ?? 0.0;
+    }
+    _maxspend = prefs.getDouble("maxspendkey") ?? initialmaxspend;
+    //print("getSpend: $spend}");
+    notifyListeners();
+  }
+
+  void saveSpend() async {
+    final prefs = await SharedPreferences.getInstance();
+    double spend = 0;
+    double maxspend = 0;
+    for (int i = 0; i < maxindex; i++) {
+      int monthindex = (startdate.toMonth() - 1 + i) % 12;
+      int yearindex = i ~/ 12;
+      spend += spendlist.toSpendSum(i, counter[index]);
+      _spend[yearindex][monthindex] = spend;
+      if (spend > maxspend) maxspend = spend;
+      await prefs.setDouble("spendkey$i", spend);
+      await prefs.setDouble("maxspendkey", maxspend);
+    }
+    print("saveSpend: $spend");
+    print("saveMaxSpend: $maxspend");
     notifyListeners();
   }
 

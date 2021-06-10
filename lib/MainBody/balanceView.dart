@@ -61,7 +61,7 @@ class balanceViewState extends State<balanceView> {
                     }).toList(),
                   ),
                   Text("] ", style: customTextStyle(24, "defaultfont"),),
-                  Text("${viewModel.balancelist[viewModel.index].stringBalance(viewModel.unitvalue)}",
+                  Text("${viewModel.balancelist[viewModel.index].stringMoney(viewModel.unitvalue)}",
                     style: customTextStyle(32, "defaultfont"),
                   ),
                 ],

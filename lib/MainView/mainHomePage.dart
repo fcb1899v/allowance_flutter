@@ -57,7 +57,7 @@ class _MainHomePageState extends State<MainHomePage> {
             drawer: mainDrawer(viewModel),
             bottomNavigationBar: mainBottomNavi(viewModel),
             body: (viewModel.selectflag) ? mainBody(viewModel): summeryBody(viewModel),
-            floatingActionButton: inputButtons(viewModel),
+            floatingActionButton: (viewModel.selectflag) ? inputButtons(viewModel): null,
           ),
         ),
       ),

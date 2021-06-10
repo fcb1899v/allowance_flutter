@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../MainView/mainViewModel.dart';
+import 'spendChart.dart';
 import 'yearPlusMinus.dart';
 import 'assetsChart.dart';
 import 'balanceChart.dart';
@@ -18,19 +19,25 @@ class _summeryBodyState extends State<summeryBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 10),
-            yearPlusMinus(viewModel),
-            SizedBox(height: 10),
-            assetsChart(viewModel),
-            SizedBox(height: 10),
-            balanceChart(viewModel),
-            SizedBox(height: 10),
-          ]
-        ),
+    return Center(
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 10),
+          yearPlusMinus(viewModel),
+          SizedBox(height: 10),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  assetsChart(viewModel),
+                  balanceChart(viewModel),
+                  spendChart(viewModel),
+                  SizedBox(height: 10),
+                ],
+              )
+            )
+          ),
+        ],
       ),
     );
   }
