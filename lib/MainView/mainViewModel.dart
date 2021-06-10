@@ -136,7 +136,7 @@ class mainViewModel extends Model {
       _index = 0;
     }
     _startdate = prefs.getString("startdatekey") ?? "01/01/2021";
-    print("startdate: $startdate, index: $index");
+    //print("startdate: $startdate, index: $index");
     notifyListeners();
   }
 
@@ -420,7 +420,7 @@ class mainViewModel extends Model {
       await prefs.setDouble("spendkey$i", spend);
       await prefs.setDouble("maxspendkey", maxspend);
     }
-    print("saveSpend: $spend");
+    //print("saveSpend: $spend");
     print("saveMaxSpend: $maxspend");
     notifyListeners();
   }

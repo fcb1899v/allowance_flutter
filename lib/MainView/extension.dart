@@ -29,7 +29,6 @@ extension ListDoubleExt on List<double> {
         maxbalance = newmaxbalance;
       }
     }
-    print("maxbalance: $maxbalance");
     return maxbalance;
   }
 }
@@ -77,7 +76,6 @@ extension StringExt on String {
   }
 
   int toCurrentIndex() {
-    print("now : ${DateTime.now()}, startdate : $this");
     return 12 * (DateTime.now().year - this.toYear()) + DateTime.now().month - this.toMonth();
   }
 }
@@ -89,7 +87,7 @@ extension intExt on int {
   }
 
   int yearIndex() {
-    return (this / 12).toInt();
+    return this ~/ 12;
   }
 }
 
@@ -120,7 +118,7 @@ extension DateExt on DateTime? {
   }
 
   int displayYear(int index) {
-    final addindextoyear = this!.year + ((this!.month + index) / 12).toInt();
+    final addindextoyear = this!.year + (this!.month + index) ~/ 12;
     return (this != null && (this!.month + index) % 12 != 0) ?
       addindextoyear: addindextoyear - 1;
   }
