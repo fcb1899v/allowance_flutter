@@ -10,6 +10,7 @@
   "summary": "まとめ",
   "balance": "残っているお金",
   "savedmoney": "残ったお金",
+  "month": "[月]",
 
   "allowance": "おこづかい",
   "spend": "買ったもの",
@@ -25,24 +26,15 @@
   "title": "のおこづかい帳",
   "allowancebook": "おこづかい帳",
 
-
-  "selectdate": "タップしてね",
-  "inputdate": "入力してね",
-  "inputdesc": "入力してね",
-  "inputamnt": "入力してね",
-  "settingdatetitle": "日",
-  "settingdesctitle": "買ったもの",
-  "settingamnttitle": "金額",
-
   "name": "お名前",
   "settingnametitle": "名前の設定",
   "settingnamehint": "お名前を入力してね",
   "unit": "お金の単位",
   "settingunittitle": "お金の単位の設定",
-  "settingallowancetitle": "おこづかいの金額設定",
-  "settingallowancehint": "おこづかいを入力してね",
+  "assets": "最初のお金",
+  "settingassetstitle": "最初のお金の設定",
+  "settingassetshint": "最初のお金を入力してね",
   "startdate": "使い始めた日",
   "privacyPolicy": "プライバシー・ポリシー",
-  "version": "バージョン",
-  "month": "[月]"
+  "version": "バージョン"
 }

@@ -41,6 +41,11 @@
     "description": "Saved Money label"
   },
 
+  "month": "[Month]",
+  "@month": {
+    "description": "Month"
+  },
+
   "allowance": "Allowance",
   "@allowance": {
     "description": "Allowance"
@@ -81,14 +86,14 @@
     "description": "Setting day hint"
   },
 
-  "settingdesctitle": "Setting the description",
-  "@settingdesctitle": {
-    "description": "Setting description title"
-  },
-
   "settingdeschint": "Enter the description",
   "@settingdeschint": {
     "description": "Setting description hint"
+  },
+
+  "settingamnthint": "Enter the amount",
+  "@settingamnthint": {
+    "description": "Setting amount hint"
   },
 
   "title": "'s Allowance",
@@ -99,41 +104,6 @@
   "allowancebook": "Allowance book",
   "@allowancebook": {
     "description": "Title label"
-  },
-
-  "selectdate": "Select date",
-  "@selectdate": {
-    "description": "Open datepicker"
-  },
-
-  "inputdate": "Enter",
-  "@inputdate": {
-    "description": "Open Textfield for date"
-  },
-
-  "settingdatetitle": "Setting the day",
-  "@settingdatetitle": {
-    "description": "Setting day title"
-  },
-
-  "inputdesc": "Enter",
-  "@inputdesc": {
-    "description": "Open Textfield for description"
-  },
-
-  "inputamnt": "Enter",
-  "@inputamnt": {
-    "description": "Open Textfield for amount"
-  },
-
-  "settingamnttitle": "Setting the amount",
-  "@settingamnttitle": {
-    "description": "Setting amount title"
-  },
-
-  "settingamnthint": "Enter the amount",
-  "@settingamnthint": {
-    "description": "Setting amount hint"
   },
 
   "name": "Your name",
@@ -161,14 +131,19 @@
     "description": "Setting currency unit title"
   },
 
-  "settingallowancetitle": "Setting your monthly allowance",
-  "@settingallowancetitle": {
-    "description": "Setting allowance title"
+  "assets": "Assets",
+  "@assets": {
+    "description": "Allowance"
   },
 
-  "settingallowancehint": "Enter your monthly allowance",
-  "@settingallowancehint": {
-    "description": "Setting allowance hint"
+  "settingassetstitle": "Setting your start assets",
+  "@settingassetstitle": {
+    "description": "Setting assets title"
+  },
+
+  "settingassetshint": "Enter your start assets",
+  "@settingassetshint": {
+    "description": "Setting assets hint"
   },
 
   "startdate": "Start date",
@@ -184,10 +159,5 @@
   "version": "Version",
   "@version": {
     "description": "Version"
-  },
-
-  "month": "[Month]",
-  "@month": {
-    "description": "Month"
   }
 }

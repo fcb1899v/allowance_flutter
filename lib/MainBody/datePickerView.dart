@@ -19,12 +19,12 @@ class datePickerViewState extends State<datePickerView> {
   //DatePickerが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
     int i = viewModel.index;
-    int intday = viewModel.datelist[i][widget.id];
-    double amount = viewModel.amntlist[i][widget.id];
-    Color? customcolor = (intday == 0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
+    int intday = viewModel.spendlist[i][widget.id]["date"];
+    double amount = viewModel.spendlist[i][widget.id]["amnt"];
+    Color? customcolor = (intday == 100) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
-        if (widget.id != viewModel.counter[i] - 1) {
+        if (widget.id != viewModel.counter[i] - 1 || intday != 100) {
           viewModel.selectDate(context, widget.id),
         },
       },

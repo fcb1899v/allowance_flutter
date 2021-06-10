@@ -29,7 +29,18 @@ class mainViewModel extends Model {
   String _name = "";
   String get name => _name;
 
-  double _maxbalance = 0;
+  double _startassets = 0.0;
+  double get startassets => _startassets;
+
+  List<List<double>> _assets = List.generate(10,
+    (_) => List.generate(12, (_) => 0.0)
+  );
+  List<List<double>> get assets => _assets;
+
+  double _maxassets = 0.0;
+  double get maxassets => _maxassets;
+
+  double _maxbalance = 0.0;
   double get maxbalance => _maxbalance;
 
   String _unitvalue = "¥";
@@ -41,20 +52,10 @@ class mainViewModel extends Model {
   List<int> _counter = List.generate(120, (_) => 1);
   List<int> get counter => _counter;
 
-  List<List<int>> _datelist = List.generate(120, (_) =>
-    List.generate(30, (_) => 0)
+  List<List<Map>> _spendlist = List.generate(120, (_) =>
+      List.generate(30, (_) => {"date": 100, "desc": "", "amnt": 0.0})
   );
-  List<List<int>> get datelist => _datelist;
-
-  List<List<String>> _desclist = List.generate(120, (_) =>
-    List.generate(30, (_) => "")
-  );
-  List<List<String>> get desclist => _desclist;
-
-  List<List<double>> _amntlist = List.generate(120, (_) =>
-    List.generate(30, (_) => 0.0)
-  );
-  List<List<double>> get amntlist => _amntlist;
+  List<List<Map>> get spendlist => _spendlist;
 
   List<double> _balancelist = List.generate(120, (_) => 0.0);
   List<double> get balancelist => _balancelist;
@@ -66,8 +67,7 @@ class mainViewModel extends Model {
     (_) => List.generate(12, (_) => 0.0)
   );
   List<List<double>> get balance => _balance;
-  
-  
+
   //データの初期化
   void init()
   {
@@ -77,9 +77,8 @@ class mainViewModel extends Model {
     getStartDate();
     getCurrentIndex();
     getCounter();
-    getDateList();
-    getDescList();
-    getAmntList();
+    getSpendList();
+    getAssets();
     getBalance();
     getPercent();
   }
@@ -115,8 +114,8 @@ class mainViewModel extends Model {
     if (index > 0) {
       _index--;
       print("index: $index, maxindex: $maxindex, ");
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   void getStartDate() async {
@@ -185,11 +184,75 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
+  void deleteSpend(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+    spendlist[index].removeAt(id);
+    spendlist[index].add({"date": 100, "desc": "", "amnt": 0.0});
+    spendlist[index].sort((a, b) => a["date"].compareTo(b["date"]));
+    for (int id = 0; id < counter[index]; id++) {
+      final date = spendlist[index][id]["date"];
+      final desc = spendlist[index][id]["desc"];
+      final amnt = spendlist[index][id]["amnt"];
+      await prefs.setInt("datekey${index}_$id", date);
+      await prefs.setString("desckey${index}_$id", desc);
+      await prefs.setDouble("amntkey${index}_$id", amnt);
+    }
+    decreaseCounter();
+    saveBalance();
+    savePercent();
+    saveAssets();
+    notifyListeners();
+  }
+
+  void getSpendList() async {
+    final prefs = await SharedPreferences.getInstance();
+    for (int i = 0; i < maxindex; i++) {
+      for (int id = 0; id < counter[i]; id++) {
+        _spendlist[i][id]["date"] = prefs.getInt("datekey${i}_$id") ?? 0;
+        _spendlist[i][id]["desc"] = prefs.getString("desckey${i}_$id") ?? "";
+        _spendlist[i][id]["amnt"] = prefs.getDouble("amntkey${i}_$id") ?? 00.0;
+      }
+    }
+    notifyListeners();
+  }
+
+  void saveSpendList(int day, String description, double amount) async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("datekey${index}_${counter[index] - 2}", day);
+    await prefs.setString("desckey${index}_${counter[index] - 2}", description);
+    await prefs.setDouble("amntkey${index}_${counter[index] - 2}", amount);
+    _spendlist[index][counter[index] - 2]["date"] = day;
+    _spendlist[index][counter[index] - 2]["desc"] = description;
+    _spendlist[index][counter[index] - 2]["amnt"] = amount;
+    spendlist[index].sort((a, b) => a["date"].compareTo(b["date"]));
+    for (int i = 0; i < counter[index]; i++) {
+      int date = spendlist[index][i]["date"];
+      String desc = spendlist[index][i]["desc"];
+      double amnt = spendlist[index][i]["amnt"];
+      await prefs.setInt("datekey${index}_$i", date);
+      await prefs.setString("desckey${index}_$i", desc);
+      await prefs.setDouble("amntkey${index}_$i", amnt);
+    }
+    saveBalance();
+    savePercent();
+    saveAssets();
+    notifyListeners();
+  }
+
   void saveDateList(int id, int day) async{
     final prefs = await SharedPreferences.getInstance();
-    _datelist[index][id] = day;
     await prefs.setInt("datekey${index}_$id", day);
-    print("index: $index, id: $id, Date : $day");
+    _spendlist[index][id]["date"] = day;
+    spendlist[index].sort((a, b) => a["date"].compareTo(b["date"]));
+    for (int i = 0; i < counter[index]; i++) {
+      int date = spendlist[index][i]["date"];
+      String desc = spendlist[index][i]["desc"];
+      double amnt = spendlist[index][i]["amnt"];
+      await prefs.setInt("datekey${index}_$i", date);
+      await prefs.setString("desckey${index}_$i", desc);
+      await prefs.setDouble("amntkey${index}_$i", amnt);
+    }
+    print("${spendlist[index]}");
     notifyListeners();
   }
 
@@ -197,32 +260,15 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     for (int i = 0; i < maxindex; i++) {
       for (int id = 0; id < counter[i]; id++) {
-        _datelist[i][id] = prefs.getInt("datekey${i}_$id") ?? 0;
+        _spendlist[i][id]["date"] = prefs.getInt("datekey${i}_$id") ?? 0;
       }
-    }
-    notifyListeners();
-  }
-
-  void deleteList(int id) async{
-    final prefs = await SharedPreferences.getInstance();
-    _datelist[index].removeRange(id, 1);
-    _datelist[index].add(0);
-    _desclist[index].removeRange(id, 1);
-    _desclist[index].add("");
-    _amntlist[index].removeRange(id, 1);
-    _amntlist[index].add(0.0);
-    print("id: $id");
-    for (int i = 0; i < counter[index]; i++) {
-      await prefs.setInt("datekey${index}_$i", datelist[index][i]);
-      await prefs.setString("desckey${index}_$i", desclist[index][i]);
-      await prefs.setDouble("amntkey${index}_$i", amntlist[index][i]);
     }
     notifyListeners();
   }
 
   //DatePickerで日付を記録
   Future selectDate(BuildContext context, int id) async {
-    Color? customcolor = (amntlist[index][id] > 0) ? Colors.pinkAccent: Colors.lightBlue;
+    Color? customcolor = (spendlist[index][id]["amnt"] > 0.0) ? Colors.pinkAccent: Colors.lightBlue;
     final DateTime? picked = await showDatePicker(
       builder: (context, child) {
         return Theme(
@@ -231,7 +277,6 @@ class mainViewModel extends Model {
               primary: customcolor, // header background color
               onPrimary: Colors.white, // header text color
               onSurface: Colors.blueGrey, // body text color
-
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -253,14 +298,16 @@ class mainViewModel extends Model {
       lastDate: DateTime(startdate.toDisplayDate(index).year + 1),
     );
     if(picked != null) {
+      print("picked.day: ${picked.day}");
       saveDateList(id, picked.day);
       getDateList();
     }
+    notifyListeners();
   }
 
   void saveDescList(int id, String description) async{
     final prefs = await SharedPreferences.getInstance();
-    _desclist[index][id] = description;
+    _spendlist[index][id]["desc"] = description;
     await prefs.setString("desckey${index}_$id", description);
     print("index: $index, id: $id, saveDescription : $description");
     notifyListeners();
@@ -270,7 +317,7 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     for (int i = 0; i < maxindex; i++) {
       for (int id = 0; id < counter[i]; id++) {
-        _desclist[i][id] = prefs.getString("desckey${i}_$id") ?? "";
+        _spendlist[i][id]["desc"] = prefs.getString("desckey${i}_$id") ?? "";
       }
     }
     notifyListeners();
@@ -279,10 +326,11 @@ class mainViewModel extends Model {
   void saveAmntList(int id, double amount) async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble("amntkey${index}_$id", amount);
-    _amntlist[index][id] = amount;
+    _spendlist[index][id]["amnt"] = amount;
     print("id: $id, saveAmount: $amount");
     saveBalance();
     savePercent();
+    saveAssets();
     notifyListeners();
   }
 
@@ -290,7 +338,7 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     for (int i = 0; i < maxindex; i++) {
       for (int id = 0; id < counter[i]; id++) {
-        _amntlist[i][id] = prefs.getDouble("amntkey${i}_$id") ?? 0.0;
+        _spendlist[i][id]["amnt"] = prefs.getDouble("amntkey${i}_$id") ?? 0.0;
       }
     }
     //print("${amntlist[index]}");
@@ -314,11 +362,11 @@ class mainViewModel extends Model {
     final prefs = await SharedPreferences.getInstance();
     final monthindex = (startdate.toMonth() - 1 + index) % 12;
     final yearindex = index ~/ 12;
-    _balancelist[index] = amntlist.toBalance(index, counter);
-    _balance[yearindex][monthindex] = amntlist.toBalance(index, counter);
+    _balancelist[index] = spendlist.toBalance(index, counter);
+    _balance[yearindex][monthindex] = spendlist.toBalance(index, counter);
     _maxbalance = balancelist.toMaxBalance();
-    await prefs.setDouble("balancelistkey$index", amntlist.toBalance(index, counter));
-    await prefs.setDouble("balancekey$index", amntlist.toBalance(index, counter));
+    await prefs.setDouble("balancelistkey$index", spendlist.toBalance(index, counter));
+    await prefs.setDouble("balancekey$index", spendlist.toBalance(index, counter));
     await prefs.setDouble("maxbalancekey", balancelist.toMaxBalance());
     print("saveBalance: ${balancelist[index]}");
     print("saveMaxBalance: $maxbalance");
@@ -327,7 +375,7 @@ class mainViewModel extends Model {
 
   void savePercent() async {
     final prefs = await SharedPreferences.getInstance();
-    _percentlist[index] = amntlist.toPercent(index, counter);
+    _percentlist[index] = spendlist.toPercent(index, counter);
     await prefs.setDouble("percentkey$index", percentlist[index]);
     print("savePercent: ${percentlist[index]}");
     notifyListeners();
@@ -349,7 +397,7 @@ class mainViewModel extends Model {
   void getName() async {
     final prefs = await SharedPreferences.getInstance();
     _name = prefs.getString("namekey") ?? "Not set";
-    //print("getName : ${name}");
+    //print("getName : $name");
     notifyListeners();
   }
 
@@ -358,14 +406,55 @@ class mainViewModel extends Model {
     if (isNotBlank(stringname)) {
       await prefs.setString("namekey", stringname!);
     }
-    print("saveName : ${name}");
+    print("saveName : $name");
+    notifyListeners();
+  }
+
+  void getAssets() async {
+    final prefs = await SharedPreferences.getInstance();
+    for (int i = 0; i < maxindex; i++) {
+      int monthindex = (startdate.toMonth() - 1 + i) % 12;
+      int yearindex = i ~/ 12;
+      _assets[yearindex][monthindex] = prefs.getDouble("assetskey_$i") ?? 0.0;
+    }
+    _startassets = prefs.getDouble("startassetskey") ?? 0.0;
+    _maxassets = prefs.getDouble("maxassetskey") ?? 0.0;
+    //print("getAssets : $assets");
+    notifyListeners();
+  }
+
+  void saveStartAssets(double assets) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (assets >= 0) {
+      await prefs.setDouble("startassetskey", assets);
+    }
+    print("saveStartAssets : $startassets");
+    saveAssets();
+    notifyListeners();
+  }
+
+  void saveAssets() async {
+    final prefs = await SharedPreferences.getInstance();
+    double asset = startassets;
+    double maxasset = startassets;
+    for (int i = 0; i < maxindex; i++) {
+      int monthindex = (startdate.toMonth() - 1 + i) % 12;
+      int yearindex = i ~/ 12;
+      asset += balancelist[i];
+      await prefs.setDouble("assetskey_$i", asset);
+      _assets[yearindex][monthindex] = asset;
+      if (asset > maxasset) maxasset = asset;
+    }
+    _maxassets = maxasset;
+    await prefs.setDouble("maxassetskey", maxasset);
+    print("saveAssets : $assets, saveMaxAssets : $maxassets" );
     notifyListeners();
   }
 
   void getUnit() async {
     final prefs = await SharedPreferences.getInstance();
     _unitvalue = prefs.getString("unitkey") ?? "¥";
-    //print("getUnit : ${unitvalue}");
+    //print("getUnit : $unitvalue");
     notifyListeners();
   }
 
@@ -374,7 +463,7 @@ class mainViewModel extends Model {
     if (isNotBlank(unit)) {
       await prefs.setString("unitkey", unit!);
     }
-    print("saveUnit : ${unitvalue}");
+    print("saveUnit : $unitvalue");
     notifyListeners();
   }
 

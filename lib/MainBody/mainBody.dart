@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'balanceView.dart';
-import 'inputButtons.dart';
 import 'monthPlusMinus.dart';
 import 'spendSpreadSheet.dart';
-import 'allowanceInputButton.dart';
-import 'spendInputButton.dart';
-import 'deleteButton.dart';
 import '../MainView/mainViewModel.dart';
 
 class mainBody extends StatefulWidget {
@@ -32,6 +28,7 @@ class _mainBodyState extends State<mainBody> {
             balanceView(viewModel),
             SizedBox(height: 40),
             spendSpreadSheet(viewModel),
+            SizedBox(height: 40),
           ]
         ),
       ),

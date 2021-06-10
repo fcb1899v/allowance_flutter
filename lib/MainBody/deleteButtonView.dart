@@ -21,8 +21,8 @@ class deleteButtonViewState extends State<deleteButtonView> {
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
     int i = viewModel.index;
-    String description = viewModel.desclist[i][widget.id];
-    double amount = viewModel.amntlist[i][widget.id];
+    String description = viewModel.spendlist[i][widget.id]["desc"];
+    double amount = viewModel.spendlist[i][widget.id]["amnt"];
     Color? customcolor = (isBlank(description)) ? Colors.grey : (amount < 0.0)
         ? Colors.lightBlue
         : Colors.pinkAccent;
@@ -43,12 +43,12 @@ class deleteButtonViewState extends State<deleteButtonView> {
                     size: 20,
                   ),
                   Text(" ${AppLocalizations.of(context)!.delete}",
-                      style: TextStyle(
-                        color: customcolor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "defaultfont",
-                      )
+                    style: TextStyle(
+                      color: customcolor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "defaultfont",
+                    )
                   ),
                 ],
               ),
@@ -57,15 +57,19 @@ class deleteButtonViewState extends State<deleteButtonView> {
         },
         onSelected: (_) {
           setState(() {
-            print("id: ${widget.id}");
-            viewModel.deleteList(widget.id);
-            viewModel.decreaseCounter();
-            viewModel.init();
+            viewModel.deleteSpend(widget.id);
           });
         },
       );
     } else {
-      return Text("",);
+      return Text("-",
+        style: TextStyle(
+          color: Colors.grey,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: "defaultfont",
+        )
+      );
     }
   }
 }

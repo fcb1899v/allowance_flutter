@@ -20,8 +20,8 @@ class descTextFieldViewState extends State<descTextFieldView> {
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
     int i = viewModel.index;
-    String description = viewModel.desclist[i][widget.id];
-    double amount = viewModel.amntlist[i][widget.id];
+    String description = viewModel.spendlist[i][widget.id]["desc"];
+    double amount = viewModel.spendlist[i][widget.id]["amnt"];
     Color? customcolor = (isBlank(description)) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
@@ -47,8 +47,8 @@ class descTextFieldViewState extends State<descTextFieldView> {
   Future<void> descFieldDialog(BuildContext context) async {
     int i = viewModel.index;
     String inputtext = "";
-    String description = viewModel.desclist[i][widget.id];
-    double amount = viewModel.amntlist[i][widget.id];
+    String description = viewModel.spendlist[i][widget.id]["desc"];
+    double amount = viewModel.spendlist[i][widget.id]["amnt"];
     Color? customcolor = (isBlank(description)) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return showDialog(
       context: context,

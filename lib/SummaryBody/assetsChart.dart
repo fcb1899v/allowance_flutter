@@ -5,20 +5,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../MainView/mainViewModel.dart';
 import '../MainView/extension.dart';
 
-class lineChart extends StatefulWidget {
+class assetsChart extends StatefulWidget {
   final mainViewModel viewModel;
-  lineChart(this.viewModel);
+  assetsChart(this.viewModel);
   @override
-  _lineChartState createState() => _lineChartState(viewModel);
+  assetsChartState createState() => assetsChartState(viewModel);
 }
 
-class _lineChartState extends State<lineChart> {
+class assetsChartState extends State<assetsChart> {
   final mainViewModel viewModel;
-  _lineChartState(this.viewModel);
+  assetsChartState(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
-    final deltay = viewModel.maxbalance ~/ 500 * 100;
+    final deltay = (viewModel.maxassets ~/ 500 * 100 != 0) ? viewModel.maxassets ~/ 500 * 100: 100;
+    print("deltay: $deltay");
     return Container(
         height: 350,
         width: MediaQuery.of(context).size.width,
@@ -31,7 +32,7 @@ class _lineChartState extends State<lineChart> {
             minX: 0,
             maxX: 11,
             minY: 0,
-            maxY: (viewModel.maxbalance ~/ deltay + 1.0) * deltay,
+            maxY: (viewModel.maxassets ~/ deltay + 1.0) * deltay,
             lineBarsData: _linechartbardatalist(),
             axisTitleData: _axistitledata(),
           ),
@@ -63,7 +64,7 @@ class _lineChartState extends State<lineChart> {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    final deltay = viewModel.maxbalance ~/ 500 * 100;
+    final deltay = viewModel.maxassets ~/ 500 * 100;
     return FlTitlesData(
       show: true,
       bottomTitles: SideTitles(
@@ -79,8 +80,10 @@ class _lineChartState extends State<lineChart> {
         margin: 15,
         getTextStyles: (value) => textstyle,
         getTitles: (value) {
-          if (value.toInt() % deltay == 0 || value == viewModel.maxbalance) {
+          if (value.toInt() % deltay == 0 && value.toInt() < 1000) {
             return "${value.toInt()}";
+          } else if (value.toInt() % deltay == 0) {
+            return "${(value.toInt() / 1000).toStringAsFixed(0)}k";
           } else {
             return '';
           }
@@ -105,7 +108,7 @@ class _lineChartState extends State<lineChart> {
     return FlAxisTitleData(
       topTitle: AxisTitle(
         showTitle: true,
-        titleText: "${AppLocalizations.of(context)!.savedmoney} [${viewModel.unitvalue}]",
+        titleText: "${AppLocalizations.of(context)!.assets} [${viewModel.unitvalue}]",
         textStyle: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -130,20 +133,20 @@ class _lineChartState extends State<lineChart> {
 
   List<LineChartBarData> _linechartbardatalist() {
     List<FlSpot> flspotlist = List.generate(12,
-      (index) => FlSpot(index.toDouble(), viewModel.balance[viewModel.yearindex][index])
+      (index) => FlSpot(index.toDouble(), viewModel.assets[viewModel.yearindex][index])
     );
     return [ LineChartBarData(
       spots: flspotlist,
       isCurved: false,
       barWidth: 5,
       isStrokeCapRound: true,
-      colors: [Colors.lightBlue],
+      colors: [Colors.deepPurpleAccent],
       dotData: FlDotData(
         show: true,
       ),
       belowBarData: BarAreaData(
         show: true,
-        colors: [Colors.lightBlue.withOpacity(0.5)],
+        colors: [Colors.deepPurpleAccent.withOpacity(0.5)],
       ),
     ),];
   }

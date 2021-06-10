@@ -134,13 +134,13 @@ extension DateExt on DateTime? {
   }
 }
 
-extension ListListDoubleExt on List<List<double>> {
+extension ListListMapAmntxt on List<List<Map>> {
 
   double toAmountSum(int index, int count) {
     double amntsum = 0;
     for (var i = 0; i < count; i++) {
-      if (this[index][i] > 0) {
-        amntsum += this[index][i];
+      if (this[index][i]["amnt"] > 0) {
+        amntsum += this[index][i]["amnt"];
       }
     }
     return amntsum;
@@ -149,7 +149,7 @@ extension ListListDoubleExt on List<List<double>> {
   double toSum(int index, int count) {
     double sum = 0;
     for (var i = 0; i < count; i++) {
-      sum += this[index][i];
+      sum += this[index][i]["amnt"];
     }
     return sum;
   }

@@ -29,6 +29,7 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
       },
       child: Icon(CupertinoIcons.gift),
       tooltip: 'allowance',
+      heroTag: "hero1",
     );
   }
 
@@ -43,8 +44,6 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
   }
 
   Future<void> allowanceInputDialog(BuildContext context) async {
-    final int i = viewModel.index;
-    final int id = viewModel.counter[i];
     int inputday = 0;
     String inputdesc = AppLocalizations.of(context)!.allowance;
     double inputamnt = 0.0;
@@ -145,9 +144,7 @@ class allowanceInputButtonState extends State<allowanceInputButton> {
               onPressed: () {
                 if (inputday > 0 && inputamnt != 0) {
                   setState(() {
-                    viewModel.saveDateList(id - 1, inputday);
-                    viewModel.saveDescList(id - 1, inputdesc);
-                    viewModel.saveAmntList(id - 1, inputamnt);
+                    viewModel.saveSpendList(inputday, inputdesc, inputamnt);
                   });
                   //viewModel.selectDate(context, id - 1);
                   Navigator.pop(context);

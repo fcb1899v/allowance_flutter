@@ -20,9 +20,8 @@ class spendInputButtonState extends State<spendInputButton> {
 
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
-    final id = viewModel.counter[viewModel.index] - 1;
     return FloatingActionButton(
-      backgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
+      backgroundColor: (viewModel.counter[viewModel.index] < 30) ? Colors.lightBlue: Colors.grey,
       onPressed: () {
         setState((){
           viewModel.increaseCounter();
@@ -30,14 +29,12 @@ class spendInputButtonState extends State<spendInputButton> {
         });
       },
       child: Icon(CupertinoIcons.shopping_cart),
-      tooltip: 'income',
-      heroTag: "hero1",
+      tooltip: 'spend',
+      heroTag: "hero2",
     );
   }
 
   Future<void> spendInputDialog(BuildContext context) async {
-    final int i = viewModel.index;
-    final int id = viewModel.counter[i];
     int inputday = 0;
     String inputdesc = "";
     double inputamnt = 0.0;
@@ -168,9 +165,7 @@ class spendInputButtonState extends State<spendInputButton> {
               onPressed: () {
                 if (inputday > 0 && isNotBlank(inputdesc) && inputamnt != 0) {
                   setState(() {
-                    viewModel.saveDateList(id - 1, inputday);
-                    viewModel.saveDescList(id - 1, inputdesc);
-                    viewModel.saveAmntList(id - 1, inputamnt);
+                    viewModel.saveSpendList(inputday, inputdesc, inputamnt);
                   });
                   //viewModel.selectDate(context, id - 1);
                   Navigator.pop(context);

@@ -4,35 +4,35 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../MainView/mainViewModel.dart';
 import '../MainView/extension.dart';
 
-class settingsAllowance extends StatefulWidget{
+class settingsAssets extends StatefulWidget{
   final mainViewModel viewModel;
-  settingsAllowance(this.viewModel);
+  settingsAssets(this.viewModel);
   @override
-  settingsAllowanceState createState() => new settingsAllowanceState(viewModel);
+  settingsAssetsState createState() => new settingsAssetsState(viewModel);
 }
 
-class settingsAllowanceState extends State<settingsAllowance> {
+class settingsAssetsState extends State<settingsAssets> {
   final mainViewModel viewModel;
-  settingsAllowanceState(this.viewModel);
+  settingsAssetsState(this.viewModel);
 
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
-    final inputallowance = AppLocalizations.of(context)!.notset;
+    final inputassets = AppLocalizations.of(context)!.notset;
     final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
-    // final displayallowance = (viewModel.allowance > 0) ?
-    //         "${viewModel.unitvalue} ${viewModel.allowance.toStringAsFixed(numberdigit)}":
-    //         inputallowance;
+    final displayassets = (viewModel.startassets >= 0.0) ?
+            "${viewModel.unitvalue} ${viewModel.startassets.toStringAsFixed(numberdigit)}":
+            inputassets;
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar),
-      title: Text(AppLocalizations.of(context)!.allowance,
+      title: Text(AppLocalizations.of(context)!.assets,
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.black,
           fontFamily: (lang == "ja") ? 'jaAccent': 'defaultFont',
         ),
       ),
-      subtitle: Text("displayallowance",
+      subtitle: Text(displayassets,
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.grey,
@@ -46,21 +46,21 @@ class settingsAllowanceState extends State<settingsAllowance> {
   }
 
   Future<void> allowanceFieldDialog(BuildContext context) async {
-    //double inputallowance = viewModel.allowance;
+    double inputassets = viewModel.startassets;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.settingallowancetitle),
+          title: Text(AppLocalizations.of(context)!.settingassetstitle,),
           content: TextField(
             onChanged: (value) {
-              if (value.toInt(0) > 0) {
-                //inputallowance = value.toDouble(0);
+              if (value.toDouble(0.0) >= 0.0) {
+                inputassets = value.toDouble(0.0);
               }
             },
             controller: TextEditingController(),
             decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.settingallowancehint,
+              hintText: AppLocalizations.of(context)!.settingassetshint,
               hintStyle: TextStyle(color: Colors.grey[400]),
             ),
             keyboardType: TextInputType.number,
@@ -90,12 +90,12 @@ class settingsAllowanceState extends State<settingsAllowance> {
                 ),
               ),
               onPressed: () {
-                // if (inputallowance > 0) {
-                //   //viewModel.saveAllowance(inputallowance);
-                // }
-                setState(() {
-                  //viewModel.getAllowance();
-                });
+                if (inputassets > 0) {
+                  setState(() {
+                    viewModel.saveStartAssets(inputassets);
+                    viewModel.getAssets();
+                  });
+                }
                 Navigator.pop(context);
               },
             ),

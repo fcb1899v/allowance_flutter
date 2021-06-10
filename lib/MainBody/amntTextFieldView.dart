@@ -20,11 +20,11 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
   //TextFieldが表示されるボタン＆選択した日付の表示
   Widget build(BuildContext context) {
     int i = viewModel.index;
-    double amount = viewModel.amntlist[i][widget.id];
+    double amount = viewModel.spendlist[i][widget.id]["amnt"];
     final customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
-        if (widget.id != viewModel.counter[i] - 1) amntFieldDialog(context)
+        if (widget.id != viewModel.counter[i] - 1 || amount != 0.0) amntFieldDialog(context)
       },
       child: SizedBox(
         child: Container(
@@ -46,7 +46,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
   Future<void> amntFieldDialog(BuildContext context) async {
     int i = viewModel.index;
     double inputamnt = 0.0;
-    double amount = viewModel.amntlist[i][widget.id];
+    double amount = viewModel.spendlist[i][widget.id]["amnt"];
     double plusminus = (amount < 0) ? -1.0: 1.0;
     Color? customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return showDialog(
@@ -105,8 +105,6 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
                 if (inputamnt != 0.0) {
                   setState(() {
                     viewModel.saveAmntList(widget.id, inputamnt);
-                    viewModel.saveBalance();
-                    viewModel.savePercent();
                   });
                   Navigator.pop(context);
                 }

@@ -32,7 +32,10 @@ class _inputButtonsState extends State<inputButtons> {
           child: Icon(CupertinoIcons.gift),
           foregroundColor: Colors.white,
           backgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
-          onTap: () => spendInputDialog(context),
+          onTap: () => {
+            viewModel.increaseCounter(),
+            spendInputDialog(context),
+          },
           label: AppLocalizations.of(context)!.spend,
           labelBackgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
           labelStyle: TextStyle(
@@ -63,8 +66,6 @@ class _inputButtonsState extends State<inputButtons> {
   }
 
   Future<void> spendInputDialog(BuildContext context) async {
-    final int i = viewModel.index;
-    final int id = viewModel.counter[i];
     int inputday = 0;
     String inputdesc = "";
     double inputamnt = 0.0;
@@ -195,9 +196,8 @@ class _inputButtonsState extends State<inputButtons> {
               onPressed: () {
                 if (inputday > 0 && isNotBlank(inputdesc) && inputamnt != 0) {
                   setState(() {
-                    viewModel.saveDateList(id - 1, inputday);
-                    viewModel.saveDescList(id - 1, inputdesc);
-                    viewModel.saveAmntList(id - 1, inputamnt);
+                    print("counter: ${viewModel.counter[viewModel.index]}");
+                    viewModel.saveSpendList(inputday, inputdesc, inputamnt);
                   });
                   //viewModel.selectDate(context, id - 1);
                   Navigator.pop(context);
@@ -211,8 +211,6 @@ class _inputButtonsState extends State<inputButtons> {
   }
 
   Future<void> allowanceInputDialog(BuildContext context) async {
-    final int i = viewModel.index;
-    final int id = viewModel.counter[i];
     int inputday = 0;
     String inputdesc = AppLocalizations.of(context)!.allowance;
     double inputamnt = 0.0;
@@ -313,9 +311,8 @@ class _inputButtonsState extends State<inputButtons> {
               onPressed: () {
                 if (inputday > 0 && inputamnt != 0) {
                   setState(() {
-                    viewModel.saveDateList(id - 1, inputday);
-                    viewModel.saveDescList(id - 1, inputdesc);
-                    viewModel.saveAmntList(id - 1, inputamnt);
+                    print("counter: ${viewModel.counter[viewModel.index]}");
+                    viewModel.saveSpendList(inputday, inputdesc, inputamnt);
                   });
                   //viewModel.selectDate(context, id - 1);
                   Navigator.pop(context);
