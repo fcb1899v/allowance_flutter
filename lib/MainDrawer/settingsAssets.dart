@@ -18,21 +18,20 @@ class settingsAssetsState extends State<settingsAssets> {
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
-    final inputassets = AppLocalizations.of(context)!.notset;
     final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
-    final displayassets = (viewModel.startassets >= 0.0) ?
+    final displayassets = (viewModel.startassets > 0.0) ?
             "${viewModel.unitvalue} ${viewModel.startassets.toStringAsFixed(numberdigit)}":
-            inputassets;
+            AppLocalizations.of(context)!.notset;
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar),
-      title: Text(AppLocalizations.of(context)!.assets,
+      title: Text(AppLocalizations.of(context)!.initialassets,
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.black,
           fontFamily: (lang == "ja") ? 'jaAccent': 'defaultFont',
         ),
       ),
-      subtitle: Text(displayassets,
+      subtitle: Text(displayassets ,
         style: TextStyle(
           fontSize: 16.0,
           color: Colors.grey,

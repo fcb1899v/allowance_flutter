@@ -20,16 +20,14 @@ extension DoubleExt on double {
 }
 
 extension ListDoubleExt on List<double> {
-  double toMaxBalance() {
-    double maxbalance = 500;
-    double newmaxbalance = 500;
+  double toMaxDouble() {
+    double maxdouble = 0.0;
     for (var i = 0; i < 120; i++) {
-      if (this[i] > maxbalance) {
-        newmaxbalance = this[i];
-        maxbalance = newmaxbalance;
+      if (this[i] > maxdouble) {
+        maxdouble = this[i];
       }
     }
-    return maxbalance;
+    return maxdouble;
   }
 }
 
@@ -163,8 +161,8 @@ extension ListListMapAmntxt on List<List<Map>> {
     return (-1.0) * amntsum;
   }
 
-  double toBalance(int index, List<int> count) {
-    return this.toSum(index, count[index]);
+  double toBalance(int index, int count) {
+    return this.toSum(index, count);
   }
 
   double toPercent(int index, List<int> count) {

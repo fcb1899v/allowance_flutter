@@ -18,7 +18,16 @@ class assetsChartState extends State<assetsChart> {
 
   @override
   Widget build(BuildContext context) {
-    final deltay = (viewModel.maxassets ~/ 500 * 100 != 0) ? viewModel.maxassets ~/ 500 * 100: 100;
+    double deltay = 1;
+    if (viewModel.maxassets >= 500) {
+      deltay = viewModel.maxassets ~/ 500 * 100;
+    } else if (viewModel.maxassets >= 50) {
+      deltay = viewModel.maxassets ~/ 50 * 10;
+    } else if (viewModel.maxassets >= 5) {
+      deltay = viewModel.maxassets ~/ 5 * 1;
+    } else {
+      deltay = 1;
+    }
     print("deltay: $deltay");
     return Container(
         height: 350,

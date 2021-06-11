@@ -36,6 +36,11 @@
     "description": "Balance label"
   },
 
+  "assets": "Assets",
+  "@assets": {
+    "description": "Asset"
+  },
+
   "moneyspent": "Money spent",
   "@moneyspent": {
     "description": "Money spent label"
@@ -136,19 +141,19 @@
     "description": "Setting currency unit title"
   },
 
-  "assets": "Assets",
-  "@assets": {
+  "initialassets": "Initial Assets",
+  "@initialassets": {
     "description": "Allowance"
   },
 
-  "settingassetstitle": "Setting your start assets",
+  "settingassetstitle": "Setting your initial assets",
   "@settingassetstitle": {
-    "description": "Setting assets title"
+    "description": "Setting initial assets title"
   },
 
-  "settingassetshint": "Enter your start assets",
+  "settingassetshint": "Enter your initial assets",
   "@settingassetshint": {
-    "description": "Setting assets hint"
+    "description": "Setting initial assets hint"
   },
 
   "startdate": "Start date",
