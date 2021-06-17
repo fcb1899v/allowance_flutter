@@ -1,6 +1,11 @@
 {
   "@@locale": "en",
 
+  "appname": "Allowance_Manager",
+  "@appname": {
+    "description": "App name"
+  },
+
   "enter": "Enter",
   "@enter": {
     "description": "Input textfield"

@@ -23,8 +23,7 @@ class mainAppBarState extends State<mainAppBar> {
     var lang = Localizations.localeOf(context).languageCode;
     return AppBar(
       leading: IconButton(
-        icon: Icon(
-          Icons.menu,
+        icon: Icon(Icons.menu,
           color: Colors.white,
         ),
         onPressed: () {
@@ -32,8 +31,8 @@ class mainAppBarState extends State<mainAppBar> {
         },
       ),
       title: Text((viewModel.selectflag) ?
-               AppLocalizations.of(context)!.list:
-               AppLocalizations.of(context)!.summary,
+          AppLocalizations.of(context)!.list:
+          AppLocalizations.of(context)!.summary,
         style: TextStyle(
           color: Colors.white,
           fontSize: (lang == "ja") ? 18: 24,

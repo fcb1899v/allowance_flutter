@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../MainView/mainViewModel.dart';
 import 'spendChart.dart';
 import 'yearPlusMinus.dart';
 import 'assetsChart.dart';
 import 'balanceChart.dart';
+import '../MainView/mainViewModel.dart';
+import '../MainView/admob.dart';
 
 class summeryBody extends StatefulWidget {
   final mainViewModel viewModel;
@@ -32,11 +33,12 @@ class _summeryBodyState extends State<summeryBody> {
                   assetsChart(viewModel),
                   balanceChart(viewModel),
                   spendChart(viewModel),
-                  SizedBox(height: 10),
                 ],
               )
             )
           ),
+          SizedBox(height: 10),
+          adMobWidget(context),
         ],
       ),
     );

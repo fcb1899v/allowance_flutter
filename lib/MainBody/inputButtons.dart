@@ -20,48 +20,51 @@ class _inputButtonsState extends State<inputButtons> {
   @override
   Widget build(BuildContext context) {
     final id = viewModel.counter[viewModel.index] - 1;
-    return SpeedDial(
-      icon: CupertinoIcons.plus,
-      activeIcon: Icons.close,
-      foregroundColor: Colors.white,
-      backgroundColor: Colors.lightBlue,
-      curve: Curves.bounceIn,
-      children: [
-        // Select file
-        SpeedDialChild(
-          child: Icon(CupertinoIcons.gift),
-          foregroundColor: Colors.white,
-          backgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
-          onTap: () => {
-            viewModel.increaseCounter(),
-            spendInputDialog(context),
-          },
-          label: AppLocalizations.of(context)!.spend,
-          labelBackgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
-          labelStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 35.0),
+      child: SpeedDial(
+        icon: CupertinoIcons.plus,
+        activeIcon: Icons.close,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.lightBlue,
+        curve: Curves.bounceIn,
+        children: [
+          // Select file
+          SpeedDialChild(
+            child: Icon(CupertinoIcons.gift),
+            foregroundColor: Colors.white,
+            backgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
+            onTap: () => {
+              viewModel.increaseCounter(),
+              spendInputDialog(context),
+            },
+            label: AppLocalizations.of(context)!.spend,
+            labelBackgroundColor: (id < 30) ? Colors.lightBlue: Colors.grey,
+            labelStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SpeedDialChild(
-          child: Icon(CupertinoIcons.money_dollar),
-          foregroundColor: Colors.white,
-          backgroundColor: (id < 30) ? Colors.pinkAccent: Colors.grey,
-          onTap: () {
-            viewModel.increaseCounter();
-            allowanceInputDialog(context);
-          },
-          label: AppLocalizations.of(context)!.allowance,
-          labelBackgroundColor: (id < 30) ? Colors.pinkAccent: Colors.grey,
-          labelStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+          SpeedDialChild(
+            child: Icon(CupertinoIcons.money_dollar),
+            foregroundColor: Colors.white,
+            backgroundColor: (id < 30) ? Colors.pinkAccent: Colors.grey,
+            onTap: () {
+              viewModel.increaseCounter();
+              allowanceInputDialog(context);
+            },
+            label: AppLocalizations.of(context)!.allowance,
+            labelBackgroundColor: (id < 30) ? Colors.pinkAccent: Colors.grey,
+            labelStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        // Take a picture
-      ],
+          // Take a picture
+        ],
+      ),
     );
   }
 

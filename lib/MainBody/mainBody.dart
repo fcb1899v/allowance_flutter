@@ -4,6 +4,7 @@ import 'balanceView.dart';
 import 'monthPlusMinus.dart';
 import 'spendSpreadSheet.dart';
 import '../MainView/mainViewModel.dart';
+import '../MainView/admob.dart';
 
 class mainBody extends StatefulWidget {
   final mainViewModel viewModel;
@@ -36,6 +37,8 @@ class _mainBodyState extends State<mainBody> {
               ),
             ),
           ),
+          SizedBox(height: 10),
+          adMobWidget(context),
         ],
       ),
     );

@@ -8,6 +8,34 @@ import 'dart:async';
 
 class mainViewModel extends Model {
 
+  //ログイン画面
+  bool _isLogin = false;
+  bool get isLogin => _isLogin;
+
+  bool _isMoveSignup = false;
+  bool get isMoveSignup => _isMoveSignup;
+
+  void stateLogin() async{
+    _isLogin = true;
+    notifyListeners();
+  }
+
+  void stateLogout() async{
+    _isLogin = false;
+    notifyListeners();
+  }
+
+  void moveSignUp() async{
+    _isMoveSignup = true;
+    notifyListeners();
+  }
+
+  void moveLogin() async{
+    _isMoveSignup = false;
+    notifyListeners();
+  }
+
+
   bool _selectflag = true;
   bool get selectflag => _selectflag;
 
@@ -93,6 +121,11 @@ class mainViewModel extends Model {
   }
 
   void dispose() {
+  }
+
+  void changeLoginFlag() async{
+    _selectflag = !selectflag;
+    notifyListeners();
   }
 
   void changeSelectFlag() async{

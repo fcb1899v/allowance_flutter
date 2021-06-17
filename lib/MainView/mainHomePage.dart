@@ -54,7 +54,7 @@ class _MainHomePageState extends State<MainHomePage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             appBar: mainAppBar(viewModel),
-            drawer: mainDrawer(viewModel),
+            drawer: (viewModel.selectflag) ? null: mainDrawer(viewModel),
             bottomNavigationBar: mainBottomNavi(viewModel),
             body: (viewModel.selectflag) ? mainBody(viewModel): summeryBody(viewModel),
             floatingActionButton: (viewModel.selectflag) ? inputButtons(viewModel): null,

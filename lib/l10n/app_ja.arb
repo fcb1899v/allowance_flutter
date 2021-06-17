@@ -1,6 +1,7 @@
 {
   "@@locale": "ja",
 
+  "appname": "おこづかい帳",
   "enter": "入力してね",
   "select": "タップしてね",
   "cancel": "キャンセル",
