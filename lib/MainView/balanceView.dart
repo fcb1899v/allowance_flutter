@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import '../extension.dart';
 import 'mainViewModel.dart';
-import '../SpendAllowance.dart';
 
 class balanceView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -17,18 +18,8 @@ class balanceViewState extends State<balanceView> {
   final mainViewModel viewModel;
   balanceViewState(this.viewModel);
 
-  //データの初期化
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      viewModel.getUnit();
-      viewModel.getAmntList();
-      viewModel.getAllowance();
-    });
-  }
-
   Widget build(BuildContext context) {
+    var lang = Localizations.localeOf(context).languageCode;
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: FittedBox(
@@ -40,7 +31,7 @@ class balanceViewState extends State<balanceView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Balance  ',
+                  Text(AppLocalizations.of(context)!.balance,
                     style: TextStyle(
                       color: Colors.lightBlue,
                       fontSize: 40,
@@ -52,7 +43,7 @@ class balanceViewState extends State<balanceView> {
                           color: Colors.white,
                         ),
                       ],
-                      fontFamily: 'Pacifico',
+                      fontFamily: (lang != "ja") ? 'Pacifico': 'Irohamaru',
                     ),
                   ),
                   DropdownButton <String>(
@@ -85,7 +76,11 @@ class balanceViewState extends State<balanceView> {
                         );
                     }).toList(),
                   ),
-                  Text(viewModel.allowance.toBalance(viewModel.amntlist, viewModel.counter),
+                  Text(viewModel.allowance.toBalance(
+                      viewModel.amntlist,
+                      viewModel.index,
+                      viewModel.counter,
+                    ),
                     style: TextStyle(
                       color: Colors.lightBlue,
                       fontSize: 50,
@@ -107,7 +102,11 @@ class balanceViewState extends State<balanceView> {
                 width: MediaQuery.of(context).size.width - 60,
                 lineHeight: 10.0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
-                percent: viewModel.allowance.toPercent(viewModel.amntlist, viewModel.counter),
+                percent: viewModel.allowance.toPercent(
+                    viewModel.amntlist,
+                    viewModel.index,
+                    viewModel.counter,
+                ),
                 animation: true,
                 animationDuration: 2000,
                 backgroundColor: Colors.white,

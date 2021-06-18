@@ -1,0 +1,108 @@
+{
+  "@@locale": "en",
+
+  "title": "'s Allowance",
+  "@title": {
+    "description": "Title label"
+  },
+
+  "allowancebook": "Allowance book",
+  "@allowancebook": {
+    "description": "Title label"
+  },
+
+  "balance": "Balance ",
+  "@balance": {
+    "description": "Balance label"
+  },
+
+  "date": "Date",
+  "@date": {
+    "description": "List of date title label"
+  },
+
+  "desc": "Description",
+  "@desc": {
+    "description": "List of description title label"
+  },
+
+  "amnt": "Amount",
+  "@amnt": {
+    "description": "List of amount title label"
+  },
+
+  "selectdate": "Select date",
+  "@selectdate": {
+    "description": "Open datepicker"
+  },
+
+  "enter": "Enter",
+  "@enter": {
+    "description": "Input textfield"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button"
+  },
+
+  "notset": "Not set",
+  "@notset": {
+    "description": "Not set"
+  },
+
+  "name": "Your name",
+  "@name": {
+    "description": "Setting your name"
+  },
+
+  "settingnametitle": "Setting your name",
+  "@settingnametitle": {
+    "description": "Setting name title"
+  },
+
+  "settingnamehint": "Enter your name",
+  "@settingnamehint": {
+    "description": "Setting name hint"
+  },
+
+  "unit": "Currency unit",
+  "@unit": {
+    "description": "Setting currency unit"
+  },
+
+  "settingunittitle": "Setting currency unit",
+  "@settingunittitle": {
+    "description": "Setting currency unit title"
+  },
+
+  "allowance": "Monthly allowance",
+  "@allowance": {
+    "description": "Setting monthly allowance"
+  },
+
+  "settingallowancetitle": "Setting your monthly allowance",
+  "@settingallowancetitle": {
+    "description": "Setting allowance title"
+  },
+
+  "settingallowancehint": "Enter your monthly allowance",
+  "@settingallowancehint": {
+    "description": "Setting allowance hint"
+  },
+
+  "startdate": "Start date",
+  "@startdate": {
+    "description": "Start date"
+  },
+
+  "privacyPolicy": "Privacy policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy"
+  },
+
+  "version": "Version",
+  "@version": {
+    "description": "Version"
+  }
+}

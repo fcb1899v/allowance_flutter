@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'drawerView.dart';
+import '../DrawerView/drawerView.dart';
 import 'mainAppBar.dart';
 import 'balanceView.dart';
-import 'mainViewModel.dart';
 import 'spendSpreadSheet.dart';
 import 'counterPlusMinus.dart';
+import 'mainViewModel.dart';
 
 class AllowancePage extends StatefulWidget {
   final mainViewModel viewModel;
@@ -43,10 +43,10 @@ class _AllowancePageState extends State<AllowancePage> {
         builder: (context, child, model) => Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: <Color>[
-                Colors.deepPurpleAccent,
-                Theme.of(context).primaryColor,
-              ]
+                colors: <Color>[
+                  Colors.deepPurpleAccent,
+                  Theme.of(context).primaryColor,
+                ]
             ),
           ),
           child: Scaffold(
@@ -57,14 +57,14 @@ class _AllowancePageState extends State<AllowancePage> {
             body: SingleChildScrollView(
               child: Center(
                 child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 50),
-                    balanceView(viewModel),
-                    SizedBox(height: 30),
-                    counterPlusMinus(viewModel),
-                    SizedBox(height: 50),
-                    spendSpreadSheet(viewModel),
-                  ]
+                    children: <Widget>[
+                      SizedBox(height: 50),
+                      balanceView(viewModel),
+                      SizedBox(height: 30),
+                      counterPlusMinus(viewModel),
+                      SizedBox(height: 50),
+                      spendSpreadSheet(viewModel),
+                    ]
                 ),
               ),
             ),

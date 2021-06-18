@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'mainViewModel.dart';
 
 class descFieldView extends StatefulWidget{
   final mainViewModel viewModel;
-  final int i;
-  descFieldView(this.viewModel, this.i);
+  final int id;
+  descFieldView(this.viewModel, this.id);
   @override
   descFieldViewState createState() => new descFieldViewState(viewModel);
 }
@@ -15,37 +15,11 @@ class descFieldViewState extends State<descFieldView> {
   final mainViewModel viewModel;
   descFieldViewState(this.viewModel);
 
-  var desccontroller = TextEditingController();
-
-  //データ取得用関数
-  void getDescription() async {
-    final prefs = await SharedPreferences.getInstance();
-    viewModel.desclist[widget.i] = prefs.getString("desckey${widget.i + 1}") ?? "";
-    desccontroller = TextEditingController.fromValue(
-      TextEditingValue(text: viewModel.desclist[widget.i],
-        selection: TextSelection.collapsed(
-            offset: viewModel.desclist[widget.i].length
-        ),
-      ),
-    );
-    // print("getAmount");
-  }
-
-  //データの初期化
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      viewModel.getCounter();
-      getDescription();
-    });
-  }
-
   //テキストフィールドの表示
   Widget build(BuildContext context) {
     return TextField(
       enabled: true,
-      controller: desccontroller,
+      controller: viewModel.desccontroller[widget.id],
       style: TextStyle(
         color: Colors.lightBlue,
         fontWeight: FontWeight.bold,
@@ -53,7 +27,7 @@ class descFieldViewState extends State<descFieldView> {
       ),
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
-        hintText: "Enter",
+        hintText: AppLocalizations.of(context)!.enter,
         hintStyle: TextStyle(
           color: Colors.grey,
           fontSize: 14,
@@ -63,14 +37,16 @@ class descFieldViewState extends State<descFieldView> {
       ),
       maxLines: 1,
       onChanged: (text) {
-        if (text != null) {
-          viewModel.saveDesc(text, widget.i);
+        if (text.isNotEmpty) {
+          viewModel.saveDescList(widget.id, text);
+          viewModel.getDescList();
           print("Description : $text");
         }
       },
       onTap: () {
-        viewModel.saveDesc("", widget.i);
-        getDescription();
+        viewModel.saveDescList(widget.id, "");
+        viewModel.getDescList();
+        viewModel.desccontroller[widget.id].clear();
       },
     );
   }

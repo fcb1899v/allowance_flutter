@@ -1,0 +1,25 @@
+{
+  "@@locale": "ja",
+
+  "title": "のおこづかい帳",
+  "allowancebook": "おこづかい帳",
+  "balance": "使えるお金 ",
+  "date": "日付",
+  "desc": "買ったもの",
+  "amnt": "使ったお金",
+  "selectdate": "タップしてね",
+  "enter": "入力してね",
+  "cancel": "キャンセル",
+  "notset": "設定してね",
+  "name": "お名前",
+  "settingnametitle": "名前の設定",
+  "settingnamehint": "お名前を入力してね",
+  "unit": "お金の単位",
+  "settingunittitle": "お金の単位の設定",
+  "allowance": "おこづかい",
+  "settingallowancetitle": "おこづかいの金額設定",
+  "settingallowancehint": "おこづかいを入力してね",
+  "startdate": "使い始めた日",
+  "privacyPolicy": "プライバシー・ポリシー",
+  "version": "バージョン"
+}

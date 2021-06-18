@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../SpendAllowance.dart';
+import '../extension.dart';
 import 'mainViewModel.dart';
 
 
@@ -30,7 +30,7 @@ class mainAppBarState extends State<mainAppBar> {
           Scaffold.of(context).openDrawer();
         },
       ),
-      title: Text(DateTime.now().displayMonthYear(viewModel.index),
+      title: Text(viewModel.startdate.toDate().displayMonthYear(viewModel.index),
         style: TextStyle(
           color: Colors.white,
           fontSize: 32,
@@ -40,22 +40,20 @@ class mainAppBarState extends State<mainAppBar> {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: <Color>[
-                Colors.deepPurpleAccent,
-                Theme
-                    .of(context)
-                    .primaryColor
-              ]
+            colors: <Color>[
+              Colors.deepPurpleAccent,
+              Theme.of(context).primaryColor
+            ]
           ),
         ),
       ),
       centerTitle: true,
       bottom: PreferredSize(
-          child: Container(
-            color: Colors.white,
-            height: 4.0,
-          ),
-          preferredSize: Size.fromHeight(4.0)
+        child: Container(
+          color: Colors.white,
+          height: 4.0,
+        ),
+        preferredSize: Size.fromHeight(4.0)
       ),
     );
   }

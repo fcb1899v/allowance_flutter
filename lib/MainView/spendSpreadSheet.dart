@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'datePickerView.dart';
 import 'descFieldView.dart';
 import 'amntFieldView.dart';
@@ -17,23 +18,14 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
   final mainViewModel viewModel;
   spendSpreadSheetState(this.viewModel);
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      viewModel.getCounter();
-      viewModel.getDescList();
-      viewModel.getAmntList();
-    });
-  }
-
   DataColumn dataColumnTitle(String columntitle) {
+    var lang = Localizations.localeOf(context).languageCode;
     return DataColumn(
       label: Text(columntitle,
         style: TextStyle(
           color: Colors.white,
           fontSize: 18,
-          fontFamily: 'Pacifico',
+          fontFamily: (lang != "ja") ? 'Pacifico': 'Irohamaru',
         ),
         textAlign: TextAlign.center,
       ),
@@ -53,13 +45,13 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
 
   List<DataRow> getDataRows() {
     List<DataRow> datarows = [];
-    for (var i = 0; i < viewModel.counter; i++) {
+    for (var id = 0; id < viewModel.counter[viewModel.index]; id++) {
       datarows.add(DataRow(
         cells: <DataCell>[
-          DataCell(datePickerView(i),),
-          DataCell(descFieldView(viewModel, i),),
+          DataCell(datePickerView(viewModel, id),),
+          DataCell(descFieldView(viewModel, id),),
           DataCell(unitText(),),
-          DataCell(amntFieldView(viewModel, i),),
+          DataCell(amntFieldView(viewModel, id),),
         ],
       ));
     }
@@ -89,10 +81,10 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
                         (states) => Colors.lightBlue
                 ),
                 columns: <DataColumn>[
-                  dataColumnTitle("Date"),
-                  dataColumnTitle("Description"),
+                  dataColumnTitle(AppLocalizations.of(context)!.date),
+                  dataColumnTitle(AppLocalizations.of(context)!.desc),
                   dataColumnTitle(""),
-                  dataColumnTitle("Amount"),
+                  dataColumnTitle(AppLocalizations.of(context)!.amnt),
                 ],
                 rows: getDataRows(),
               ),

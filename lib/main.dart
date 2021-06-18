@@ -1,14 +1,11 @@
-import 'package:allowance_app/MainView/mainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:ui';
 import 'dart:async';
-
+import 'MainView/mainViewModel.dart';
 import 'MainView/allowance.dart';
-import 'SettingsView/settingsView.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +14,7 @@ Future main() async {
   // SystemChrome.setPreferredOrientations([
   //   DeviceOrientation.portraitUp,//縦固定
   // ]);
-  runApp(
-    ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp(),);
 }
 
 class MyApp extends StatelessWidget {
@@ -29,9 +22,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: MainPage(),
       debugShowCheckedModeBanner: false,
       title: "Allowance App",
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
+        fontFamily: 'Irohamaru',
         brightness: Brightness.light,
         primaryColor: Colors.pinkAccent[100],
         textButtonTheme: TextButtonThemeData(
@@ -39,11 +36,6 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainPage(),
-      initialRoute: "/",
-      routes: {
-        "/SettingsView": (context) => settingsView(mainViewModel()),
-      },
     );
   }
 }

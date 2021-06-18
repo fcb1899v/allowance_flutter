@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../extension.dart';
 import 'mainViewModel.dart';
-import '../SpendAllowance.dart';
 
 class amntFieldView extends StatefulWidget{
   final mainViewModel viewModel;
-  final int i;
-  amntFieldView(this.viewModel, this.i);
+  final int id;
+  amntFieldView(this.viewModel, this.id);
   @override
   amntFieldViewState createState() => new amntFieldViewState(viewModel);
 }
@@ -17,37 +17,11 @@ class amntFieldViewState extends State<amntFieldView> {
   final mainViewModel viewModel;
   amntFieldViewState(this.viewModel);
 
-  var amntcontroller = TextEditingController();
-
-  //データ取得用関数
-  void getAmount() async {
-    final prefs = await SharedPreferences.getInstance();
-    viewModel.amntlist[widget.i] = prefs.getInt("amntkey${widget.i + 1}") ?? 0;
-    amntcontroller = TextEditingController.fromValue(
-      TextEditingValue(text: viewModel.amntlist[widget.i].toPrice(),
-        selection: TextSelection.collapsed(
-          offset: viewModel.amntlist[widget.i].toPrice().length
-        ),
-      ),
-    );
-    // print("getAmount");
-  }
-
-  //データの初期化
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      viewModel.getCounter();
-      getAmount();
-    });
-  }
-
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
     return TextField(
       enabled: true,
-      controller: amntcontroller,
+      controller: viewModel.amntcontroller[widget.id],
       style: TextStyle(
         color: Colors.lightBlue,
         fontWeight: FontWeight.bold,
@@ -55,7 +29,7 @@ class amntFieldViewState extends State<amntFieldView> {
       ),
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
-        hintText: "Enter",
+        hintText: AppLocalizations.of(context)!.enter,
         hintStyle: TextStyle(
           color: Colors.grey,
           fontSize: 14,
@@ -67,15 +41,15 @@ class amntFieldViewState extends State<amntFieldView> {
       maxLines: 1,
       onChanged: (text) {
         print("Amount : $text");
-        if (text != "" || text != null || text.toInt(0) != null) {
-          viewModel.saveAmnt(text.toInt(0), widget.i);
+        if (text.toInt(0) > 0) {
+          viewModel.saveAmntList(widget.id, text.toInt(0));
         }
-        getAmount();
+        viewModel.getAmntList();
       },
       onTap: () {
-        viewModel.saveAmnt(0, widget.i);
-        getAmount();
-        amntcontroller.clear();
+        viewModel.saveAmntList(widget.id, 0);
+        viewModel.getAmntList();
+        //viewModel.amntcontroller.clear();
       },
     );
   }

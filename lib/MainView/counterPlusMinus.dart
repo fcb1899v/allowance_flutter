@@ -20,15 +20,16 @@ class counterPlusMinusState extends State<counterPlusMinus> {
       children: [
         Spacer(),
         FloatingActionButton(
-          backgroundColor: (viewModel.index > 0) ? Colors.lightBlue: Colors.grey,
+          backgroundColor: (viewModel.index > 0) ?
+            Colors.lightBlue: Colors.grey,
           onPressed: () { // Startボタンタップ時の処理
             if (viewModel.index > 0) {
               setState(() {
-                viewModel.decreaseIndex();
+                viewModel.beforeIndex();
                 viewModel.getCounter();
+                viewModel.getDateList();
                 viewModel.getDescList();
                 viewModel.getAmntList();
-                viewModel.getAllowance();
               });
             }
           },
@@ -38,9 +39,12 @@ class counterPlusMinusState extends State<counterPlusMinus> {
         ),
         Spacer(),
         FloatingActionButton(
-          backgroundColor: (viewModel.counter > 1) ? Colors.lightBlue: Colors.grey,
-          onPressed: () { // Startボタンタップ時の処理
-            viewModel.decreaseCounter();
+          backgroundColor: (viewModel.counter[viewModel.index] > 1) ?
+            Colors.lightBlue: Colors.grey,
+          onPressed: () {
+            setState(() {
+              viewModel.decreaseCounter();
+            });
           },
           child: Icon(CupertinoIcons.minus),
           tooltip: 'Decrease',
@@ -48,9 +52,12 @@ class counterPlusMinusState extends State<counterPlusMinus> {
         ),
         Spacer(),
         FloatingActionButton(
-          backgroundColor: (viewModel.counter < 10) ? Colors.lightBlue: Colors.grey,
-          onPressed: () { // Stopボタンタップ時の処理
-            viewModel.increaseCounter();
+          backgroundColor: (viewModel.counter[viewModel.index] < 10) ?
+            Colors.lightBlue: Colors.grey,
+          onPressed: () {
+            setState((){
+              viewModel.increaseCounter();
+            });
           },
           child: Icon(CupertinoIcons.add),
           tooltip: 'Increase',
@@ -61,11 +68,11 @@ class counterPlusMinusState extends State<counterPlusMinus> {
           backgroundColor: Colors.lightBlue,
           onPressed: () { // Startボタンタップ時の処理
             setState(() {
-              viewModel.increaseIndex();
+              viewModel.nextIndex();
               viewModel.getCounter();
+              viewModel.getDateList();
               viewModel.getDescList();
               viewModel.getAmntList();
-              viewModel.getAllowance();
             });
           },
           child: Icon(CupertinoIcons.forward),
