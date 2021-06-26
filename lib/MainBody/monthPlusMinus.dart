@@ -43,7 +43,7 @@ class monthPlusMinusState extends State<monthPlusMinus> {
           ),
         ),
         Spacer(),
-        Text(viewModel.startdate.toDate().displayMonthYear(viewModel.index),
+        Text(viewModel.startdate.displayMonthYear(viewModel.index),
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,

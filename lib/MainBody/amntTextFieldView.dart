@@ -48,7 +48,8 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
     double inputamnt = 0.0;
     double amount = viewModel.spendlist[i][widget.id]["amnt"];
     double plusminus = (amount < 0) ? -1.0: 1.0;
-    Color? customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
+    Color? customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ?
+                          Colors.lightBlue: Colors.pinkAccent;
     return showDialog(
       context: context,
       builder: (context) {

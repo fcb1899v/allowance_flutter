@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
 
 class loginAppBar extends StatefulWidget implements PreferredSizeWidget{
   final mainViewModel viewModel;
@@ -20,26 +21,16 @@ class loginAppBarState extends State<loginAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
     return AppBar(
-      leading: (!viewModel.isMoveSignup) ? null: IconButton(
-        icon: Icon(
-          CupertinoIcons.back,
-          color: Colors.white,
-        ),
+      leading: (viewModel.isMoveSignup) ? IconButton(
+        icon: Icon(CupertinoIcons.back, color: Colors.white,),
         onPressed: () {
-          setState(() {
-            viewModel.moveLogin();
-          });
+          setState(() {viewModel.moveLogin();});
         },
-      ),
-      title: Text(AppLocalizations.of(context)!.allowancebook,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: (lang == "ja") ? 18: 24,
-          fontWeight: FontWeight.bold,
-          fontFamily: (lang == "ja") ? 'defaultfont': 'enAccent',
-        ),
+      ): null,
+      automaticallyImplyLeading: false,
+      title: titleView(context,
+        AppLocalizations.of(context)!.allowancebook,
       ),
       flexibleSpace: Container(
         decoration: BoxDecoration(

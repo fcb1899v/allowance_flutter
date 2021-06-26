@@ -18,12 +18,11 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: mainViewModel().isLogin ? MainHomePage(mainViewModel()): LoginPage(mainViewModel()),
-      initialRoute: mainViewModel().isLogin ? "/h": "/l",
+      home: LoginPage(mainViewModel()),
+      initialRoute: "/l",
       routes: {
         "/l": (context) => LoginPage(mainViewModel()),
         "/h":  (context) => MainHomePage(mainViewModel()),
@@ -53,6 +52,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
-  Widget build(BuildContext context) => (mainViewModel().isLogin) ? MainHomePage(mainViewModel()): LoginPage(mainViewModel());
+  Widget build(BuildContext context) => LoginPage(mainViewModel());
 }
 

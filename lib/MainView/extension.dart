@@ -31,6 +31,12 @@ extension ListDoubleExt on List<double> {
   }
 }
 
+extension ListListDoubleExt on List<List<double>> {
+  double toMax() {
+    return this.expand((List<double> values) => values).toList().toMaxDouble();
+  }
+}
+
 extension StringExt on String {
 
   int toInt(int defaultint) {
@@ -65,12 +71,29 @@ extension StringExt on String {
     return this.split("/")[2].toInt(2021);
   }
 
+  int toMonthIndex(int i) {
+    return (this.toMonth() - 1 + i) % 12;
+  }
+
+  int toYearIndex() {
+    return DateTime.now().year - this.toYear();
+  }
+
+
   DateTime toDate() {
     return DateTime(this.toYear(), this.toMonth(), this.toDay());
   }
 
   DateTime toDisplayDate(int index) {
     return DateTime(this.toDate().displayYear(index), this.toDate().displayMonth(index),);
+  }
+
+  String displayMonthDay(int index, int day) {
+    return "${this.toDate().displayMonth(index)}/$day";
+  }
+
+  String displayMonthYear(int index) {
+    return "${this.toDate().displayMonth(index)}/${this.toDate().displayYear(index)}";
   }
 
   int toCurrentIndex() {
@@ -120,17 +143,20 @@ extension DateExt on DateTime? {
     return (this != null && (this!.month + index) % 12 != 0) ?
       addindextoyear: addindextoyear - 1;
   }
-
-  String displayMonthYear(int index) {
-    return "${this.displayMonth(index)}/${this.displayYear(index)}";
-  }
-
-  String displayMonthDay(int index, int day) {
-    return "${this.displayMonth(index)}/$day";
-  }
 }
 
-extension ListListMapAmntxt on List<List<Map>> {
+extension ListListMapExt on List<List<Map>> {
+
+  Map toMap(int index, int id) {
+    int date = this[index][id]["date"];
+    String desc = this[index][id]["desc"];
+    double amnt = this[index][id]["amnt"];
+    return  {"date": date, "desc": desc, "amnt": amnt};
+  }
+
+  void dateSort(int index) {
+    this[index].sort((a, b) => a["date"].compareTo(b["date"]));
+  }
 
   double toSum(int index, int count) {
     double amntsum = 0;
@@ -139,7 +165,6 @@ extension ListListMapAmntxt on List<List<Map>> {
     }
     return amntsum;
   }
-
 
   double toAllowanceSum(int index, int count) {
     double amntsum = 0;

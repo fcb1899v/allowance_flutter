@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'commonWidget.dart';
+import 'mainPopupMenuButton.dart';
 import 'mainViewModel.dart';
 
 class mainAppBar extends StatefulWidget implements PreferredSizeWidget{
@@ -20,32 +22,28 @@ class mainAppBarState extends State<mainAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
     return AppBar(
-      leading: IconButton(
+      leading: (viewModel.selectflag) ? IconButton(
         icon: Icon(Icons.menu,
           color: Colors.white,
         ),
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
-      ),
-      title: Text((viewModel.selectflag) ?
+      ): null,
+      automaticallyImplyLeading: false,
+        title: titleView(context,
+          (viewModel.selectflag) ?
           AppLocalizations.of(context)!.list:
           AppLocalizations.of(context)!.summary,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: (lang == "ja") ? 18: 24,
-          fontWeight: FontWeight.bold,
-          fontFamily: (lang == "ja") ? 'defaultfont': 'enAccent',
-        ),
       ),
+      actions: [mainPopupMenuButton(viewModel)],
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: <Color>[
               Colors.deepPurpleAccent,
-              Theme.of(context).primaryColor
+              Theme.of(context).primaryColor,
             ]
           ),
         ),
@@ -57,7 +55,7 @@ class mainAppBarState extends State<mainAppBar> {
           height: 4.0,
         ),
         preferredSize: Size.fromHeight(4.0)
-      ),
+      )
     );
   }
 }

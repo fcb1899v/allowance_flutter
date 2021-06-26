@@ -1,178 +1,63 @@
 {
   "@@locale": "en",
 
-  "appname": "Allowance_Manager",
-  "@appname": {
-    "description": "App name"
-  },
+  "appname": "Allowance_Manager", "@appname": {"description": "App name"},
+  "allowancebook": "Allowance book", "@allowancebook": {"description": "Title label"},
+  "login": "Login", "@login": {"description": "Login button"},
+  "logout": "Logout", "@logout": {"description": "Logout button"},
+  "signup": "Sign up", "@signup": {"description": "Sign up button"},
+  "email": "Email", "@email": {"description": "Input email"},
+  "password": "Password", "@password": {"description": "Input password"},
+  "confirmpass": "Confirm Password", "@confirmpass": {"description": "Input confirm password"},
+  "inputemailhint": "Email", "@inputemailhint": {"description": "Input email hint"},
+  "inputpasswordhint": "Password [8-20 charactors]", "@inputpasswordhint": {"description": "Input password hint"},
+  "inputconfirmpasshint": "Confirm password", "@inputonfirmpasshint": {"description": "Input confirm password hint"},
+  "loginsuccess": "Login Successful", "@loginsuccess": {"description": "Login success message"},
+  "signupsuccess": "Sign up Successful", "@signupsuccess": {"description": "Sign up success message"},
+  "loginerror": "Login Successful", "@loginerror": {"description": "Login error message"},
+  "signuperror": "Sign up Successful", "@signuperror": {"description": "Sign up error message"},
+  "sentverifiedemail": "Sent verified mail", "@sentverifiedemail": {"description": "Sent verified email"},
+  "usewithoutlogin": "Use without logging in", "@usewithoutlogin": {"description": "Without login button"},
+  "forgotpass": "Forgot password?", "@forgotpass": {"description": "Forgot password button"},
+  "passwordreset": "Password reset", "@passwordreset": {"description": "Password reset title"},
+  "sentpassresetmail": "Sent password reset mail", "@sentpassresetmail": {"description": "Sent password reset mail"},
+  "sendmailerror": "Send mail error", "@sendmailerror": {"description": "Send password reset mail error"},
+  "cantsentpassresetmail": "Can't send password reset mail", "@cantsentpassresetmail": {"description": "Can't send password reset mail message"},
 
-  "enter": "Enter",
-  "@enter": {
-    "description": "Input textfield"
-  },
 
-  "select": "Select",
-  "@select": {
-    "description": "Open picker"
-  },
 
-  "cancel": "Cancel",
-  "@cancel": {
-    "description": "Cancel button"
-  },
-
-  "notset": "Not set",
-  "@notset": {
-    "description": "Not set"
-  },
-
-  "list": "List",
-  "@list": {
-    "description": "Bottom label of list"
-  },
-
-  "summary": "Summary",
-  "@summary": {
-    "description": "Bottom label of summary"
-  },
-
-  "balance": "Balance",
-  "@balance": {
-    "description": "Balance label"
-  },
-
-  "assets": "Assets",
-  "@assets": {
-    "description": "Asset"
-  },
-
-  "moneyspent": "Money spent",
-  "@moneyspent": {
-    "description": "Money spent label"
-  },
-
-  "moneyleft": "Money left",
-  "@moneyleft": {
-    "description": "Money left label"
-  },
-
-  "month": "[Month]",
-  "@month": {
-    "description": "Month"
-  },
-
-  "allowance": "Allowance",
-  "@allowance": {
-    "description": "Allowance"
-  },
-
-  "spend": "Spend",
-  "@spend": {
-    "description": "Spend money"
-  },
-
-  "day": "Day",
-  "@day": {
-    "description": "List of day title label"
-  },
-
-  "desc": "Description",
-  "@desc": {
-    "description": "List of description title label"
-  },
-
-  "amnt": "Amount",
-  "@amnt": {
-    "description": "List of amount title label"
-  },
-
-  "input": "Input",
-  "@input": {
-    "description": "Input List"
-  },
-
-  "delete": "Delete",
-  "@delete": {
-    "description": "Delete last row"
-  },
-
-  "settingdatehint": "Enter the day (1~31)",
-  "@settingdatehint": {
-    "description": "Setting day hint"
-  },
-
-  "settingdeschint": "Enter the description",
-  "@settingdeschint": {
-    "description": "Setting description hint"
-  },
-
-  "settingamnthint": "Enter the amount",
-  "@settingamnthint": {
-    "description": "Setting amount hint"
-  },
-
-  "title": "'s Allowance",
-  "@title": {
-    "description": "Title label"
-  },
-
-  "allowancebook": "Allowance book",
-  "@allowancebook": {
-    "description": "Title label"
-  },
-
-  "name": "Your name",
-  "@name": {
-    "description": "Setting your name"
-  },
-
-  "settingnametitle": "Setting your name",
-  "@settingnametitle": {
-    "description": "Setting name title"
-  },
-
-  "settingnamehint": "Enter your name",
-  "@settingnamehint": {
-    "description": "Setting name hint"
-  },
-
-  "unit": "Currency unit",
-  "@unit": {
-    "description": "Setting currency unit"
-  },
-
-  "settingunittitle": "Setting currency unit",
-  "@settingunittitle": {
-    "description": "Setting currency unit title"
-  },
-
-  "initialassets": "Initial Assets",
-  "@initialassets": {
-    "description": "Allowance"
-  },
-
-  "settingassetstitle": "Setting your initial assets",
-  "@settingassetstitle": {
-    "description": "Setting initial assets title"
-  },
-
-  "settingassetshint": "Enter your initial assets",
-  "@settingassetshint": {
-    "description": "Setting initial assets hint"
-  },
-
-  "startdate": "Start date",
-  "@startdate": {
-    "description": "Start date"
-  },
-
-  "privacyPolicy": "Privacy policy",
-  "@privacyPolicy": {
-    "description": "Privacy policy"
-  },
-
-  "version": "Version",
-  "@version": {
-    "description": "Version"
-  }
+  "enter": "Enter", "@enter": {"description": "Input textfield"},
+  "select": "Select", "@select": {"description": "Open picker"},
+  "ok": "OK", "@ok": {"description": "OK button"},
+  "cancel": "Cancel", "@cancel": {"description": "Cancel button"},
+  "balance": "Balance", "@balance": {"description": "Balance label"},
+  "assets": "Assets", "@assets": {"description": "Settings of Asset"},
+  "moneyspent": "Money spent", "@moneyspent": {"description": "Money spent label"},
+  "moneyleft": "Money left", "@moneyleft": {"description": "Money left label"},
+  "month": "[Month]", "@month": {"description": "Month"},
+  "list": "List", "@list": {"description": "Bottom label of list"},
+  "summary": "Summary", "@summary": {"description": "Bottom label of summary"},
+  "allowance": "Allowance", "@allowance": {"description": "Allowance"},
+  "spend": "Spend", "@spend": {"description": "Spend money"},
+  "day": "Day", "@day": {"description": "List of day title label"},
+  "desc": "Description", "@desc": {"description": "List of description title label"},
+  "amnt": "Amount", "@amnt": {"description": "List of amount title label"},
+  "input": "Input", "@input": {"description": "Input list"},
+  "delete": "Delete", "@delete": {"description": "Delete list"},
+  "settingdatehint": "Enter the day (1~31)", "@settingdatehint": {"description": "day hint"},
+  "settingdeschint": "Enter the description", "@settingdeschint": {"description": "description hint"},
+  "settingamnthint": "Enter the amount", "@settingamnthint": {"description": "amount hint"},
+  "title": "'s Allowance", "@title": {"description": "Title label"},
+  "notset": "Not set", "@notset": {"description": "Not set"},
+  "name": "Your name", "@name": {"description": "Setting your name"},
+  "settingnametitle": "Setting your name", "@settingnametitle": {"description": "Setting name title"},
+  "settingnamehint": "Enter your name", "@settingnamehint": {"description": "Setting name hint"},
+  "unit": "Currency unit", "@unit": {"description": "Setting currency unit"},
+  "settingunittitle": "Setting currency unit", "@settingunittitle": {"description": "Setting currency unit title"},
+  "initialassets": "Initial Assets", "@initialassets": {"description": "Allowance"},
+  "settingassetstitle": "Setting your initial assets", "@settingassetstitle": {"description": "Setting initial assets title"},
+  "settingassetshint": "Enter your initial assets", "@settingassetshint": {"description": "Setting initial assets hint"},
+  "startdate": "Start date", "@startdate": {"description": "Start date"},
+  "privacyPolicy": "Privacy policy", "@privacyPolicy": {"description": "Privacy policy"},
+  "version": "Version", "@version": {"description": "Version"}
 }

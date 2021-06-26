@@ -20,18 +20,21 @@ class datePickerViewState extends State<datePickerView> {
   Widget build(BuildContext context) {
     int i = viewModel.index;
     int intday = viewModel.spendlist[i][widget.id]["date"];
+    String description = viewModel.spendlist[i][widget.id]["desc"];
     double amount = viewModel.spendlist[i][widget.id]["amnt"];
-    Color? customcolor = (intday == 100) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
+    Color? customcolor = (description == "" && amount == 0.0) ? Colors.grey:
+                           (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
-        if (widget.id != viewModel.counter[i] - 1 || intday != 100) {
+        if (widget.id != viewModel.counter[i] - 1 || (description != "" && amount != 0.0)) {
           viewModel.selectDate(context, widget.id),
         },
       },
       child: SizedBox(
         child: Container(
           width: double.infinity,
-          child: Text((intday > 0 && intday < 32) ? viewModel.startdate.toDate().displayMonthDay(viewModel.index, intday): "-",
+          child: Text((intday > 0 && intday < 32) ?
+                   viewModel.startdate.displayMonthDay(viewModel.index, intday): "-",
             style: TextStyle(
               color: customcolor,
               fontSize: 14,

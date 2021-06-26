@@ -23,17 +23,17 @@ class _MainHomePageState extends State<MainHomePage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      viewModel.init();
-    });
+    if (mounted) {
+      setState(() {
+        viewModel.init();
+      });
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    setState(() {
-      viewModel.dispose();
-    });
+    _MainHomePageState(viewModel);
   }
 
   @override
@@ -54,7 +54,7 @@ class _MainHomePageState extends State<MainHomePage> {
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             appBar: mainAppBar(viewModel),
-            drawer: (viewModel.selectflag) ? null: mainDrawer(viewModel),
+            drawer: (viewModel.selectflag) ? mainDrawer(viewModel): null,
             bottomNavigationBar: mainBottomNavi(viewModel),
             body: (viewModel.selectflag) ? mainBody(viewModel): summeryBody(viewModel),
             floatingActionButton: (viewModel.selectflag) ? inputButtons(viewModel): null,

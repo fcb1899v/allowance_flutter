@@ -19,8 +19,8 @@ class settingsAssetsState extends State<settingsAssets> {
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
     final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
-    final displayassets = (viewModel.startassets > 0.0) ?
-            "${viewModel.unitvalue} ${viewModel.startassets.toStringAsFixed(numberdigit)}":
+    final displayassets = (viewModel.initialassets > 0.0) ?
+            "${viewModel.unitvalue} ${viewModel.initialassets.toStringAsFixed(numberdigit)}":
             AppLocalizations.of(context)!.notset;
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar),
@@ -45,7 +45,7 @@ class settingsAssetsState extends State<settingsAssets> {
   }
 
   Future<void> allowanceFieldDialog(BuildContext context) async {
-    double inputassets = viewModel.startassets;
+    double inputassets = viewModel.initialassets;
     return showDialog(
       context: context,
       builder: (context) {
@@ -91,7 +91,7 @@ class settingsAssetsState extends State<settingsAssets> {
               onPressed: () {
                 if (inputassets > 0) {
                   setState(() {
-                    viewModel.saveStartAssets(inputassets);
+                    viewModel.saveInitialAssets(inputassets);
                     viewModel.getAssets();
                   });
                 }
