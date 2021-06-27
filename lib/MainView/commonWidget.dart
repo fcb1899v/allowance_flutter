@@ -42,4 +42,13 @@ TextStyle customShadowTextStyle(Color color, double size, font) {
   );
 }
 
+TextStyle underlineTextStyle(Color color, double size, font) {
+  return TextStyle(
+    color: color,
+    fontSize: size,
+    fontFamily: font,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.underline,
+  );
+}
 

@@ -33,7 +33,7 @@ class loginAppBarState extends State<loginAppBar> {
       ): null,
       automaticallyImplyLeading: false,
       title: Text(AppLocalizations.of(context)!.allowancebook,
-        style: customTextStyle(Colors.white, customsize, customfont),
+        style: customShadowTextStyle(Colors.white, customsize, customfont),
       ),
       flexibleSpace: Container(
         decoration: BoxDecoration(

@@ -21,7 +21,7 @@ class passwordResetButtonState extends State<passwordResetButton> {
     String inputemail = "";
     return TextButton(
       child: Text(AppLocalizations.of(context)!.forgotpass,
-        style: customTextStyle(Colors.white, 14, "defaultfont"),
+        style: underlineTextStyle(Colors.white, 14, "defaultfont"),
       ),
       onPressed: () {
         showDialog(

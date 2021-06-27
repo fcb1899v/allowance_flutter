@@ -26,7 +26,7 @@ class mainAppBarState extends State<mainAppBar> {
     final customsize = (lang == "ja") ? 18.0: 24.0;
     final customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return AppBar(
-      leading: (viewModel.selectflag) ? IconButton(
+      leading: (viewModel.selectflag && viewModel.isLogin) ? IconButton(
         icon: Icon(Icons.menu,
           color: Colors.white,
         ),
@@ -35,10 +35,10 @@ class mainAppBarState extends State<mainAppBar> {
         },
       ): null,
       automaticallyImplyLeading: false,
-        title: Text((viewModel.selectflag) ?
-          AppLocalizations.of(context)!.list:
-          AppLocalizations.of(context)!.summary,
-        style: customTextStyle(Colors.white, customsize, customfont),
+      title: Text((viewModel.selectflag) ?
+        AppLocalizations.of(context)!.list:
+        AppLocalizations.of(context)!.summary,
+        style: customShadowTextStyle(Colors.white, customsize, customfont),
       ),
       actions: [mainPopupMenuButton(viewModel)],
       flexibleSpace: Container(

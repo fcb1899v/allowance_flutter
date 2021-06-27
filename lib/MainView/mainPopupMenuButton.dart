@@ -40,10 +40,14 @@ class mainPopupMenuButtonState extends State<mainPopupMenuButton> {
       itemBuilder: (context) {
         return popuplist.map((String value) {
           return PopupMenuItem(
-            child: ListTile(
-              leading:Icon(CupertinoIcons.person_circle, color: Colors.lightBlue,),
-              title:Text(value,
-                style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),
+            padding: EdgeInsets.all(0.0),
+            child: Container(
+              decoration: BoxDecoration (color: Colors.white),
+              child: ListTile(
+                leading:Icon(CupertinoIcons.person_circle, color: Colors.lightBlue,),
+                title:Text(value,
+                  style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),
+                ),
               ),
             ),
             value: value,

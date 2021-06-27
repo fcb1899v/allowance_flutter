@@ -43,7 +43,7 @@ class _loginBodyState extends State<loginBody> {
             Text((!viewModel.isMoveSignup) ?
               AppLocalizations.of(context)!.login:
               AppLocalizations.of(context)!.signup,
-              style: customTextStyle(Colors.white, customsize, customfont),
+              style: customShadowTextStyle(Colors.white, customsize, customfont),
             ),
             SizedBox(height: 30,),
             ClipRRect(
@@ -144,7 +144,7 @@ class _loginBodyState extends State<loginBody> {
                     ),
                     if (!viewModel.isMoveSignup) TextButton(
                       child: Text(AppLocalizations.of(context)!.signup,
-                        style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
+                        style: underlineTextStyle(Colors.lightBlue, 14, "defaultfont"),
                       ),
                       onPressed: () {
                         setState((){
