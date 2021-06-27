@@ -99,45 +99,48 @@ Future<void> tryAuth(
     title = (!isMoveSignup) ?
       AppLocalizations.of(context)!.loginerror:
       AppLocalizations.of(context)!.signuperror;
-    message = e.code.loginErrorMessage();
+    message = e.code.loginErrorMessage(context, (!isMoveSignup) ?
+      AppLocalizations.of(context)!.loginerrormessage:
+      AppLocalizations.of(context)!.signuperrormessage,
+    );
     showLoginAlertDialog(context, title, message);
   }
 }
 
 extension LoginStringExt on String {
 
-  String loginErrorMessage() {
+  String loginErrorMessage(BuildContext context, String defaultmessage) {
     String dialogmessage = "";
     switch (this) {
       case 'invalid-email':
-        dialogmessage = 'This email is invalid.';
+        dialogmessage = AppLocalizations.of(context)!.invalidemail;
         break;
       case 'wrong-password':
-        dialogmessage = 'Wrong password provided for this user.';
+        dialogmessage = AppLocalizations.of(context)!.wrongpassword;
         break;
       case 'user-not-found':
-        dialogmessage = 'No user found for this email.';
+        dialogmessage = AppLocalizations.of(context)!.usernotfound;
         break;
       case 'user-disabled':
-        dialogmessage = 'This user disabled.';
+        dialogmessage = AppLocalizations.of(context)!.userdisabled;
         break;
       case 'too-many-requests':
-        dialogmessage = 'Too many requests to log into this account.';
+        dialogmessage = AppLocalizations.of(context)!.toomanyrequests;
         break;
       case 'operation-not-allowed':
-        dialogmessage = 'Server error, please try again later.';
+        dialogmessage = AppLocalizations.of(context)!.operationnotallowed;
         break;
       case 'email-already-in-use':
-        dialogmessage = 'The account already exists for this email.';
+        dialogmessage = AppLocalizations.of(context)!.emailalreadyinuse;
         break;
       case 'weak-password':
-        dialogmessage = 'The password provided is too weak.';
+        dialogmessage = AppLocalizations.of(context)!.weakpassword;
         break;
       default:
-        dialogmessage = 'Login failed. Please try again.';
+        dialogmessage = defaultmessage;
         break;
     }
-    print(dialogmessage);
+    print("Error: $dialogmessage");
     return dialogmessage;
   }
 }

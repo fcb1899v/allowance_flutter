@@ -23,9 +23,16 @@
   "sentpassresetmail": "Sent password reset mail", "@sentpassresetmail": {"description": "Sent password reset mail"},
   "sendmailerror": "Send mail error", "@sendmailerror": {"description": "Send password reset mail error"},
   "cantsentpassresetmail": "Can't send password reset mail", "@cantsentpassresetmail": {"description": "Can't send password reset mail message"},
-
-
-
+  "invalidemail": "This email address is badly formatted", "@invalidemail": {"description": "Invalid email"},
+  "wrongpassword": "This password is wrong", "@wrongpassword": {"description": "Wrong password"},
+  "usernotfound": "This email address is not registered", "@usernotfound": {"description": "User not found"},
+  "userdisabled": "This email address has been disabled", "@userdisabled": {"description": "User disabled"},
+  "emailalreadyinuse": "This email address has been already in use", "@emailalreadyinuse": {"description": "Email already in use"},
+  "weakpassword": "This password is too weak", "@weakpassword": {"description": "Weak password"},
+  "toomanyrequests": "Too many requests, please try again later", "@toomanyrequests": {"description": "Too many requests"},
+  "operationnotallowed": "Server error, please try again later", "@operationnotallowed": {"description": "Operation not allowed"},
+  "loginerrormessage": "Failed to Login", "@loginerrormessage": {"description": "Login default error message"},
+  "signuperrormessage": "Failed to sign up", "@signuperrormessage": {"description": "Sign up default error message"},
   "enter": "Enter", "@enter": {"description": "Input textfield"},
   "select": "Select", "@select": {"description": "Open picker"},
   "ok": "OK", "@ok": {"description": "OK button"},
