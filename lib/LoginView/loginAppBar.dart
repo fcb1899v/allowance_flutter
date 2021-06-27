@@ -21,6 +21,9 @@ class loginAppBarState extends State<loginAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = Localizations.localeOf(context).languageCode;
+    final customsize = (lang == "ja") ? 18.0: 24.0;
+    final customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return AppBar(
       leading: (viewModel.isMoveSignup) ? IconButton(
         icon: Icon(CupertinoIcons.back, color: Colors.white,),
@@ -29,8 +32,8 @@ class loginAppBarState extends State<loginAppBar> {
         },
       ): null,
       automaticallyImplyLeading: false,
-      title: titleView(context,
-        AppLocalizations.of(context)!.allowancebook,
+      title: Text(AppLocalizations.of(context)!.allowancebook,
+        style: customTextStyle(Colors.white, customsize, customfont),
       ),
       flexibleSpace: Container(
         decoration: BoxDecoration(

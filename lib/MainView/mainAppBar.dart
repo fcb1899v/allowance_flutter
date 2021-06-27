@@ -22,6 +22,9 @@ class mainAppBarState extends State<mainAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = Localizations.localeOf(context).languageCode;
+    final customsize = (lang == "ja") ? 18.0: 24.0;
+    final customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return AppBar(
       leading: (viewModel.selectflag) ? IconButton(
         icon: Icon(Icons.menu,
@@ -32,10 +35,10 @@ class mainAppBarState extends State<mainAppBar> {
         },
       ): null,
       automaticallyImplyLeading: false,
-        title: titleView(context,
-          (viewModel.selectflag) ?
+        title: Text((viewModel.selectflag) ?
           AppLocalizations.of(context)!.list:
           AppLocalizations.of(context)!.summary,
+        style: customTextStyle(Colors.white, customsize, customfont),
       ),
       actions: [mainPopupMenuButton(viewModel)],
       flexibleSpace: Container(

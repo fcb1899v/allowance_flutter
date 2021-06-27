@@ -42,7 +42,9 @@ class mainPopupMenuButtonState extends State<mainPopupMenuButton> {
           return PopupMenuItem(
             child: ListTile(
               leading:Icon(CupertinoIcons.person_circle, color: Colors.lightBlue,),
-              title:Text(value, style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),),
+              title:Text(value,
+                style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),
+              ),
             ),
             value: value,
           );

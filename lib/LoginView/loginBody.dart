@@ -30,6 +30,9 @@ class _loginBodyState extends State<loginBody> {
   @override
   Widget build(BuildContext context) {
     if (!viewModel.isMoveSignup) isConfirmPassInput = true;
+    final lang = Localizations.localeOf(context).languageCode;
+    final customsize = (lang == "ja") ? 18.0: 24.0;
+    final customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return Center(
       child: Container(
         padding: EdgeInsets.only(left: 0, right: 0,),
@@ -37,9 +40,11 @@ class _loginBodyState extends State<loginBody> {
         child: Column(
           children: [
             SizedBox(height: 30,),
-            titleView(context, (!viewModel.isMoveSignup) ?
+            Text((!viewModel.isMoveSignup) ?
               AppLocalizations.of(context)!.login:
-              AppLocalizations.of(context)!.signup),
+              AppLocalizations.of(context)!.signup,
+              style: customTextStyle(Colors.white, customsize, customfont),
+            ),
             SizedBox(height: 30,),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),

@@ -40,12 +40,7 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
                 headingRowColor: MaterialStateColor.resolveWith(
                   (states) => Colors.lightBlue
                 ),
-                columns: <DataColumn>[
-                  dataColumnTitle(context, AppLocalizations.of(context)!.day),
-                  dataColumnTitle(context, AppLocalizations.of(context)!.desc),
-                  dataColumnTitle(context, "${AppLocalizations.of(context)!.amnt} [${viewModel.unitvalue}]"),
-                  dataColumnTitle(context, ""),
-                ],
+                columns: dataColumnTitles(context),
                 rows: getDataRows(),
               ),
             ),
@@ -54,6 +49,40 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
       ),
     );
   }
+
+  List<DataColumn> dataColumnTitles(BuildContext context) {
+    final lang = Localizations.localeOf(context).languageCode;
+    final customfont = (lang == "ja") ? 'jaAccent': 'enAccent';
+    return [
+      DataColumn(
+        label: Text(AppLocalizations.of(context)!.day,
+          style: customTextStyle(Colors.white, 16, customfont),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      DataColumn(
+        label: Text(AppLocalizations.of(context)!.desc,
+          style: customTextStyle(Colors.white, 16, customfont),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      DataColumn(
+        label: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(AppLocalizations.of(context)!.amnt,
+              style: customTextStyle(Colors.white, 16, customfont),
+            ),
+            Text(" [${viewModel.unitvalue}]",
+              style: customTextStyle(Colors.white, 16, "Roboto"),
+            ),
+          ],
+        ),
+      ),
+      DataColumn(label: Text(""),),
+    ];
+  }
+
 
   List<DataRow> getDataRows() {
     List<DataRow> datarows = [];

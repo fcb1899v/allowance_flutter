@@ -26,7 +26,7 @@ class settingsUnitState extends State<settingsUnit> {
         style: settingsTextStyle(Colors.black, 16, customfont,),
       ),
       subtitle: Text("${viewModel.unitvalue}",
-        style: settingsTextStyle(Colors.grey, 16, null),
+        style: settingsTextStyle(Colors.grey, 16, "Roboto"),
       ),
       trailing: Icon(CupertinoIcons.forward),
       onTap: () {
@@ -48,7 +48,7 @@ class settingsUnitState extends State<settingsUnit> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   DropdownButton <String>(
-                    style: customTextStyle(Colors.black, 30, null),
+                    style: customTextStyle(Colors.black, 30, "Roboto"),
                     value: selectunit,
                     onChanged: (String? newValue) {
                       if (isNotBlank(selectunit)) {

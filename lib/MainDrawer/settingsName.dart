@@ -53,7 +53,7 @@ class settingsNameState extends State<settingsName> {
             controller: TextEditingController(),
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.settingnamehint,
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle: customTextStyle(Colors.grey, 14, "defaultfont"),
             ),
             autofocus: true,
           ),

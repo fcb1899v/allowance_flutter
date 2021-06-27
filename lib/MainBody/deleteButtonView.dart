@@ -51,7 +51,7 @@ class deleteButtonViewState extends State<deleteButtonView> {
         },
       );
     } else {
-      return Text("-", style: customTextStyle(Colors.grey, 16, "defaultfont"));
+      return Text("", style: customTextStyle(Colors.grey, 16, "defaultfont"));
     }
   }
 }

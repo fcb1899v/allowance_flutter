@@ -33,21 +33,21 @@ class settingsAssetsState extends State<settingsAssets> {
       subtitle: Row(
         children: [
           Text(displayunit,
-            style: settingsTextStyle(Colors.grey, 16, null,),
+            style: settingsTextStyle(Colors.grey, 16, "Roboto"),
           ),
           Text(displayassets,
-            style: settingsTextStyle(Colors.grey, 16, customfont,),
+            style: settingsTextStyle(Colors.grey, 16, customfont),
           ),
         ],
       ),
       trailing: Icon(CupertinoIcons.forward),
       onTap: () {
-        allowanceFieldDialog(context);
+        setIniAssetsDialog(context);
       },
     );
   }
 
-  Future<void> allowanceFieldDialog(BuildContext context) async {
+  Future<void> setIniAssetsDialog(BuildContext context) async {
     double inputassets = viewModel.initialassets;
     return showDialog(
       context: context,

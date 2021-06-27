@@ -20,8 +20,9 @@ class balanceViewState extends State<balanceView> {
   balanceViewState(this.viewModel);
 
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
-    var textstyle = customShadowTextStyle(Colors.white, 24, "defaultfont");
+    final lang = Localizations.localeOf(context).languageCode;
+    final customfont = (lang == "ja") ? "defaultfont": 'enAccent';
+    final customsize = (lang == "ja") ? 24.0: 32.0;
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: FittedBox(
@@ -34,10 +35,9 @@ class balanceViewState extends State<balanceView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("${AppLocalizations.of(context)!.balance}",
-                    style: (lang == "ja") ? textstyle:
-                      customShadowTextStyle(Colors.white, 32, 'enAccent',),
-                    ),
-                  Text(" [", style: textstyle,),
+                    style: customShadowTextStyle(Colors.white, customsize, customfont),
+                  ),
+                  Text(" [", style: customShadowTextStyle(Colors.white, 24, null),),
                   DropdownButton <String>(
                     value: viewModel.unitvalue,
                     dropdownColor: Colors.lightBlue,
@@ -59,7 +59,7 @@ class balanceViewState extends State<balanceView> {
                       );
                     }).toList(),
                   ),
-                  Text("] ", style: textstyle,),
+                  Text("] ", style: customShadowTextStyle(Colors.white, 24, null),),
                   Text("${viewModel.balancelist[viewModel.index].stringMoney(viewModel.unitvalue)}",
                     style: customShadowTextStyle(Colors.white, 32, "defaultfont"),
                   ),
