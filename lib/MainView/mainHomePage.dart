@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -23,11 +24,13 @@ class _MainHomePageState extends State<MainHomePage> {
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      setState(() {
-        viewModel.init();
-      });
-    }
+    Firebase.initializeApp().whenComplete(() {
+      if (mounted) {
+        setState(() {
+          viewModel.init();
+        });
+      }
+    });
   }
 
   @override

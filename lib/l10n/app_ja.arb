@@ -33,8 +33,6 @@
   "operationnotallowed": "サーバーエラー　時間をおいてから試してください",
   "loginerrormessage": "ログインに失敗しました",
   "signuperrormessage": "ユーザー登録に失敗しました",
-
-
   "enter": "入力してね",
   "select": "タップしてね",
   "ok": "OK",
@@ -66,6 +64,9 @@
   "initialassets": "最初のお金",
   "settingassetstitle": "最初のお金の設定",
   "settingassetshint": "最初のお金を入力してね",
+  "targetassets": "目標のお金",
+  "settingtargettitle": "目標のお金の設定",
+  "settingtargethint": "目標のお金を入力してね",
   "startdate": "使い始めた日",
   "privacyPolicy": "プライバシー・ポリシー",
   "version": "バージョン"

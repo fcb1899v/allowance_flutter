@@ -61,9 +61,12 @@
   "settingnamehint": "Enter your name", "@settingnamehint": {"description": "Setting name hint"},
   "unit": "Currency unit", "@unit": {"description": "Setting currency unit"},
   "settingunittitle": "Setting currency unit", "@settingunittitle": {"description": "Setting currency unit title"},
-  "initialassets": "Initial Assets", "@initialassets": {"description": "Allowance"},
+  "initialassets": "Initial assets", "@initialassets": {"description": "Allowance"},
   "settingassetstitle": "Setting your initial assets", "@settingassetstitle": {"description": "Setting initial assets title"},
   "settingassetshint": "Enter your initial assets", "@settingassetshint": {"description": "Setting initial assets hint"},
+  "targetassets": "Target assets", "@targetassets": {"description": "Allowance"},
+  "settingtargettitle": "Setting your target assets", "@settingtargettitle": {"description": "Setting target assets title"},
+  "settingtargethint": "Enter your target assets", "@settingtargethint": {"description": "Setting target assets hint"},
   "startdate": "Start date", "@startdate": {"description": "Start date"},
   "privacyPolicy": "Privacy policy", "@privacyPolicy": {"description": "Privacy policy"},
   "version": "Version", "@version": {"description": "Version"}

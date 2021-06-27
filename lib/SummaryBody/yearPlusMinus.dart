@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/extension.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
+import '/MainView/extension.dart';
 
 class yearPlusMinus extends StatefulWidget{
   final mainViewModel viewModel;
@@ -34,25 +35,13 @@ class yearPlusMinusState extends State<yearPlusMinus> {
                 });
               },
               child: Icon(CupertinoIcons.back),
-              tooltip: 'Decrease',
-              heroTag: "hero12",
+              heroTag: "herominus2",
             ),
           ),
         ),
         Spacer(),
         Text("${viewModel.startdate.toYear() + viewModel.yearindex}",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            shadows: <Shadow>[
-              Shadow(
-                offset: Offset(2.0, 2.0),
-                blurRadius: 1.0,
-                color: Colors.lightBlue,
-              ),
-            ],
-            fontFamily: 'enAccent',
-          ),
+          style: customShadowTextStyle(Colors.white, 24, 'enAccent'),
         ),
         Spacer(),
         Container(
@@ -68,8 +57,7 @@ class yearPlusMinusState extends State<yearPlusMinus> {
                 });
               },
               child: Icon(CupertinoIcons.forward),
-              tooltip: 'Increase',
-              heroTag: "hero11",
+              heroTag: "heroplus2",
             ),
           ),
         ),

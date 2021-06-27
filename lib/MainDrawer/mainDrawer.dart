@@ -4,7 +4,8 @@ import '/MainView/mainViewModel.dart';
 import 'drawerHeader.dart';
 import 'settingsName.dart';
 import 'settingsUnit.dart';
-import 'settingsAssets.dart';
+import 'settingsInitialAssets.dart';
+import 'settingsTargetAssets.dart';
 import 'startDateView.dart';
 import 'versionView.dart';
 
@@ -35,7 +36,8 @@ class mainDrawerState extends State<mainDrawer> {
               SizedBox(height: 10),
               settingsName(viewModel),
               settingsUnit(viewModel),
-              settingsAssets(viewModel),
+              settingsInitialAssets(viewModel),
+              settingsTargetAssets(viewModel),
               startDateView(viewModel),
               versionView(viewModel),
             ],

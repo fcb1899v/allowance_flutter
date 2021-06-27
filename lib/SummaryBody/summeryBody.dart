@@ -4,8 +4,8 @@ import 'spendChart.dart';
 import 'yearPlusMinus.dart';
 import 'assetsChart.dart';
 import 'balanceChart.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/admob.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/admob.dart';
 
 class summeryBody extends StatefulWidget {
   final mainViewModel viewModel;

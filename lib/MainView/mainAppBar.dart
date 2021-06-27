@@ -26,7 +26,7 @@ class mainAppBarState extends State<mainAppBar> {
     final customsize = (lang == "ja") ? 18.0: 24.0;
     final customfont = (lang == "ja") ? 'defaultfont': 'enAccent';
     return AppBar(
-      leading: (viewModel.selectflag && viewModel.isLogin) ? IconButton(
+      leading: (viewModel.isLogin) ? IconButton(
         icon: Icon(Icons.menu,
           color: Colors.white,
         ),
@@ -53,10 +53,7 @@ class mainAppBarState extends State<mainAppBar> {
       ),
       centerTitle: true,
       bottom: PreferredSize(
-        child: Container(
-          color: Colors.white,
-          height: 4.0,
-        ),
+        child: Container(color: Colors.white, height: 4.0,),
         preferredSize: Size.fromHeight(4.0)
       )
     );

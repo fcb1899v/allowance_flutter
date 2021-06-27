@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -59,6 +60,9 @@ class mainViewModel extends Model {
   double _maxassets = 0.0;
   double get maxassets => _maxassets;
 
+  double _targetassets = 0.0;
+  double get targetassets => _targetassets;
+
   List<List<double>> _balance = List.generate(10,
     (_) => List.generate(12, (_) => 0.0)
   );
@@ -100,6 +104,7 @@ class mainViewModel extends Model {
     getSpend();
     getBalance();
     getPercent();
+    getTargetAssets();
   }
 
   void dispose() {
@@ -113,14 +118,19 @@ class mainViewModel extends Model {
   }
 
   void getFirestoreSpendList() async {
-    CollectionReference usersref = FirebaseFirestore.instance.collection("users");
+    String userid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore auth = FirebaseFirestore.instance;
+    DocumentReference userdocref = auth.collection("users").doc(userid);
     for (int j = 0; j < maxindex; j++) {
-      DocumentSnapshot<Object?> docsnapshot = usersref.doc("j").get() as DocumentSnapshot<Object?>;
+      DocumentReference datadocref = userdocref.collection("data").doc("j");
+      DocumentSnapshot docsnapshot = datadocref.get() as DocumentSnapshot<Map<String, dynamic>>;
       if (docsnapshot.exists) {
         for (int i = 0; i < counter[j]; i++) {
-          _spendlist[j][i]["date"] = docsnapshot["$i"]["date"];
-          _spendlist[j][i]["desc"] = docsnapshot["$i"]["desc"];
-          _spendlist[j][i]["amnt"] = docsnapshot["$i"]["amnt"];
+          _spendlist[j][i] = {
+            "date": docsnapshot["$i"]["date"],
+            "desc": docsnapshot["$i"]["desc"],
+            "amnt": docsnapshot["$i"]["amnt"],
+          };
           print("${spendlist[j][i]}");
         }
       }
@@ -501,14 +511,32 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
-  void saveInitialAssets(double iniassets) async {
-    if (iniassets >= 0) {
-      _initialassets = iniassets;
+  void saveInitialAssets(double initial) async {
+    if (initial >= 0.0) {
+      _initialassets = initial;
       setSharedPrefDouble("initialassetskey", initialassets);
-      setFirestoreData("settings", "initial asset", initialassets);
+      setFirestoreData("settings", "initial assets", initialassets);
       saveAssets();
+      print("save initial assets : $initialassets");
     }
-    print("save initial assets : $initialassets");
+    notifyListeners();
+  }
+
+  void getTargetAssets() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _targetassets = prefs.getDouble("targetassetskey") ?? 0.0;
+    //print("getTargetAssets : $targetassets");
+    notifyListeners();
+  }
+
+  void saveTargetAssets(double target) async {
+    if (targetassets >= 0.0) {
+      _targetassets = target;
+      setSharedPrefDouble("targetassetskey", targetassets);
+      setFirestoreData("settings", "target assets", targetassets);
+      saveMaxAssets();
+      print("save target assets : $targetassets");
+    }
     notifyListeners();
   }
 
@@ -527,7 +555,7 @@ class mainViewModel extends Model {
   }
 
   void saveMaxAssets() async {
-    _maxassets = assets.toMax();
+    _maxassets = (targetassets > assets.toMax()) ? targetassets: assets.toMax();
     setSharedPrefDouble("maxassetskey", maxassets);
     print("saveMaxAssets : $maxassets" );
   }
