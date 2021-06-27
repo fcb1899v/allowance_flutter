@@ -50,7 +50,7 @@ class _loginBodyState extends State<loginBody> {
                   children: [
                     SizedBox(height: 10,),
                     TextFormField(
-                      style: commonTextStyle(),
+                      style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                       onChanged: (value) {
                         isEmailInput = (value.length != 0);
                         if (isNotBlank(value)) inputemail = value;
@@ -61,7 +61,7 @@ class _loginBodyState extends State<loginBody> {
                       decoration: InputDecoration(
                         icon: Icon(CupertinoIcons.person_circle,),
                         labelText: AppLocalizations.of(context)!.email,
-                        labelStyle: commonTextStyle(),
+                        labelStyle: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                         contentPadding: EdgeInsets.all(0),
                         hintText: AppLocalizations.of(context)!.inputemailhint,
                         hintStyle: TextStyle(color: Colors.grey[400]),
@@ -71,7 +71,7 @@ class _loginBodyState extends State<loginBody> {
                     ),
                     SizedBox(height: 10,),
                     TextFormField(
-                      style: commonTextStyle(),
+                      style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                       onChanged: (value) {
                         isPasswordInput = (value.length > 7 && value.length < 21);
                         if (isNotBlank(value)) inputpassword = value;
@@ -82,7 +82,7 @@ class _loginBodyState extends State<loginBody> {
                       decoration: InputDecoration(
                         icon: Icon(CupertinoIcons.lock_circle,),
                         labelText: AppLocalizations.of(context)!.password,
-                        labelStyle: commonTextStyle(),
+                        labelStyle: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                         contentPadding: EdgeInsets.all(0),
                         hintText: AppLocalizations.of(context)!.inputpasswordhint,
                         hintStyle: TextStyle(color: Colors.grey[400]),
@@ -92,7 +92,7 @@ class _loginBodyState extends State<loginBody> {
                     ),
                     if (viewModel.isMoveSignup) SizedBox(height: 10,),
                     if (viewModel.isMoveSignup) TextFormField(
-                      style: commonTextStyle(),
+                      style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                       onChanged: (value) {
                         isConfirmPassInput = (value.length > 7 && value.length < 21 && value == inputpassword);
                         if (isNotBlank(value)) inputconfirmpass = value;
@@ -103,7 +103,7 @@ class _loginBodyState extends State<loginBody> {
                       decoration: InputDecoration(
                         icon: Icon(CupertinoIcons.lock_circle,),
                         labelText: AppLocalizations.of(context)!.confirmpass,
-                        labelStyle: commonTextStyle(),
+                        labelStyle: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                         contentPadding: EdgeInsets.all(0),
                         hintText: AppLocalizations.of(context)!.inputconfirmpasshint,
                         hintStyle: TextStyle(color: Colors.grey[400]),
@@ -122,13 +122,15 @@ class _loginBodyState extends State<loginBody> {
                           child: Text((!viewModel.isMoveSignup) ?
                                    AppLocalizations.of(context)!.login:
                                    AppLocalizations.of(context)!.signup,
-                            style: commonButtonStyle()
+                            style: customTextStyle(Colors.white, 14, "defaultfont"),
                           ),
                           onPressed: () async {
                             if (isEmailInput && isPasswordInput && isConfirmPassInput) {
                               tryAuth(context, viewModel.isMoveSignup,
                                 inputemail, inputpassword, inputconfirmpass,
-                                viewModel.stateLogin(),
+                                {
+                                  viewModel.stateLogin(),
+                                }
                               );
                             }
                           },
@@ -137,7 +139,7 @@ class _loginBodyState extends State<loginBody> {
                     ),
                     if (!viewModel.isMoveSignup) TextButton(
                       child: Text(AppLocalizations.of(context)!.signup,
-                        style: commonTextStyle(),
+                        style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                       ),
                       onPressed: () {
                         setState((){
@@ -161,7 +163,7 @@ class _loginBodyState extends State<loginBody> {
                 color: Colors.lightBlue,
                 child: TextButton(
                   child: Text(AppLocalizations.of(context)!.usewithoutlogin,
-                    style: commonButtonStyle(),
+                    style: customTextStyle(Colors.white, 14, "defaultfont"),
                   ),
                   onPressed: () => pushPage(context, "/h"),
                 ),

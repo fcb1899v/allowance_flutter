@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quiver/strings.dart';
 import 'firebasefirestore.dart';
 import 'extension.dart';
 import 'dart:async';
 
-// ignore: camel_case_types
 class mainViewModel extends Model {
 
   bool _isLogin = false;
@@ -94,7 +94,7 @@ class mainViewModel extends Model {
     getStartDate();
     getCurrentIndex();
     getCounter();
-    //getFireStoreSpendList();
+    //getFirestoreSpendList();
     getSpendList();
     getAssets();
     getSpend();
@@ -112,18 +112,21 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
-  // void getFireStoreSpendList() async {
-  //   for (int j = 0; j < maxindex; j++) {
-  //     final docsnapshot = "$j".toDataDocRef().get();
-  //     Map<String, dynamic>? data = docsnapshot.data() as Map<String, dynamic>;
-  //     for (int i = 0; i < counter[j]; i++) {
-  //       if (isNotBlank(data["$i"])) {
-  //         _spendlist[j][i]["data"] = data["$i"] as Map<String, dynamic>;
-  //       }
-  //     }
-  //   }
-  //   notifyListeners();
-  // }
+  void getFirestoreSpendList() async {
+    CollectionReference usersref = FirebaseFirestore.instance.collection("users");
+    for (int j = 0; j < maxindex; j++) {
+      DocumentSnapshot<Object?> docsnapshot = usersref.doc("j").get() as DocumentSnapshot<Object?>;
+      if (docsnapshot.exists) {
+        for (int i = 0; i < counter[j]; i++) {
+          _spendlist[j][i]["date"] = docsnapshot["$i"]["date"];
+          _spendlist[j][i]["desc"] = docsnapshot["$i"]["desc"];
+          _spendlist[j][i]["amnt"] = docsnapshot["$i"]["amnt"];
+          print("${spendlist[j][i]}");
+        }
+      }
+    }
+    notifyListeners();
+  }
 
   void stateLogout() async{
     _isLogin = false;
@@ -263,25 +266,22 @@ class mainViewModel extends Model {
     notifyListeners();
   }
 
-  void getSpendData(int id, int j) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _spendlist[j][id]["date"] = prefs.getInt("datekey${j}_$id") ?? 0;
-    _spendlist[j][id]["desc"] = prefs.getString("desckey${j}_$id") ?? "";
-    _spendlist[j][id]["amnt"] = prefs.getDouble("amntkey${j}_$id") ?? 0.0;
-    notifyListeners();
-  }
-
   void getSpendList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     for (int j = 0; j < maxindex; j++) {
       for (int i = 0; i < counter[j]; i++) {
-        getSpendData(i, j);
+        _spendlist[j][i]["date"] = prefs.getInt("datekey${j}_$i") ?? 0;
+        _spendlist[j][i]["desc"] = prefs.getString("desckey${j}_$i") ?? "";
+        _spendlist[j][i]["amnt"] = prefs.getDouble("amntkey${j}_$i") ?? 0.0;
       }
     }
     notifyListeners();
   }
 
   void saveSpendList(int day, String description, double amount) async{
-    _spendlist[index][counter[index] - 2] = {"date": day, "desc": description, "amnt": amount};
+    _spendlist[index][counter[index] - 2] = {
+      "date": day, "desc": description, "amnt": amount
+    };
     setSharedPrefSpendList(spendlist, index, counter[index] - 2);
     spendlist.dateSort(index);
     for (int i = 0; i < counter[index]; i++) {

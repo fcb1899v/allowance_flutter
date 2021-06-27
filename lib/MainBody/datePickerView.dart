@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/extension.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
+import '/MainView/extension.dart';
 
 class datePickerView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -35,11 +36,7 @@ class datePickerViewState extends State<datePickerView> {
           width: double.infinity,
           child: Text((intday > 0 && intday < 32) ?
                    viewModel.startdate.displayMonthDay(viewModel.index, intday): "-",
-            style: TextStyle(
-              color: customcolor,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 14, "defaultfont"),
             textAlign: TextAlign.right,
             maxLines: 1,
           ),

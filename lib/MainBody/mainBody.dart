@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'balanceView.dart';
 import 'monthPlusMinus.dart';
 import 'spendSpreadSheet.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/admob.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/admob.dart';
 
 class mainBody extends StatefulWidget {
   final mainViewModel viewModel;

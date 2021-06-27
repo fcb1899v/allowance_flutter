@@ -1,3 +1,4 @@
+import 'package:allowance_app/MainView/commonWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,16 +20,37 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
   final mainViewModel viewModel;
   spendSpreadSheetState(this.viewModel);
 
-  DataColumn dataColumnTitle(String columntitle) {
-    var lang = Localizations.localeOf(context).languageCode;
-    return DataColumn(
-      label: Text(columntitle,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: FittedBox(
+        child: Theme(
+          data: Theme.of(context).copyWith(dividerColor: Colors.lightBlue),
+          child: Container(
+            padding: EdgeInsets.only(left: 0, right: 0,),
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: DataTable(
+                headingRowHeight: 40,
+                dataRowHeight: 40,
+                showCheckboxColumn: true,
+                columnSpacing: 10,
+                decoration: BoxDecoration(color: Colors.white,),
+                headingRowColor: MaterialStateColor.resolveWith(
+                  (states) => Colors.lightBlue
+                ),
+                columns: <DataColumn>[
+                  dataColumnTitle(context, AppLocalizations.of(context)!.day),
+                  dataColumnTitle(context, AppLocalizations.of(context)!.desc),
+                  dataColumnTitle(context, "${AppLocalizations.of(context)!.amnt} [${viewModel.unitvalue}]"),
+                  dataColumnTitle(context, ""),
+                ],
+                rows: getDataRows(),
+              ),
+            ),
+          ),
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
@@ -46,46 +68,6 @@ class spendSpreadSheetState extends State<spendSpreadSheet> {
       ));
     }
     return datarows;
-  }
-
-
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: FittedBox(
-        child: Theme(
-          data: Theme.of(context).copyWith(
-              dividerColor: Colors.lightBlue
-          ),
-          child: Container(
-            padding: EdgeInsets.only(left: 0, right: 0,),
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: DataTable(
-                headingRowHeight: 40,
-                dataRowHeight: 40,
-                showCheckboxColumn: true,
-                columnSpacing: 10,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                headingRowColor: MaterialStateColor.resolveWith(
-                  (states) => Colors.lightBlue
-                ),
-                columns: <DataColumn>[
-                  dataColumnTitle(AppLocalizations.of(context)!.day),
-                  dataColumnTitle(AppLocalizations.of(context)!.desc),
-                  dataColumnTitle("${AppLocalizations.of(context)!.amnt} [${viewModel.unitvalue}]"),
-                  dataColumnTitle(""),
-                ],
-                rows: getDataRows(),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
 

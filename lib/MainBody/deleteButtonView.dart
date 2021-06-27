@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quiver/strings.dart';
-import '../MainView/mainViewModel.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
 
 class deleteButtonView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -23,32 +24,20 @@ class deleteButtonViewState extends State<deleteButtonView> {
     int i = viewModel.index;
     String description = viewModel.spendlist[i][widget.id]["desc"];
     double amount = viewModel.spendlist[i][widget.id]["amnt"];
-    Color? customcolor = (isBlank(description)) ? Colors.grey : (amount < 0.0)
-        ? Colors.lightBlue
-        : Colors.pinkAccent;
+    Color? customcolor = (isBlank(description)) ? Colors.grey:
+             (amount < 0.0) ? Colors.lightBlue : Colors.pinkAccent;
     if (widget.id != viewModel.counter[i] - 1) {
       return PopupMenuButton(
-        icon: Icon(Icons.more_vert,
-          color: customcolor,
-          size: 20,
-        ),
+        icon: customIcon(Icons.more_vert, customcolor, 20),
         itemBuilder: (context) {
           return [
             PopupMenuItem(
               value: '',
               child: Row(
                 children: <Widget>[
-                  Icon(CupertinoIcons.delete,
-                    color: customcolor,
-                    size: 20,
-                  ),
+                  customIcon(CupertinoIcons.delete, customcolor, 20),
                   Text(" ${AppLocalizations.of(context)!.delete}",
-                    style: TextStyle(
-                      color: customcolor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "defaultfont",
-                    )
+                    style: customTextStyle(customcolor, 16, "defaultfont",)
                   ),
                 ],
               ),
@@ -62,14 +51,7 @@ class deleteButtonViewState extends State<deleteButtonView> {
         },
       );
     } else {
-      return Text("-",
-        style: TextStyle(
-          color: Colors.grey,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          fontFamily: "defaultfont",
-        )
-      );
+      return Text("-", style: customTextStyle(Colors.grey, 16, "defaultfont"));
     }
   }
 }

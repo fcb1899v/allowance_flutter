@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/MainView/commonWidget.dart';
 import '/MainView/extension.dart';
 
 DateTime? showDatePickerDialog(BuildContext context, Color color, String startdate, int index) {
@@ -14,11 +15,7 @@ DateTime? showDatePickerDialog(BuildContext context, Color color, String startda
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
                 primary: color, // button text color
-                textStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "defaultfont",
-                )
+                textStyle: customTextStyle(color, 14, "defaultfont"),
             ),
           ),
         ),

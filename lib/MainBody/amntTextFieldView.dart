@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/extension.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
+import '/MainView/extension.dart';
 
 class amntTextFieldView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -21,20 +22,19 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
   Widget build(BuildContext context) {
     int i = viewModel.index;
     double amount = viewModel.spendlist[i][widget.id]["amnt"];
-    final customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
+    final customcolor = (amount == 0.0) ? Colors.grey: (amount < 0.0) ?
+            Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
-        if (widget.id != viewModel.counter[i] - 1 || amount != 0.0) amntFieldDialog(context)
+        if (widget.id != viewModel.counter[i] - 1 || amount != 0.0) {
+          amntFieldDialog(context)
+        },
       },
       child: SizedBox(
         child: Container(
           width: double.infinity,
           child: Text((amount == 0.0) ? "-": amount.stringAmount(viewModel.unitvalue),
-            style: TextStyle(
-              color: customcolor,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 14, "defaultfont"),
             textAlign: TextAlign.right,
             maxLines: 1,
           ),
@@ -55,16 +55,10 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
       builder: (context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.amnt,
-            style: TextStyle(fontSize: 16,
-              color: customcolor,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 16, "defaultfont"),
           ),
           content: TextField(
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 14, "defaultfont"),
             onChanged: (value) {
               if (value.toDouble(0.0) > 0.0) {
                 inputamnt = plusminus * value.toDouble(0);
@@ -76,7 +70,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
                 borderSide: BorderSide(color: customcolor, width: 1.0),
               ),
               hintText: AppLocalizations.of(context)!.settingamnthint,
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle: customTextStyle(Colors.grey, 14, "defaultfont"),
             ),
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             autofocus: true,
@@ -84,11 +78,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
           actions: <Widget>[
             TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
-                style: TextStyle(
-                  color: customcolor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(customcolor, 14, "defaultfont"),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -96,11 +86,7 @@ class amntTextFieldViewState extends State<amntTextFieldView> {
             ),
             TextButton(
               child: Text("OK",
-                style: TextStyle(
-                  color: customcolor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(customcolor, 14, "defaultfont"),
               ),
               onPressed: () {
                 if (inputamnt != 0.0) {

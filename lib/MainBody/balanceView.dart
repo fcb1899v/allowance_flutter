@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/extension.dart';
-
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
+import '/MainView/extension.dart';
 
 class balanceView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -21,6 +21,7 @@ class balanceViewState extends State<balanceView> {
 
   Widget build(BuildContext context) {
     var lang = Localizations.localeOf(context).languageCode;
+    var textstyle = customShadowTextStyle(Colors.white, 24, "defaultfont");
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: FittedBox(
@@ -33,16 +34,14 @@ class balanceViewState extends State<balanceView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text("${AppLocalizations.of(context)!.balance}",
-                    style: customTextStyle(
-                        (lang == "ja") ? 24: 32,
-                        (lang == "ja") ? 'defaultfont': 'enAccent',
+                    style: (lang == "ja") ? textstyle:
+                      customShadowTextStyle(Colors.white, 32, 'enAccent',),
                     ),
-                  ),
-                  Text(" [", style: customTextStyle(24, "defaultfont"),),
+                  Text(" [", style: textstyle,),
                   DropdownButton <String>(
                     value: viewModel.unitvalue,
                     dropdownColor: Colors.lightBlue,
-                    style: customTextStyle(24, "defaultfont"),
+                    style: customShadowTextStyle(Colors.white, 24, null),
                     icon: Icon(CupertinoIcons.minus, size: 0.1),
                     underline: SizedBox(),
                     onChanged: (value) {
@@ -60,9 +59,9 @@ class balanceViewState extends State<balanceView> {
                       );
                     }).toList(),
                   ),
-                  Text("] ", style: customTextStyle(24, "defaultfont"),),
+                  Text("] ", style: textstyle,),
                   Text("${viewModel.balancelist[viewModel.index].stringMoney(viewModel.unitvalue)}",
-                    style: customTextStyle(32, "defaultfont"),
+                    style: customShadowTextStyle(Colors.white, 32, "defaultfont"),
                   ),
                 ],
               ),
@@ -82,22 +81,6 @@ class balanceViewState extends State<balanceView> {
           ),
         ),
       ),
-    );
-  }
-
-  TextStyle customTextStyle(double size, font) {
-    return TextStyle(
-      color: Colors.white,
-      fontSize: size,
-      fontWeight: FontWeight.bold,
-      fontFamily: font,
-      shadows: <Shadow>[
-        Shadow(
-          offset: Offset(2.0, 2.0),
-          blurRadius: 1.0,
-          color: Colors.lightBlue,
-        ),
-      ],
     );
   }
 }

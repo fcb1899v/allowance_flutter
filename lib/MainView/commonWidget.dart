@@ -16,22 +16,56 @@ Widget titleView(BuildContext context, String title) {
   );
 }
 
-TextStyle commonTextStyle() {
-  return TextStyle(
-    decorationColor: Colors.white,
-    color: Colors.lightBlue,
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
-    fontFamily: "defaultfont",
+DataColumn dataColumnTitle(BuildContext context, String columntitle) {
+  var lang = Localizations.localeOf(context).languageCode;
+  return DataColumn(
+    label: Text(columntitle,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontFamily: (lang == "ja") ? 'jaAccent': 'enAccent',
+      ),
+      textAlign: TextAlign.center,
+    ),
   );
 }
 
-TextStyle commonButtonStyle() {
-  return TextStyle(
-    decorationColor: Colors.lightBlue,
-    color: Colors.white,
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
-    fontFamily: "defaultfont",
+Icon customIcon(IconData icon, Color color, double size) {
+  return Icon(icon,
+    color: color,
+    size: size,
   );
 }
+
+TextStyle customTextStyle(Color color, double size, font) {
+  return TextStyle(
+    color: color,
+    fontSize: size,
+    fontWeight: FontWeight.bold,
+    fontFamily: font,
+  );
+}
+
+TextStyle settingsTextStyle(Color color, double size, font) {
+  return TextStyle(
+    color: color,
+    fontSize: size,
+    fontFamily: font,
+  );
+}
+
+TextStyle customShadowTextStyle(Color color, double size, font) {
+  return TextStyle(
+    color: color,
+    fontSize: size,
+    fontWeight: FontWeight.bold,
+    fontFamily: font,
+    shadows: [ Shadow(
+      offset: Offset(2.0, 2.0),
+      blurRadius: 1.0,
+      color: Colors.lightBlue,
+    )],
+  );
+}
+
+

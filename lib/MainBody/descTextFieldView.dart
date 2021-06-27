@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quiver/strings.dart';
-import '../MainView/mainViewModel.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
 
 class descTextFieldView extends StatefulWidget{
   final mainViewModel viewModel;
@@ -22,20 +23,19 @@ class descTextFieldViewState extends State<descTextFieldView> {
     int i = viewModel.index;
     String description = viewModel.spendlist[i][widget.id]["desc"];
     double amount = viewModel.spendlist[i][widget.id]["amnt"];
-    Color? customcolor = (isBlank(description)) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
+    Color? customcolor = (isBlank(description)) ? Colors.grey:
+             (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return InkWell(
       onTap: () => {
-        if (widget.id != viewModel.counter[i] - 1 && amount < 0.0) descFieldDialog(context),
+        if (widget.id != viewModel.counter[i] - 1 && amount < 0.0) {
+          descFieldDialog(context)
+        },
       },
       child: SizedBox(
         child: Container(
           width: double.infinity,
           child: Text((isNotBlank(description)) ? description: "-",
-            style: TextStyle(
-              color: customcolor,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 14, "defaultfont"),
             maxLines: 1,
             textAlign: TextAlign.right,
           ),
@@ -49,22 +49,17 @@ class descTextFieldViewState extends State<descTextFieldView> {
     String inputtext = "";
     String description = viewModel.spendlist[i][widget.id]["desc"];
     double amount = viewModel.spendlist[i][widget.id]["amnt"];
-    Color? customcolor = (isBlank(description)) ? Colors.grey: (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
+    Color? customcolor = (isBlank(description)) ? Colors.grey:
+             (amount < 0.0) ? Colors.lightBlue: Colors.pinkAccent;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.spend,
-            style: TextStyle(fontSize: 16,
-              color: customcolor,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 16, "defaultfont"),
           ),
           content: TextField(
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: customTextStyle(customcolor, 14, "defaultfont"),
             onChanged: (value) {
               if (isNotBlank(value)) inputtext = value;
             },
@@ -74,18 +69,14 @@ class descTextFieldViewState extends State<descTextFieldView> {
                 borderSide: BorderSide(color: customcolor, width: 1.0),
               ),
               hintText: AppLocalizations.of(context)!.settingdeschint,
-              hintStyle: TextStyle(color: Colors.grey[400]),
+              hintStyle: customTextStyle(Colors.grey, 14, "defaultfont"),
             ),
             autofocus: true,
           ),
           actions: <Widget>[
             TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
-                style: TextStyle(
-                  color: customcolor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(customcolor, 14, "defaultfont"),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -93,11 +84,7 @@ class descTextFieldViewState extends State<descTextFieldView> {
             ),
             TextButton(
               child: Text("OK",
-                style: TextStyle(
-                  color: customcolor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(customcolor, 14, "defaultfont"),
               ),
               onPressed: () {
                 if (isNotBlank(inputtext)) {

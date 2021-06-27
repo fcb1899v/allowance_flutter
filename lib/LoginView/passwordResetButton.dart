@@ -21,7 +21,7 @@ class passwordResetButtonState extends State<passwordResetButton> {
     String inputemail = "";
     return TextButton(
       child: Text(AppLocalizations.of(context)!.forgotpass,
-        style: commonButtonStyle(),
+        style: customTextStyle(Colors.white, 14, "defaultfont"),
       ),
       onPressed: () {
         showDialog(
@@ -29,10 +29,10 @@ class passwordResetButtonState extends State<passwordResetButton> {
           builder: (context) {
             return AlertDialog(
               title: Text(AppLocalizations.of(context)!.passwordreset,
-                style: commonTextStyle(),
+                style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
               ),
               content: TextField(
-                style: commonTextStyle(),
+                style: customTextStyle(Colors.white, 14, "defaultfont"),
                 onChanged: (value) {
                   if (isNotBlank(value)) inputemail = value;
                 },
@@ -49,7 +49,7 @@ class passwordResetButtonState extends State<passwordResetButton> {
               actions: <Widget>[
                 TextButton(
                   child: Text(AppLocalizations.of(context)!.cancel,
-                    style: commonTextStyle(),
+                    style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -57,7 +57,7 @@ class passwordResetButtonState extends State<passwordResetButton> {
                 ),
                 TextButton(
                   child: Text(AppLocalizations.of(context)!.ok,
-                    style: commonTextStyle(),
+                    style: customTextStyle(Colors.lightBlue, 14, "defaultfont"),
                   ),
                   onPressed: () async {
                     if (isNotBlank(inputemail)) {

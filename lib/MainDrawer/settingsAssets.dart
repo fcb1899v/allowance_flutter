@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../MainView/mainViewModel.dart';
-import '../MainView/extension.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
+import '/MainView/extension.dart';
 
 class settingsAssets extends StatefulWidget{
   final mainViewModel viewModel;
@@ -17,25 +18,27 @@ class settingsAssetsState extends State<settingsAssets> {
 
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
+    final lang = Localizations.localeOf(context).languageCode;
+    final customfont = (lang == "ja") ? 'jaAccent': 'defaultFont';
     final numberdigit = (viewModel.unitvalue == '¥') ? 0: 2;
-    final displayassets = (viewModel.initialassets > 0.0) ?
-            "${viewModel.unitvalue} ${viewModel.initialassets.toStringAsFixed(numberdigit)}":
+    final displayunit = (viewModel.initialassets >= 0.0) ? "${viewModel.unitvalue} ": "";
+    final displayassets = (viewModel.initialassets >= 0.0) ?
+            "${viewModel.initialassets.toStringAsFixed(numberdigit)}":
             AppLocalizations.of(context)!.notset;
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar),
       title: Text(AppLocalizations.of(context)!.initialassets,
-        style: TextStyle(
-          fontSize: 16.0,
-          color: Colors.black,
-          fontFamily: (lang == "ja") ? 'jaAccent': 'defaultFont',
-        ),
+        style: settingsTextStyle(Colors.black, 16, customfont,),
       ),
-      subtitle: Text(displayassets ,
-        style: TextStyle(
-          fontSize: 16.0,
-          color: Colors.grey,
-        ),
+      subtitle: Row(
+        children: [
+          Text(displayunit,
+            style: settingsTextStyle(Colors.grey, 16, null,),
+          ),
+          Text(displayassets,
+            style: settingsTextStyle(Colors.grey, 16, customfont,),
+          ),
+        ],
       ),
       trailing: Icon(CupertinoIcons.forward),
       onTap: () {
@@ -68,11 +71,7 @@ class settingsAssetsState extends State<settingsAssets> {
           actions: <Widget>[
             TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
-                style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),
               ),
               onPressed: () {
                 setState(() {
@@ -82,14 +81,9 @@ class settingsAssetsState extends State<settingsAssets> {
             ),
             TextButton(
               child: Text("OK",
-                style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),),
               onPressed: () {
-                if (inputassets > 0) {
+                if (inputassets >= 0.0) {
                   setState(() {
                     viewModel.saveInitialAssets(inputassets);
                     viewModel.getAssets();

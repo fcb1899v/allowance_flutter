@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:quiver/strings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../MainView/mainViewModel.dart';
+import '/MainView/mainViewModel.dart';
+import '/MainView/commonWidget.dart';
 
 class settingsUnit extends StatefulWidget{
   final mainViewModel viewModel;
@@ -17,30 +18,24 @@ class settingsUnitState extends State<settingsUnit> {
 
   //金額を入力および表示するテキストフィールド
   Widget build(BuildContext context) {
-    var lang = Localizations.localeOf(context).languageCode;
+    final lang = Localizations.localeOf(context).languageCode;
+    final customfont = (lang == "ja") ? 'jaAccent': 'defaultFont';
     return ListTile(
       leading: Icon(CupertinoIcons.money_dollar_circle),
       title: Text(AppLocalizations.of(context)!.unit,
-        style: TextStyle(
-          fontSize: 16.0,
-          color: Colors.black,
-          fontFamily: (lang == "ja") ? 'jaAccent': 'defaultFont',
-        ),
+        style: settingsTextStyle(Colors.black, 16, customfont,),
       ),
       subtitle: Text("${viewModel.unitvalue}",
-        style: TextStyle(
-          fontSize: 16.0,
-          color: Colors.grey,
-        ),
+        style: settingsTextStyle(Colors.grey, 16, null),
       ),
       trailing: Icon(CupertinoIcons.forward),
       onTap: () {
-        unitDropDownListDialog(context);
+        unitDropDownList(context);
       },
     );
   }
 
-  Future<void> unitDropDownListDialog(BuildContext context) async {
+  Future<void> unitDropDownList(BuildContext context) async {
     String selectunit = viewModel.unitvalue;
     return await showDialog(
       context: context,
@@ -53,11 +48,7 @@ class settingsUnitState extends State<settingsUnit> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   DropdownButton <String>(
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: customTextStyle(Colors.black, 30, null),
                     value: selectunit,
                     onChanged: (String? newValue) {
                       if (isNotBlank(selectunit)) {
@@ -81,11 +72,7 @@ class settingsUnitState extends State<settingsUnit> {
           actions: <Widget>[
             TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
-                style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),
               ),
               onPressed: () {
                 setState(() {
@@ -95,11 +82,7 @@ class settingsUnitState extends State<settingsUnit> {
             ),
             TextButton(
               child: Text("OK",
-                style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: customTextStyle(Colors.lightBlue, 16, "defaultfont"),
               ),
               onPressed: () {
                 if (isNotBlank(selectunit)) {

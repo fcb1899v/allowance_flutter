@@ -40,7 +40,7 @@ extension ListListDoubleExt on List<List<double>> {
 extension StringExt on String {
 
   int toInt(int defaultint) {
-    return (int.parse(this) > 0) ? int.parse(this) : defaultint;
+    return (int.parse(this) >= 0) ? int.parse(this) : defaultint;
   }
 
   int toIntDay(int defaultint) {
@@ -48,7 +48,7 @@ extension StringExt on String {
   }
 
   double toDouble(double defaultdouble) {
-    return (double.parse(this) > 0) ? double.parse(this) : defaultdouble;
+    return (double.parse(this) >= 0.0) ? double.parse(this) : defaultdouble;
   }
 
   String addZero() {
